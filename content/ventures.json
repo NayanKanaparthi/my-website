@@ -1,0 +1,25 @@
+[
+  {
+    "title": "Tokenomics",
+    "description": "Tokenomics is a token-aware optimization and memory layer that sits between your application and LLM providers, intelligently allocating tokens, learning from past interactions, and reducing unnecessary computational waste.",
+    "status": "Active",
+    "year": "2025",
+    "image": "/uploads/1764005954174-d1d0c211-7f13-49b7-9867-1519815cdd0d.png"
+  },
+  {
+    "title": "AdVantage Ecosystem",
+    "description": "Driving a New Era of Learning with Peer-to-Peer Collaboration and Community Innovation\nAdvantage Ecosystem is a next-generation educational platform designed to foster decentralized, peer-to-peer learning networks. Our mission is to make education more engaging, inclusive, and practical by creating a dynamic ecosystem where students, professionals, and communities collaborate seamlessly.\n",
+    "status": "Active",
+    "year": "2023",
+    "link": "https://adveco.in/",
+    "image": "/uploads/1764006556898-WhatsApp_Image_2024-10-16_at_20.32.21_5bb6c587.jpg"
+  },
+  {
+    "title": "Exploring the Cosmos with Solaris ( Podcast )",
+    "description": "the Society for Outer Life and Advanced Research on Interstellar Settlements",
+    "status": "Active",
+    "year": "2025",
+    "link": "https://open.spotify.com/show/2LKrwm7r6VNLtbxaFGfJLg?si=94a58a491972445f",
+    "image": "/uploads/1764006188502-SOLARIS.png"
+  }
+]

@@ -1,0 +1,21 @@
+[
+  {
+    "title": "Quantitative-Risk-Simulator-using-Correlated-GBM-Monte-Carlo",
+    "description": "Interactive portfolio risk simulator using correlated Geometric Brownian Motion (GBM) and Monte Carlo simulation. Estimates Value at Risk (VaR), Conditional VaR (CVaR), and probability of loss across multi-asset portfolios. Built with Python and Streamlit.",
+    "image": "/uploads/1764006368220-1760297874056.jpeg",
+    "githubLink": "https://github.com/NayanKanaparthi/Quantitative-Risk-Simulator-using-Correlated-GBM-Monte-Carlo",
+    "projectLink": "https://github.com/NayanKanaparthi/Quantitative-Risk-Simulator-using-Correlated-GBM-Monte-Carlo",
+    "category": "Project, Fintech, Risk"
+  },
+  {
+    "title": "Reflexive Demand in the AI Infrastructure Boom",
+    "description": "Over the past few months, I have been researching a question that has been bothering me for a while. The AI infrastructure boom is growing at a scale we have never seen before, but what is actually driving it?\n\nEvery week there is news about multibillion dollar cloud commitments, data center expansions, GPU shortages, and record CapEx across the largest tech companies. The narrative focuses on AI demand, but when you dig into the financial data, the story becomes more complex.\n\nI decided to analyze the numbers myself.\n\nThis paper looks at the financial mechanics behind the AI build out from 2022 through 2025. It studies how vendor financing, long dated backlogs, capital intensity, and credit conditions are shaping today’s AI race. The work compares cash flow, CapEx, RPO, and debt issuance across Oracle, Nvidia, Microsoft, Amazon, and Google, and examines whether the boom reflects real adoption or a reflexive cycle driven by financing and belief.\n\nIt also looks at how this cycle resembles previous investment waves, including the dot com capex surge and late cycle credit expansions, while highlighting important differences in how demand is being created today.\n\nI built a full website that turns my research paper into an easy to read online experience, allowing readers to move through the paper in a clean format, view the charts and tables clearly, and explore the ideas without needing to download a PDF.",
+    "image": "/uploads/1764000360747-Screenshot_2025-11-22_215855.png",
+    "githubLink": "",
+    "projectLink": "https://reflexivedemand.netlify.app/",
+    "type": "paper",
+    "category": "Research",
+    "date": "2025-11-24",
+    "tags": []
+  }
+]

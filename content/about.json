@@ -1,0 +1,41 @@
+{
+  "bio": "",
+  "timeline": [],
+  "skills": {
+    "Strategy": [
+      ""
+    ],
+    "AI": [
+      ""
+    ],
+    "Quantitative": [
+      ""
+    ],
+    "Product": [
+      ""
+    ]
+  },
+  "image": "/uploads/1763842729989-1695654532765.jpeg",
+  "professionalExperience": [
+    {
+      "title": "Graduate Research Assistant",
+      "company": "NYU Stern",
+      "location": "New York",
+      "startDate": "Sept",
+      "endDate": "",
+      "description": "",
+      "companyImage": "/uploads/1763842852505-sterb.png"
+    }
+  ],
+  "leadershipExperience": [
+    {
+      "title": "Organizer",
+      "company": "MLH- FrostHacks",
+      "location": "Hyderabad",
+      "startDate": "",
+      "endDate": "",
+      "description": "",
+      "companyImage": "/uploads/1763842788843-frost_hacks_vector_png_logo.png"
+    }
+  ]
+}

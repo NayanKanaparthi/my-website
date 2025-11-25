@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@400;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-inter: 'Inter', sans-serif;
+    --font-manrope: 'Manrope', sans-serif;
+    --font-serif: 'Source Serif Pro', serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  body {
+    font-family: var(--font-inter);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-manrope);
+    font-weight: 600;
+  }
+
+  .serif {
+    font-family: var(--font-serif);
+  }
+
+  .mono {
+    font-family: var(--font-mono);
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+/* Blog post formatting */
+.prose {
+  max-width: 100% !important;
+  column-count: 1 !important;
+  column-width: auto !important;
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+  break-after: avoid;
+  page-break-after: avoid;
+}
+
+.prose ul,
+.prose ol {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.prose p {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+

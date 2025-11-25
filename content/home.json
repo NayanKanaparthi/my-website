@@ -1,0 +1,41 @@
+{
+  "hero": {
+    "title": "Building at the intersection of Technology and Business Strategy",
+    "subtitle": "Strategist and AI builder applying quantitative thinking to business, management, and innovation.",
+    "image": "/uploads/1763842923990-1695654532765.jpeg"
+  },
+  "featuredWork": [
+    "advantage-ecosystem-questlabs"
+  ],
+  "playbooks": [],
+  "institutions": [
+    {
+      "image": "/uploads/1763998556278-sterb.png",
+      "name": ""
+    },
+    {
+      "image": "/uploads/1763998562724-Micro.png",
+      "name": ""
+    },
+    {
+      "image": "/uploads/1763998568589-mlh-facebook-ae6144c0a3605f15992ee2970616db8d-removebg-preview.png",
+      "name": ""
+    },
+    {
+      "image": "/uploads/1763998609493-download__3_-removebg-preview.png",
+      "name": ""
+    },
+    {
+      "image": "/uploads/1763998615349-MIT-lockup-3line-red-removebg-preview.png",
+      "name": ""
+    },
+    {
+      "image": "/uploads/1763998640709-Advantage.png",
+      "name": ""
+    }
+  ],
+  "socialLinks": {
+    "twitter": "https://x.com/NayanKanaparthi",
+    "linkedin": "https://www.linkedin.com/in/nayan-kanaparthi/"
+  }
+}
