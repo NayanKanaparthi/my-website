@@ -2,11 +2,11 @@ import { getHomeContent } from '@/lib/content'
 
 export default function Playbooks() {
   const homeContent = getHomeContent()
-  const playbooks = homeContent.playbooks || []
+  const playbooks = (homeContent as any).playbooks || []
   return (
     <div className="overflow-x-auto pb-4">
       <div className="flex space-x-4 min-w-max">
-        {playbooks.map((playbook, index) => (
+        {playbooks.map((playbook: any, index: number) => (
           <div
             key={index}
             className="bg-white rounded-lg p-6 border border-navy/10 hover:border-violet/30 hover:shadow-lg transition-all duration-300 min-w-[300px]"
