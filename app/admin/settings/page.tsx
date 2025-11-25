@@ -3,7 +3,6 @@
 import { useState } from 'react'
 
 export default function SettingsPage() {
-  const [oldPassword, setOldPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [otp, setOtp] = useState('')
@@ -19,13 +18,6 @@ export default function SettingsPage() {
     setError('')
     setSuccess('')
     setSendingOtp(true)
-
-    // Validate old password
-    if (!oldPassword) {
-      setError('Please enter your old password')
-      setSendingOtp(false)
-      return
-    }
 
     // Validate new passwords match
     if (newPassword !== confirmPassword) {
@@ -45,7 +37,7 @@ export default function SettingsPage() {
       const response = await fetch('/api/admin/send-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ oldPassword }),
+        body: JSON.stringify({}),
       })
 
       const data = await response.json()
@@ -71,7 +63,7 @@ export default function SettingsPage() {
     setLoading(true)
 
     // Validate all fields
-    if (!oldPassword || !newPassword || !confirmPassword || !otp) {
+    if (!newPassword || !confirmPassword || !otp) {
       setError('All fields are required')
       setLoading(false)
       return
@@ -89,7 +81,6 @@ export default function SettingsPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          oldPassword,
           newPassword,
           confirmPassword,
           otp,
@@ -101,7 +92,6 @@ export default function SettingsPage() {
       if (response.ok) {
         setSuccess('Password changed successfully!')
         // Reset form
-        setOldPassword('')
         setNewPassword('')
         setConfirmPassword('')
         setOtp('')
@@ -128,22 +118,6 @@ export default function SettingsPage() {
         <h2 className="text-xl font-semibold text-navy mb-6">Change Password</h2>
 
         <form onSubmit={showOtpInput ? handleChangePassword : handleSendOTP} className="space-y-6">
-          {/* Old Password */}
-          <div>
-            <label htmlFor="oldPassword" className="block text-sm font-medium text-navy mb-2">
-              Old Password
-            </label>
-            <input
-              type="password"
-              id="oldPassword"
-              value={oldPassword}
-              onChange={(e) => setOldPassword(e.target.value)}
-              required
-              disabled={showOtpInput}
-              className="w-full px-4 py-2 border border-navy/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet focus:border-transparent disabled:bg-navy/5 disabled:cursor-not-allowed"
-            />
-          </div>
-
           {/* New Password */}
           <div>
             <label htmlFor="newPassword" className="block text-sm font-medium text-navy mb-2">
@@ -228,7 +202,7 @@ export default function SettingsPage() {
             {!showOtpInput ? (
               <button
                 type="submit"
-                disabled={sendingOtp || !oldPassword || !newPassword || !confirmPassword}
+                disabled={sendingOtp || !newPassword || !confirmPassword}
                 className="px-6 py-3 bg-violet text-white rounded-lg font-medium hover:bg-violet/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {sendingOtp ? 'Sending OTP...' : 'Send OTP'}

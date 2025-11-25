@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { isAuthenticated } from '@/lib/auth'
-import { verifyPassword } from '@/lib/auth'
-import { getAdminPasswordHash } from '@/lib/config'
 import { generateOTP, storeOTP } from '@/lib/otp'
 import { sendOTPEmail } from '@/lib/email'
 
@@ -14,20 +12,7 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const { oldPassword } = await request.json()
-
-    if (!oldPassword) {
-      return NextResponse.json({ error: 'Old password is required' }, { status: 400 })
-    }
-
-    // Verify old password
-    const ADMIN_PASSWORD_HASH = getAdminPasswordHash()
-    const isValid = await verifyPassword(oldPassword, ADMIN_PASSWORD_HASH)
-
-    if (!isValid) {
-      return NextResponse.json({ error: 'Invalid old password' }, { status: 401 })
-    }
-
+    // User is already authenticated (checked above), so we can proceed to send OTP
     // Generate and store OTP
     const otp = generateOTP()
     storeOTP(ADMIN_EMAIL, otp)
