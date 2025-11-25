@@ -93,5 +93,4 @@ The site is ready to deploy on Vercel, Netlify, or any platform that supports Ne
 
 ## License
 
-Private - All rights reserved.
-
+MIT License
