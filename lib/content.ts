@@ -62,6 +62,7 @@ export interface HomeContent {
     image?: string
   }
   featuredWork: string[] // Array of work item slugs (max 3)
+  playbooks?: Array<{ title: string; description: string }> // Array of playbooks
   institutions: Array<string | { image: string; name?: string }> // Array of institution logos (image URLs or objects with image/name)
   socialLinks?: {
     twitter?: string
