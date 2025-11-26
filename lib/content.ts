@@ -6,24 +6,62 @@ const contentDirectory = path.join(process.cwd(), 'content')
 // Check if we're in production (Vercel)
 const isProduction = process.env.VERCEL === '1' || process.env.NODE_ENV === 'production'
 
-// Initialize Upstash Redis only in production
+// Lazy initialization of Upstash Redis
 let redis: any = null
-if (isProduction) {
-  try {
-    // Check if Upstash Redis environment variables are set
-    // When integrated through Vercel Marketplace, these are automatically set
-    if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
-      const { Redis } = require('@upstash/redis')
-      redis = new Redis({
-        url: process.env.UPSTASH_REDIS_REST_URL,
-        token: process.env.UPSTASH_REDIS_REST_TOKEN,
-      })
-    } else {
-      console.warn('Upstash Redis environment variables not set. Content saving will not work in production.')
-    }
-  } catch (error) {
-    console.warn('Upstash Redis not available, falling back to file system:', error)
+let redisInitialized = false
+
+function getRedisClient() {
+  if (!isProduction) {
+    return null
   }
+
+  // Initialize Redis lazily (on first use) to ensure env vars are available
+  if (!redisInitialized) {
+    try {
+      const { Redis } = require('@upstash/redis')
+      
+      // Try fromEnv() first (recommended by Upstash)
+      try {
+        redis = Redis.fromEnv()
+        if (redis) {
+          console.log('Upstash Redis initialized using fromEnv()')
+          redisInitialized = true
+          return redis
+        }
+      } catch (fromEnvError) {
+        console.log('fromEnv() failed, trying manual initialization:', fromEnvError)
+      }
+      
+      // Fallback to manual initialization if fromEnv() doesn't work
+      // Check for various possible environment variable names
+      const url = process.env.UPSTASH_REDIS_REST_URL || 
+                  process.env.KV_REST_API_URL
+      const token = process.env.UPSTASH_REDIS_REST_TOKEN || 
+                    process.env.KV_REST_API_TOKEN
+      
+      if (url && token) {
+        redis = new Redis({
+          url: url,
+          token: token,
+        })
+        console.log('Upstash Redis initialized using manual config')
+        redisInitialized = true
+        return redis
+      } else {
+        console.warn('Upstash Redis environment variables not found. Available env vars:', {
+          UPSTASH_REDIS_REST_URL: !!process.env.UPSTASH_REDIS_REST_URL,
+          UPSTASH_REDIS_REST_TOKEN: !!process.env.UPSTASH_REDIS_REST_TOKEN,
+          KV_REST_API_URL: !!process.env.KV_REST_API_URL,
+          KV_REST_API_TOKEN: !!process.env.KV_REST_API_TOKEN,
+        })
+      }
+    } catch (error) {
+      console.error('Failed to initialize Upstash Redis:', error)
+      redisInitialized = true // Mark as initialized to prevent retry loops
+    }
+  }
+  
+  return redis
 }
 
 export interface WorkItem {
@@ -133,10 +171,11 @@ function getContentPath(filename: string): string {
 
 export async function readContent<T>(filename: string, defaultValue: T): Promise<T> {
   // Use Upstash Redis in production if available
-  if (isProduction && redis) {
+  const redisClient = getRedisClient()
+  if (isProduction && redisClient) {
     try {
       const key = `content:${filename}`
-      const content = await redis.get(key)
+      const content = await redisClient.get(key)
       if (content !== null) {
         // Parse JSON string back to object
         return typeof content === 'string' ? JSON.parse(content) : content
@@ -152,7 +191,7 @@ export async function readContent<T>(filename: string, defaultValue: T): Promise
   const filePath = getContentPath(filename)
   if (!fs.existsSync(filePath)) {
     // In production, if file doesn't exist and Redis is available, try to write default to Redis
-    if (isProduction && redis) {
+    if (isProduction && redisClient) {
       try {
         await writeContent(filename, defaultValue)
         return defaultValue
@@ -178,16 +217,29 @@ export async function readContent<T>(filename: string, defaultValue: T): Promise
 export async function writeContent<T>(filename: string, data: T): Promise<void> {
   // Use Upstash Redis in production
   if (isProduction) {
-    if (!redis) {
+    const redisClient = getRedisClient()
+    if (!redisClient) {
+      // Provide helpful error message with debugging info
+      const envInfo = {
+        UPSTASH_REDIS_REST_URL: !!process.env.UPSTASH_REDIS_REST_URL,
+        UPSTASH_REDIS_REST_TOKEN: !!process.env.UPSTASH_REDIS_REST_TOKEN,
+        KV_REST_API_URL: !!process.env.KV_REST_API_URL,
+        KV_REST_API_TOKEN: !!process.env.KV_REST_API_TOKEN,
+        VERCEL: !!process.env.VERCEL,
+        NODE_ENV: process.env.NODE_ENV,
+      }
       throw new Error(
-        'Upstash Redis is not configured. Please set up Upstash KV in your Vercel project. ' +
-        'Go to your Vercel project → Marketplace → Search for "Upstash" → Add Upstash KV integration. ' +
-        'The environment variables (UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN) will be automatically added.'
+        'Upstash Redis is not configured. Please set up Upstash Redis in your Vercel project. ' +
+        'Go to your Vercel project → Marketplace → Search for "Upstash" → Add "Upstash for Redis" integration. ' +
+        'After adding, redeploy your project. ' +
+        `Debug info: ${JSON.stringify(envInfo)}`
       )
     }
     try {
       const key = `content:${filename}`
-      await redis.set(key, JSON.stringify(data))
+      // Store as JSON string
+      await redisClient.set(key, JSON.stringify(data))
+      console.log(`Successfully saved ${filename} to Redis`)
       return
     } catch (error) {
       console.error(`Error writing to Redis for ${filename}:`, error)
