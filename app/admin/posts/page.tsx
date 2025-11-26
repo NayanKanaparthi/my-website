@@ -18,13 +18,21 @@ export default function AdminPostsPage() {
 
   const fetchPosts = async () => {
     try {
-      const response = await fetch('/api/admin/posts')
-      if (response.ok) {
-        const data = await response.json()
-        setAllPosts(data.posts || [])
+      const response = await fetch('/api/admin/posts', {
+        credentials: 'include',
+      })
+      if (!response.ok) {
+        if (response.status === 401) {
+          window.location.href = '/admin-login'
+          return
+        }
+        throw new Error(`Failed to fetch posts: ${response.statusText}`)
       }
+      const data = await response.json()
+      setAllPosts(data.posts || [])
     } catch (error) {
       console.error('Error fetching posts:', error)
+      alert('Failed to load posts. Please refresh the page.')
     } finally {
       setLoading(false)
     }
@@ -39,6 +47,7 @@ export default function AdminPostsPage() {
     try {
       const response = await fetch(`/api/admin/posts/${slug}`, {
         method: 'DELETE',
+        credentials: 'include',
       })
 
       if (response.ok) {

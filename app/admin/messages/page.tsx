@@ -24,13 +24,19 @@ export default function MessagesPage() {
 
   const fetchMessages = async () => {
     try {
-      const response = await fetch('/api/admin/messages')
-      if (response.ok) {
-        const data = await response.json()
-        setMessages(data.messages || [])
-      } else {
+      const response = await fetch('/api/admin/messages', {
+        credentials: 'include',
+      })
+      if (!response.ok) {
+        if (response.status === 401) {
+          window.location.href = '/admin-login'
+          return
+        }
         setError('Failed to load messages')
+        return
       }
+      const data = await response.json()
+      setMessages(data.messages || [])
     } catch (err) {
       setError('An error occurred while loading messages')
     } finally {
@@ -49,6 +55,7 @@ export default function MessagesPage() {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ messages: updatedMessages }),
+        credentials: 'include',
       })
     } catch (err) {
       console.error('Error updating message:', err)
@@ -70,6 +77,7 @@ export default function MessagesPage() {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ messages: updatedMessages }),
+        credentials: 'include',
       })
     } catch (err) {
       console.error('Error deleting message:', err)

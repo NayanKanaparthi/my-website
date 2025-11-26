@@ -11,7 +11,10 @@ export default function AdminNav() {
   const handleLogout = async () => {
     setLoggingOut(true)
     try {
-      const response = await fetch('/api/auth/logout', { method: 'POST' })
+      const response = await fetch('/api/auth/logout', { 
+        method: 'POST',
+        credentials: 'include',
+      })
       if (response.ok) {
         // Clear any client-side state if needed
         // Force a hard redirect to ensure cookie is cleared

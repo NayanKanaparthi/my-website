@@ -15,7 +15,9 @@ export default function ContentManagementPage() {
   const loadContent = async () => {
     setLoading(true)
     try {
-      const response = await fetch(`/api/admin/content?type=${activeTab}`)
+      const response = await fetch(`/api/admin/content?type=${activeTab}`, {
+        credentials: 'include',
+      })
       if (!response.ok) {
         if (response.status === 401) {
           // Unauthorized - redirect to login
@@ -51,6 +53,7 @@ export default function ContentManagementPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ type: activeTab, data }),
+        credentials: 'include',
       })
       if (!response.ok) {
         if (response.status === 401) {
@@ -716,6 +719,7 @@ function LogoUpload({ onUpload }: { onUpload: (url: string) => void }) {
       const response = await fetch('/api/admin/upload', {
         method: 'POST',
         body: formData,
+        credentials: 'include',
       })
 
       if (response.ok) {
@@ -764,7 +768,9 @@ function HomeEditor({ data, onChange }: { data: any; onChange: (data: any) => vo
     const loadWorkItems = async () => {
       setLoadingWork(true)
       try {
-        const response = await fetch('/api/admin/content?type=work')
+        const response = await fetch('/api/admin/content?type=work', {
+          credentials: 'include',
+        })
         const result = await response.json()
         if (response.ok) {
           setWorkItems(Array.isArray(result.data) ? result.data : [])

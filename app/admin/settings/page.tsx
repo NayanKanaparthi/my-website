@@ -38,6 +38,7 @@ export default function SettingsPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({}),
+        credentials: 'include',
       })
 
       const data = await response.json()
@@ -85,6 +86,7 @@ export default function SettingsPage() {
           confirmPassword,
           otp,
         }),
+        credentials: 'include',
       })
 
       const data = await response.json()
