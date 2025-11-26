@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
       const errorMsg = emailError?.message || ''
       
       if (errorMsg.includes('SMTP_PASS') || errorMsg.includes('not set')) {
-        errorMessage += 'SMTP_PASS is not set in .env.local. Please add your Gmail App Password.'
+        errorMessage += 'SMTP_PASS environment variable is not configured. For Netlify: Go to Site settings > Environment variables and add SMTP_PASS with your Gmail App Password. For local development: Add it to .env.local file.'
       } else if (errorMsg.includes('Invalid login') || errorMsg.includes('BadCredentials') || errorMsg.includes('Username and Password not accepted')) {
         errorMessage += 'Gmail authentication failed. Please make sure you are using a Gmail App Password (not your regular password). Generate one at: https://myaccount.google.com/apppasswords'
       } else if (errorMsg.includes('Failed to connect') || errorMsg.includes('ECONNREFUSED')) {

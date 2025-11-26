@@ -16,7 +16,7 @@ export async function createTransporter() {
   const smtpPass = process.env.SMTP_PASS
 
   if (!smtpPass) {
-    const error = new Error('SMTP_PASS environment variable is not set. Please configure email settings in .env.local')
+    const error = new Error('SMTP_PASS environment variable is not set. Please configure email settings in your environment variables (Netlify: Site settings > Environment variables, or .env.local for local development)')
     console.error('Email configuration error:', error.message)
     throw error
   }
