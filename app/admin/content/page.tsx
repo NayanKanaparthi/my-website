@@ -301,7 +301,7 @@ function WorkEditor({ data, onChange }: { data: any[]; onChange: (data: any[]) =
       ))}
       {data.length === 0 && (
         <div className="text-center py-12 text-navy/60">
-          <p>No work items yet. Click "Add Work Item" to get started.</p>
+          <p>No work items yet. Click &quot;Add Work Item&quot; to get started.</p>
         </div>
       )}
     </div>
@@ -378,7 +378,7 @@ function VenturesEditor({ data, onChange }: { data: any[]; onChange: (data: any[
           </div>
         </div>
       ))}
-      {data.length === 0 && <div className="text-center py-12 text-navy/60"><p>No ventures yet. Click "Add Venture" to get started.</p></div>}
+      {data.length === 0 && <div className="text-center py-12 text-navy/60"><p>No ventures yet. Click &quot;Add Venture&quot; to get started.</p></div>}
     </div>
   )
 }
@@ -515,7 +515,7 @@ function ProjectsEditor({ data, onChange }: { data: any[]; onChange: (data: any[
       ))}
       {projects.length === 0 && (
         <div className="text-center py-12 text-navy/60">
-          <p>No projects yet. Click "Add Project" to get started.</p>
+          <p>No projects yet. Click &quot;Add Project&quot; to get started.</p>
         </div>
       )}
     </div>
@@ -874,7 +874,7 @@ function HomeEditor({ data, onChange }: { data: any; onChange: (data: any) => vo
           ) : workItems.length === 0 ? (
             <div className="text-center py-8 text-navy/60">
               <p>No work items available.</p>
-              <p className="text-sm mt-1">Add work items in the "Work/Projects" tab first.</p>
+              <p className="text-sm mt-1">Add work items in the &quot;Work/Projects&quot; tab first.</p>
             </div>
           ) : (
             <div className="space-y-2 max-h-96 overflow-y-auto">

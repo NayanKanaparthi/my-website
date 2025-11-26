@@ -9,7 +9,7 @@ export default async function ProjectsPage() {
       <div className="mb-16">
         <h1 className="text-4xl md:text-5xl font-semibold text-navy mb-4">Projects</h1>
         <p className="text-xl text-navy/70 max-w-2xl">
-          A collection of projects I've built, exploring the intersection of technology, strategy, and innovation.
+          A collection of projects I&apos;ve built, exploring the intersection of technology, strategy, and innovation.
         </p>
       </div>
 

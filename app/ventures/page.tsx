@@ -8,7 +8,7 @@ export default async function VenturesPage() {
       <div className="mb-16">
         <h1 className="text-4xl md:text-5xl font-semibold text-navy mb-4">Ventures</h1>
         <p className="text-xl text-navy/70 max-w-2xl">
-          Projects and initiatives I'm building at the intersection of strategy, technology, and innovation.
+          Projects and initiatives I&apos;m building at the intersection of strategy, technology, and innovation.
         </p>
       </div>
 
