@@ -1,23 +1,23 @@
 import type { Metadata } from 'next'
-import { Inter, Manrope, JetBrains_Mono } from 'next/font/google'
+import localFont from 'next/font/local'
 import './globals.css'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 
-const inter = Inter({ 
-  subsets: ['latin'],
+const inter = localFont({ 
+  src: '../public/fonts/Inter-Variable.woff2',
   variable: '--font-inter',
   display: 'swap',
 })
 
-const manrope = Manrope({ 
-  subsets: ['latin'],
+const manrope = localFont({ 
+  src: '../public/fonts/Manrope-Variable.woff2',
   variable: '--font-manrope',
   display: 'swap',
 })
 
-const jetbrainsMono = JetBrains_Mono({ 
-  subsets: ['latin'],
+const jetbrainsMono = localFont({ 
+  src: '../public/fonts/JetBrainsMono-Variable.woff2',
   variable: '--font-mono',
   display: 'swap',
 })
