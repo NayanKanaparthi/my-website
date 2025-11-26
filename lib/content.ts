@@ -6,20 +6,23 @@ const contentDirectory = path.join(process.cwd(), 'content')
 // Check if we're in production (Vercel)
 const isProduction = process.env.VERCEL === '1' || process.env.NODE_ENV === 'production'
 
-// Initialize Vercel KV only in production
-let kv: any = null
+// Initialize Upstash Redis only in production
+let redis: any = null
 if (isProduction) {
   try {
-    // Check if KV environment variables are set
-    if (process.env.KV_URL || process.env.KV_REST_API_URL) {
-      // Import Vercel KV - it will use KV_URL, KV_REST_API_URL, KV_REST_API_TOKEN from environment
-      const { kv: vercelKv } = require('@vercel/kv')
-      kv = vercelKv
+    // Check if Upstash Redis environment variables are set
+    // When integrated through Vercel Marketplace, these are automatically set
+    if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
+      const { Redis } = require('@upstash/redis')
+      redis = new Redis({
+        url: process.env.UPSTASH_REDIS_REST_URL,
+        token: process.env.UPSTASH_REDIS_REST_TOKEN,
+      })
     } else {
-      console.warn('Vercel KV environment variables not set. Content saving will not work in production.')
+      console.warn('Upstash Redis environment variables not set. Content saving will not work in production.')
     }
   } catch (error) {
-    console.warn('Vercel KV not available, falling back to file system:', error)
+    console.warn('Upstash Redis not available, falling back to file system:', error)
   }
 }
 
@@ -129,17 +132,18 @@ function getContentPath(filename: string): string {
 }
 
 export async function readContent<T>(filename: string, defaultValue: T): Promise<T> {
-  // Use Vercel KV in production if available
-  if (isProduction && kv) {
+  // Use Upstash Redis in production if available
+  if (isProduction && redis) {
     try {
       const key = `content:${filename}`
-      const content = await kv.get(key)
+      const content = await redis.get(key)
       if (content !== null) {
-        return content as T
+        // Parse JSON string back to object
+        return typeof content === 'string' ? JSON.parse(content) : content
       }
-      // If not found in KV, fall through to read from committed files
+      // If not found in Redis, fall through to read from committed files
     } catch (error) {
-      console.error(`Error reading from KV for ${filename}:`, error)
+      console.error(`Error reading from Redis for ${filename}:`, error)
       // Fall through to read from committed files
     }
   }
@@ -147,8 +151,8 @@ export async function readContent<T>(filename: string, defaultValue: T): Promise
   // Use file system (works for reading in both dev and production from committed files)
   const filePath = getContentPath(filename)
   if (!fs.existsSync(filePath)) {
-    // In production, if file doesn't exist and KV is available, try to write default to KV
-    if (isProduction && kv) {
+    // In production, if file doesn't exist and Redis is available, try to write default to Redis
+    if (isProduction && redis) {
       try {
         await writeContent(filename, defaultValue)
         return defaultValue
@@ -172,21 +176,22 @@ export async function readContent<T>(filename: string, defaultValue: T): Promise
 }
 
 export async function writeContent<T>(filename: string, data: T): Promise<void> {
-  // Use Vercel KV in production
+  // Use Upstash Redis in production
   if (isProduction) {
-    if (!kv) {
+    if (!redis) {
       throw new Error(
-        'Vercel KV is not configured. Please set up a KV database in your Vercel project. ' +
-        'Go to Storage → Create Database → KV in your Vercel dashboard.'
+        'Upstash Redis is not configured. Please set up Upstash KV in your Vercel project. ' +
+        'Go to your Vercel project → Marketplace → Search for "Upstash" → Add Upstash KV integration. ' +
+        'The environment variables (UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN) will be automatically added.'
       )
     }
     try {
       const key = `content:${filename}`
-      await kv.set(key, data)
+      await redis.set(key, JSON.stringify(data))
       return
     } catch (error) {
-      console.error(`Error writing to KV for ${filename}:`, error)
-      throw new Error(`Failed to save content to KV: ${error instanceof Error ? error.message : 'Unknown error'}`)
+      console.error(`Error writing to Redis for ${filename}:`, error)
+      throw new Error(`Failed to save content to Redis: ${error instanceof Error ? error.message : 'Unknown error'}`)
     }
   }
   

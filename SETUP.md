@@ -71,14 +71,16 @@ Replace the placeholder in `app/about/page.tsx` with your actual photo:
 
 ### For Vercel Deployment
 
-1. **Set up Vercel KV (Required for Content Management)**
+1. **Set up Upstash KV (Required for Content Management)**
    - Go to your Vercel project dashboard
-   - Navigate to Storage → Create Database → KV
-   - Create a new KV database
+   - Click on the **Marketplace** tab (or go to your project → Integrations)
+   - Search for **"Upstash"** or **"Upstash KV"**
+   - Click on **Upstash** (you'll see it in the Native Storage Integrations)
+   - Click **Add Integration** or **Create Database**
+   - Follow the prompts to create your Upstash KV database
    - Vercel will automatically add the required environment variables:
-     - `KV_URL`
-     - `KV_REST_API_URL`
-     - `KV_REST_API_TOKEN`
+     - `UPSTASH_REDIS_REST_URL`
+     - `UPSTASH_REDIS_REST_TOKEN`
    - These are automatically available to your application
 
 2. **Set Environment Variables**
@@ -110,7 +112,7 @@ Replace the placeholder in `app/about/page.tsx` with your actual photo:
    - Use services like Supabase, Firebase, or AWS S3
    - Update `lib/content.ts` accordingly
 
-**Note:** The current implementation uses Vercel KV for production on Vercel, and file system for local development.
+**Note:** The current implementation uses Upstash Redis (KV) for production on Vercel, and file system for local development. Upstash is available in the Vercel Marketplace under "Native Storage Integrations".
 
 The site is fully production-ready with:
 - Server-side rendering

@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@types/nodemailer": "^7.0.4",
+    "@upstash/redis": "^1.35.7",
     "bcryptjs": "^2.4.3",
     "date-fns": "^3.0.6",
     "gray-matter": "^4.0.3",
