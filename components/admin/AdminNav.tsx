@@ -11,11 +11,20 @@ export default function AdminNav() {
   const handleLogout = async () => {
     setLoggingOut(true)
     try {
-      await fetch('/api/auth/logout', { method: 'POST' })
-      router.push('/admin-login')
-      router.refresh()
+      const response = await fetch('/api/auth/logout', { method: 'POST' })
+      if (response.ok) {
+        // Clear any client-side state if needed
+        // Force a hard redirect to ensure cookie is cleared
+        window.location.href = '/admin-login'
+      } else {
+        console.error('Logout failed:', response.statusText)
+        // Still redirect even if API call fails
+        window.location.href = '/admin-login'
+      }
     } catch (error) {
       console.error('Logout error:', error)
+      // Still redirect even if API call fails
+      window.location.href = '/admin-login'
     } finally {
       setLoggingOut(false)
     }

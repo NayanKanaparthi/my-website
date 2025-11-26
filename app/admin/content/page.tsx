@@ -12,29 +12,37 @@ export default function ContentManagementPage() {
   const [saving, setSaving] = useState(false)
   const [data, setData] = useState<any>(null)
 
-  useEffect(() => {
-    loadContent()
-  }, [activeTab])
-
   const loadContent = async () => {
     setLoading(true)
     try {
       const response = await fetch(`/api/admin/content?type=${activeTab}`)
-      const result = await response.json()
-      if (response.ok) {
-        // Ensure projects is always an array
-        if (activeTab === 'projects' && !Array.isArray(result.data)) {
-          setData([])
-        } else {
-          setData(result.data)
+      if (!response.ok) {
+        if (response.status === 401) {
+          // Unauthorized - redirect to login
+          window.location.href = '/admin-login'
+          return
         }
+        throw new Error(`Failed to load content: ${response.statusText}`)
+      }
+      const result = await response.json()
+      // Ensure projects is always an array
+      if (activeTab === 'projects' && !Array.isArray(result.data)) {
+        setData([])
+      } else {
+        setData(result.data)
       }
     } catch (error) {
       console.error('Error loading content:', error)
+      alert('Failed to load content. Please refresh the page.')
     } finally {
       setLoading(false)
     }
   }
+
+  useEffect(() => {
+    loadContent()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeTab])
 
   const saveContent = async () => {
     setSaving(true)
@@ -44,13 +52,19 @@ export default function ContentManagementPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ type: activeTab, data }),
       })
-      if (response.ok) {
-        alert('Content saved successfully!')
-      } else {
-        alert('Failed to save content')
+      if (!response.ok) {
+        if (response.status === 401) {
+          // Unauthorized - redirect to login
+          window.location.href = '/admin-login'
+          return
+        }
+        const errorData = await response.json().catch(() => ({}))
+        throw new Error(errorData.error || `Failed to save content: ${response.statusText}`)
       }
+      alert('Content saved successfully!')
     } catch (error) {
       console.error('Error saving content:', error)
+      alert(error instanceof Error ? error.message : 'Failed to save content. Please try again.')
       alert('Error saving content')
     } finally {
       setSaving(false)
