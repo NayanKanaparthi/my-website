@@ -38,6 +38,19 @@ export async function POST(request: NextRequest) {
 
     // Use Vercel Blob Storage in production, file system in development
     if (isProduction) {
+      // Check if Blob storage is configured before attempting upload
+      if (!process.env.BLOB_READ_WRITE_TOKEN) {
+        return NextResponse.json(
+          { 
+            error: 'Vercel Blob Storage is not configured. Please add Blob storage in your Vercel project. ' +
+                   'Go to your Vercel project → Storage → Create Database → Blob. ' +
+                   'After adding Blob storage, redeploy your project. ' +
+                   'The BLOB_READ_WRITE_TOKEN will be automatically added as an environment variable.'
+          },
+          { status: 500 }
+        )
+      }
+
       try {
         // Upload to Vercel Blob Storage
         const blob = await put(`uploads/${filename}`, buffer, {
@@ -48,15 +61,14 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ url: blob.url, success: true })
       } catch (blobError) {
         console.error('Blob upload error:', blobError)
-        // If BLOB_READ_WRITE_TOKEN is not set, provide helpful error
-        if (!process.env.BLOB_READ_WRITE_TOKEN) {
-          throw new Error(
-            'Vercel Blob Storage is not configured. Please add Blob storage in your Vercel project. ' +
-            'Go to your Vercel project → Storage → Create Database → Blob. ' +
-            'The BLOB_READ_WRITE_TOKEN will be automatically added.'
-          )
-        }
-        throw blobError
+        const errorMessage = blobError instanceof Error ? blobError.message : 'Unknown error'
+        return NextResponse.json(
+          { 
+            error: `Failed to upload to Blob storage: ${errorMessage}. ` +
+                   'Please verify that Blob storage is properly configured in your Vercel project.'
+          },
+          { status: 500 }
+        )
       }
     } else {
       // Development: Save to local file system
