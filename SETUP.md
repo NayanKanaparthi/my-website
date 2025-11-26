@@ -83,6 +83,14 @@ Replace the placeholder in `app/about/page.tsx` with your actual photo:
      - `UPSTASH_REDIS_REST_TOKEN`
    - These are automatically available to your application
 
+2. **Set up Vercel Blob Storage (Required for Image/File Uploads)**
+   - Go to your Vercel project dashboard
+   - Click on **Storage** → **Create Database** → **Blob**
+   - Follow the prompts to create your Blob storage
+   - Vercel will automatically add the required environment variable:
+     - `BLOB_READ_WRITE_TOKEN`
+   - This is automatically available to your application
+
 2. **Set Environment Variables**
    In your Vercel project settings, add:
    ```
