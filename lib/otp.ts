@@ -41,9 +41,9 @@ function loadOTPsFromFile(): void {
 function saveOTPsToFile(): void {
   try {
     const data: Record<string, OTPData> = {}
-    for (const [email, otpData] of otpStore.entries()) {
+    otpStore.forEach((otpData, email) => {
       data[email] = otpData
-    }
+    })
     fs.writeFileSync(otpStoreFile, JSON.stringify(data, null, 2), 'utf8')
   } catch (error) {
     console.error('Error saving OTPs to file:', error)
@@ -114,12 +114,12 @@ export function deleteOTP(email: string): void {
 function cleanupExpiredOTPs(): void {
   const now = Date.now()
   let cleaned = false
-  for (const [email, data] of otpStore.entries()) {
+  otpStore.forEach((data, email) => {
     if (now > data.expiresAt) {
       otpStore.delete(email)
       cleaned = true
     }
-  }
+  })
   if (cleaned) {
     saveOTPsToFile()
   }
