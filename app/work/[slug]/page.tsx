@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation'
 import { getWorkItems } from '@/lib/content'
 
 export default async function CaseStudyPage({ params }: { params: { slug: string } }) {
-  const workItems = getWorkItems()
+  const workItems = await getWorkItems()
   const study = workItems.find((item) => item.slug === params.slug)
 
   if (!study) {

@@ -1,7 +1,7 @@
 import { getHomeContent } from '@/lib/content'
 
-export default function Playbooks() {
-  const homeContent = getHomeContent()
+export default async function Playbooks() {
+  const homeContent = await getHomeContent()
   const playbooks = (homeContent as any).playbooks || []
   return (
     <div className="overflow-x-auto pb-4">

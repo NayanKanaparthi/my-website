@@ -1,7 +1,7 @@
 import { getTalks } from '@/lib/content'
 
 export default async function TalksPage() {
-  const talks = getTalks()
+  const talks = await getTalks()
 
   return (
     <div className="max-w-5xl mx-auto px-6 sm:px-8 py-16">

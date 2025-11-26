@@ -9,7 +9,7 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const messages = getMessages()
+    const messages = await getMessages()
     return NextResponse.json({ messages })
   } catch (error) {
     console.error('Error fetching messages:', error)
@@ -25,7 +25,7 @@ export async function PUT(request: NextRequest) {
 
   try {
     const { messages } = await request.json()
-    saveMessages(messages)
+    await saveMessages(messages)
     return NextResponse.json({ success: true })
   } catch (error) {
     console.error('Error updating messages:', error)

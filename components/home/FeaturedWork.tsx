@@ -1,10 +1,10 @@
 import Link from 'next/link'
 import { getHomeContent, getWorkItems } from '@/lib/content'
 
-export default function FeaturedWork() {
-  const homeContent = getHomeContent()
+export default async function FeaturedWork() {
+  const homeContent = await getHomeContent()
   const featuredWorkSlugs = homeContent.featuredWork || []
-  const allWorkItems = getWorkItems()
+  const allWorkItems = await getWorkItems()
   
   // Get the actual work items based on slugs
   const featuredWork = featuredWorkSlugs

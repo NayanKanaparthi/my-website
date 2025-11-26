@@ -25,15 +25,15 @@ export async function GET(request: NextRequest) {
   try {
     switch (type) {
       case 'work':
-        return NextResponse.json({ data: getWorkItems() })
+        return NextResponse.json({ data: await getWorkItems() })
       case 'ventures':
-        return NextResponse.json({ data: getVentures() })
+        return NextResponse.json({ data: await getVentures() })
       case 'projects':
-        return NextResponse.json({ data: getProjects() })
+        return NextResponse.json({ data: await getProjects() })
       case 'about':
-        return NextResponse.json({ data: getAboutContent() })
+        return NextResponse.json({ data: await getAboutContent() })
       case 'home':
-        return NextResponse.json({ data: getHomeContent() })
+        return NextResponse.json({ data: await getHomeContent() })
       default:
         return NextResponse.json({ error: 'Invalid type' }, { status: 400 })
     }
@@ -54,19 +54,19 @@ export async function POST(request: NextRequest) {
 
     switch (type) {
       case 'work':
-        saveWorkItems(data)
+        await saveWorkItems(data)
         break
       case 'ventures':
-        saveVentures(data)
+        await saveVentures(data)
         break
       case 'projects':
-        saveProjects(data)
+        await saveProjects(data)
         break
       case 'about':
-        saveAboutContent(data)
+        await saveAboutContent(data)
         break
       case 'home':
-        saveHomeContent(data)
+        await saveHomeContent(data)
         break
       default:
         return NextResponse.json({ error: 'Invalid type' }, { status: 400 })
@@ -75,7 +75,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ success: true })
   } catch (error) {
     console.error('Error saving content:', error)
-    return NextResponse.json({ error: 'Failed to save content' }, { status: 500 })
+    const errorMessage = error instanceof Error ? error.message : 'Failed to save content'
+    return NextResponse.json({ error: errorMessage }, { status: 500 })
   }
 }
 

@@ -3,6 +3,26 @@ import path from 'path'
 
 const contentDirectory = path.join(process.cwd(), 'content')
 
+// Check if we're in production (Vercel)
+const isProduction = process.env.VERCEL === '1' || process.env.NODE_ENV === 'production'
+
+// Initialize Vercel KV only in production
+let kv: any = null
+if (isProduction) {
+  try {
+    // Check if KV environment variables are set
+    if (process.env.KV_URL || process.env.KV_REST_API_URL) {
+      // Import Vercel KV - it will use KV_URL, KV_REST_API_URL, KV_REST_API_TOKEN from environment
+      const { kv: vercelKv } = require('@vercel/kv')
+      kv = vercelKv
+    } else {
+      console.warn('Vercel KV environment variables not set. Content saving will not work in production.')
+    }
+  } catch (error) {
+    console.warn('Vercel KV not available, falling back to file system:', error)
+  }
+}
+
 export interface WorkItem {
   slug: string
   title: string
@@ -108,10 +128,39 @@ function getContentPath(filename: string): string {
   return path.join(contentDirectory, filename)
 }
 
-export function readContent<T>(filename: string, defaultValue: T): T {
+export async function readContent<T>(filename: string, defaultValue: T): Promise<T> {
+  // Use Vercel KV in production if available
+  if (isProduction && kv) {
+    try {
+      const key = `content:${filename}`
+      const content = await kv.get(key)
+      if (content !== null) {
+        return content as T
+      }
+      // If not found in KV, fall through to read from committed files
+    } catch (error) {
+      console.error(`Error reading from KV for ${filename}:`, error)
+      // Fall through to read from committed files
+    }
+  }
+  
+  // Use file system (works for reading in both dev and production from committed files)
   const filePath = getContentPath(filename)
   if (!fs.existsSync(filePath)) {
-    writeContent(filename, defaultValue)
+    // In production, if file doesn't exist and KV is available, try to write default to KV
+    if (isProduction && kv) {
+      try {
+        await writeContent(filename, defaultValue)
+        return defaultValue
+      } catch {
+        // If write fails, just return default
+        return defaultValue
+      }
+    }
+    // In development, write to file system
+    if (!isProduction) {
+      await writeContent(filename, defaultValue)
+    }
     return defaultValue
   }
   try {
@@ -122,29 +171,53 @@ export function readContent<T>(filename: string, defaultValue: T): T {
   }
 }
 
-export function writeContent<T>(filename: string, data: T): void {
+export async function writeContent<T>(filename: string, data: T): Promise<void> {
+  // Use Vercel KV in production
+  if (isProduction) {
+    if (!kv) {
+      throw new Error(
+        'Vercel KV is not configured. Please set up a KV database in your Vercel project. ' +
+        'Go to Storage → Create Database → KV in your Vercel dashboard.'
+      )
+    }
+    try {
+      const key = `content:${filename}`
+      await kv.set(key, data)
+      return
+    } catch (error) {
+      console.error(`Error writing to KV for ${filename}:`, error)
+      throw new Error(`Failed to save content to KV: ${error instanceof Error ? error.message : 'Unknown error'}`)
+    }
+  }
+  
+  // Use file system in development
   const filePath = getContentPath(filename)
-  fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8')
+  try {
+    fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8')
+  } catch (error) {
+    console.error(`Error writing file ${filename}:`, error)
+    throw error
+  }
 }
 
 // Content getters
-export function getWorkItems(): WorkItem[] {
+export async function getWorkItems(): Promise<WorkItem[]> {
   return readContent<WorkItem[]>('work.json', [])
 }
 
-export function getVentures(): Venture[] {
+export async function getVentures(): Promise<Venture[]> {
   return readContent<Venture[]>('ventures.json', [])
 }
 
-export function getTalks(): Talk[] {
+export async function getTalks(): Promise<Talk[]> {
   return readContent<Talk[]>('talks.json', [])
 }
 
-export function getExperiments(): Experiment[] {
+export async function getExperiments(): Promise<Experiment[]> {
   return readContent<Experiment[]>('experiments.json', [])
 }
 
-export function getAboutContent(): AboutContent {
+export async function getAboutContent(): Promise<AboutContent> {
   return readContent<AboutContent>('about.json', {
     bio: '',
     professionalExperience: [],
@@ -158,7 +231,7 @@ export function getAboutContent(): AboutContent {
   })
 }
 
-export function getHomeContent(): HomeContent {
+export async function getHomeContent(): Promise<HomeContent> {
   return readContent<HomeContent>('home.json', {
     hero: {
       title: 'Building at the intersection of strategy, AI, and quantitative thinking',
@@ -169,51 +242,51 @@ export function getHomeContent(): HomeContent {
   })
 }
 
-export function getProjects(): Project[] {
+export async function getProjects(): Promise<Project[]> {
   return readContent<Project[]>('projects.json', [])
 }
 
-export function saveProjects(projects: Project[]): void {
-  writeContent('projects.json', projects)
+export async function saveProjects(projects: Project[]): Promise<void> {
+  await writeContent('projects.json', projects)
 }
 
-export function getMessages(): Message[] {
+export async function getMessages(): Promise<Message[]> {
   return readContent<Message[]>('messages.json', [])
 }
 
-export function saveMessage(message: Message): void {
-  const messages = getMessages()
+export async function saveMessage(message: Message): Promise<void> {
+  const messages = await getMessages()
   messages.unshift(message) // Add to beginning
-  writeContent('messages.json', messages)
+  await writeContent('messages.json', messages)
 }
 
-export function saveMessages(messages: Message[]): void {
-  writeContent('messages.json', messages)
+export async function saveMessages(messages: Message[]): Promise<void> {
+  await writeContent('messages.json', messages)
 }
 
 // Content setters
-export function saveWorkItems(items: WorkItem[]): void {
-  writeContent('work.json', items)
+export async function saveWorkItems(items: WorkItem[]): Promise<void> {
+  await writeContent('work.json', items)
 }
 
-export function saveVentures(items: Venture[]): void {
-  writeContent('ventures.json', items)
+export async function saveVentures(items: Venture[]): Promise<void> {
+  await writeContent('ventures.json', items)
 }
 
-export function saveTalks(items: Talk[]): void {
-  writeContent('talks.json', items)
+export async function saveTalks(items: Talk[]): Promise<void> {
+  await writeContent('talks.json', items)
 }
 
-export function saveExperiments(items: Experiment[]): void {
-  writeContent('experiments.json', items)
+export async function saveExperiments(items: Experiment[]): Promise<void> {
+  await writeContent('experiments.json', items)
 }
 
-export function saveAboutContent(content: AboutContent): void {
-  writeContent('about.json', content)
+export async function saveAboutContent(content: AboutContent): Promise<void> {
+  await writeContent('about.json', content)
 }
 
-export function saveHomeContent(content: HomeContent): void {
-  writeContent('home.json', content)
+export async function saveHomeContent(content: HomeContent): Promise<void> {
+  await writeContent('home.json', content)
 }
 
 

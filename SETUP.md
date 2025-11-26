@@ -69,9 +69,48 @@ Replace the placeholder in `app/about/page.tsx` with your actual photo:
 
 ## Production Deployment
 
-1. Set environment variables in your hosting platform
-2. Build the project: `npm run build`
-3. Deploy to Vercel, Netlify, or your preferred platform
+### For Vercel Deployment
+
+1. **Set up Vercel KV (Required for Content Management)**
+   - Go to your Vercel project dashboard
+   - Navigate to Storage → Create Database → KV
+   - Create a new KV database
+   - Vercel will automatically add the required environment variables:
+     - `KV_URL`
+     - `KV_REST_API_URL`
+     - `KV_REST_API_TOKEN`
+   - These are automatically available to your application
+
+2. **Set Environment Variables**
+   In your Vercel project settings, add:
+   ```
+   ADMIN_PASSWORD_HASH=your_generated_hash_here
+   JWT_SECRET=your_random_secret_string_here
+   NODE_ENV=production
+   ```
+
+3. **Deploy**
+   - Push your code to GitHub
+   - Vercel will automatically deploy
+   - Or use: `vercel --prod`
+
+### For Other Platforms (Netlify, etc.)
+
+**Important:** The content management system requires write access to storage. On serverless platforms with read-only filesystems, you'll need to:
+
+1. **Option A: Use a Database**
+   - Set up a database (PostgreSQL, MongoDB, etc.)
+   - Update `lib/content.ts` to use your database instead of file system
+
+2. **Option B: Use GitHub API**
+   - Implement GitHub API integration to commit changes back to your repository
+   - This requires GitHub token setup
+
+3. **Option C: Use External Storage**
+   - Use services like Supabase, Firebase, or AWS S3
+   - Update `lib/content.ts` accordingly
+
+**Note:** The current implementation uses Vercel KV for production on Vercel, and file system for local development.
 
 The site is fully production-ready with:
 - Server-side rendering
@@ -79,5 +118,6 @@ The site is fully production-ready with:
 - SEO-friendly structure
 - Secure admin authentication
 - RSS feed generation
+- Content management system (requires KV on Vercel)
 
 

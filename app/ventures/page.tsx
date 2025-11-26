@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { getVentures } from '@/lib/content'
 
 export default async function VenturesPage() {
-  const ventures = getVentures()
+  const ventures = await getVentures()
   return (
     <div className="max-w-5xl mx-auto px-6 sm:px-8 py-16">
       <div className="mb-16">

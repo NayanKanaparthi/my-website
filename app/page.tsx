@@ -5,7 +5,7 @@ import InstitutionLogos from '@/components/home/InstitutionLogos'
 import { getHomeContent } from '@/lib/content'
 
 export default async function Home() {
-  const homeContent = getHomeContent()
+  const homeContent = await getHomeContent()
 
   return (
     <div className="min-h-screen">

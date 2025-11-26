@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { getWorkItems } from '@/lib/content'
 
 export default async function WorkPage() {
-  const caseStudies = getWorkItems()
+  const caseStudies = await getWorkItems()
   return (
     <div className="max-w-5xl mx-auto px-6 sm:px-8 py-16">
       <div className="mb-16">

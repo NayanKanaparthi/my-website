@@ -2,7 +2,7 @@ import { getAboutContent } from '@/lib/content'
 import Image from 'next/image'
 
 export default async function AboutPage() {
-  const aboutContent = getAboutContent()
+  const aboutContent = await getAboutContent()
   const skills = aboutContent.skills || {
     Strategy: [],
     AI: [],

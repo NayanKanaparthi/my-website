@@ -1,7 +1,7 @@
 import { getHomeContent } from '@/lib/content'
 
-export default function InstitutionLogos() {
-  const homeContent = getHomeContent()
+export default async function InstitutionLogos() {
+  const homeContent = await getHomeContent()
   const institutions = homeContent.institutions || []
 
   if (institutions.length === 0) return null

@@ -1,7 +1,7 @@
 import { getHomeContent } from '@/lib/content'
 
-export default function Footer() {
-  const homeContent = getHomeContent()
+export default async function Footer() {
+  const homeContent = await getHomeContent()
   const socialLinks = homeContent.socialLinks || {}
 
   return (

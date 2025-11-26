@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Save message
-    saveMessage(messageObj)
+    await saveMessage(messageObj)
 
     return NextResponse.json({ success: true, message: 'Message sent successfully' })
   } catch (error) {

@@ -1,7 +1,7 @@
 import { getExperiments } from '@/lib/content'
 
 export default async function ExperimentsPage() {
-  const experiments = getExperiments()
+  const experiments = await getExperiments()
 
   return (
     <div className="min-h-screen bg-navy text-offwhite">
