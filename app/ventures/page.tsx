@@ -16,10 +16,10 @@ export default async function VenturesPage() {
         {ventures.map((venture, index) => {
           const cardContent = (
             <article
-              className="bg-white rounded-lg border border-navy/10 hover:border-violet/30 hover:shadow-lg transition-all duration-300 group overflow-hidden"
+              className="bg-white rounded-lg border border-navy/10 hover:border-violet/30 hover:shadow-lg transition-all duration-300 group overflow-hidden flex flex-col md:flex-row"
             >
               {venture.image && (
-                <div className="w-full h-64 bg-navy/5 overflow-hidden">
+                <div className="w-full md:w-64 md:flex-shrink-0 h-48 md:h-auto bg-navy/5 overflow-hidden">
                   <img
                     src={venture.image}
                     alt={venture.title}
@@ -27,7 +27,7 @@ export default async function VenturesPage() {
                   />
                 </div>
               )}
-              <div className="p-8">
+              <div className="p-8 flex-1">
                 <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
                   <h2 className="text-2xl font-semibold text-navy mb-2 group-hover:text-violet transition-colors">
                     {venture.title}

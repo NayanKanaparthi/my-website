@@ -112,6 +112,52 @@ export default async function AboutPage() {
         </section>
       )}
 
+      {/* Education */}
+      {aboutContent.education && aboutContent.education.length > 0 && (
+        <section className="mb-16">
+          <h2 className="text-2xl font-semibold text-navy mb-8">Education</h2>
+          <div className="space-y-6">
+            {aboutContent.education.map((edu, index) => (
+              <div key={index} className="flex items-start space-x-4 pb-6 border-b border-navy/10 last:border-0">
+                {edu.universityLogo && (
+                  <div className="flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden bg-white border border-navy/10">
+                    <img
+                      src={edu.universityLogo}
+                      alt={edu.university}
+                      className="w-full h-full object-contain p-2"
+                    />
+                  </div>
+                )}
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-navy mb-1">{edu.university}</h3>
+                  <div className="flex items-center space-x-2 text-navy/70 mb-2">
+                    <span className="font-medium">{edu.major}</span>
+                    {edu.location && (
+                      <>
+                        <span>•</span>
+                        <span>{edu.location}</span>
+                      </>
+                    )}
+                    {edu.year && (
+                      <>
+                        <span>•</span>
+                        <span>{edu.year}</span>
+                      </>
+                    )}
+                  </div>
+                  {edu.relevantCoursework && (
+                    <div className="text-sm text-navy/60 mb-3">
+                      <span className="font-medium">Relevant Coursework: </span>
+                      <span>{edu.relevantCoursework}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* Skills */}
       <section>
         <h2 className="text-2xl font-semibold text-navy mb-8">Skills</h2>

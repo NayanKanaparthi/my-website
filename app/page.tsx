@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import FeaturedWork from '@/components/home/FeaturedWork'
-import WritingPreview from '@/components/home/WritingPreview'
+import FeaturedBlogs from '@/components/home/FeaturedBlogs'
+import FeaturedVentures from '@/components/home/FeaturedVentures'
+import FeaturedProjects from '@/components/home/FeaturedProjects'
 import InstitutionLogos from '@/components/home/InstitutionLogos'
 import { getHomeContent } from '@/lib/content'
 
@@ -48,35 +50,107 @@ export default async function Home() {
 
       {/* Featured Work */}
       <section className="max-w-7xl mx-auto px-6 sm:px-8 py-20">
-        <div className="mb-12">
-          <h2 className="text-3xl font-semibold text-navy mb-3">Featured Work</h2>
-          <p className="text-navy/60 text-lg">Selected projects and case studies</p>
+        <div className="flex items-center justify-between mb-12">
+          <div>
+            <h2 className="text-3xl font-semibold text-navy mb-3">Featured Work</h2>
+            <p className="text-navy/60 text-lg">Selected projects and case studies</p>
+          </div>
+          <Link 
+            href="/work" 
+            className="hidden md:flex items-center gap-2 text-violet hover:text-violet/80 transition-colors text-sm font-medium group"
+          >
+            More
+            <span className="group-hover:translate-x-1 transition-transform">→</span>
+          </Link>
         </div>
         <FeaturedWork />
+        <div className="mt-8 md:hidden text-center">
+          <Link 
+            href="/work" 
+            className="inline-flex items-center gap-2 text-violet hover:text-violet/80 transition-colors text-sm font-medium"
+          >
+            More
+            <span>→</span>
+          </Link>
+        </div>
       </section>
 
-      {/* Writing Preview */}
+      {/* Featured Blogs */}
       <section className="max-w-7xl mx-auto px-6 sm:px-8 py-20 border-t border-navy/10">
         <div className="flex items-center justify-between mb-12">
           <div>
-            <h2 className="text-3xl font-semibold text-navy mb-3">Recent Blogs</h2>
+            <h2 className="text-3xl font-semibold text-navy mb-3">Featured Blogs</h2>
             <p className="text-navy/60 text-lg">Thoughts on strategy, AI, and quantitative thinking</p>
           </div>
           <Link 
             href="/blogs" 
             className="hidden md:flex items-center gap-2 text-violet hover:text-violet/80 transition-colors text-sm font-medium group"
           >
-            View all
+            More
             <span className="group-hover:translate-x-1 transition-transform">→</span>
           </Link>
         </div>
-        <WritingPreview />
+        <FeaturedBlogs />
         <div className="mt-8 md:hidden text-center">
           <Link 
             href="/blogs" 
             className="inline-flex items-center gap-2 text-violet hover:text-violet/80 transition-colors text-sm font-medium"
           >
-            View all blogs
+            More
+            <span>→</span>
+          </Link>
+        </div>
+      </section>
+
+      {/* Featured Ventures */}
+      <section className="max-w-7xl mx-auto px-6 sm:px-8 py-20 border-t border-navy/10">
+        <div className="flex items-center justify-between mb-12">
+          <div>
+            <h2 className="text-3xl font-semibold text-navy mb-3">Featured Ventures</h2>
+            <p className="text-navy/60 text-lg">Projects and initiatives I&apos;m building</p>
+          </div>
+          <Link 
+            href="/ventures" 
+            className="hidden md:flex items-center gap-2 text-violet hover:text-violet/80 transition-colors text-sm font-medium group"
+          >
+            More
+            <span className="group-hover:translate-x-1 transition-transform">→</span>
+          </Link>
+        </div>
+        <FeaturedVentures />
+        <div className="mt-8 md:hidden text-center">
+          <Link 
+            href="/ventures" 
+            className="inline-flex items-center gap-2 text-violet hover:text-violet/80 transition-colors text-sm font-medium"
+          >
+            More
+            <span>→</span>
+          </Link>
+        </div>
+      </section>
+
+      {/* Featured Projects */}
+      <section className="max-w-7xl mx-auto px-6 sm:px-8 py-20 border-t border-navy/10">
+        <div className="flex items-center justify-between mb-12">
+          <div>
+            <h2 className="text-3xl font-semibold text-navy mb-3">Featured Projects</h2>
+            <p className="text-navy/60 text-lg">Selected projects and research</p>
+          </div>
+          <Link 
+            href="/projects" 
+            className="hidden md:flex items-center gap-2 text-violet hover:text-violet/80 transition-colors text-sm font-medium group"
+          >
+            More
+            <span className="group-hover:translate-x-1 transition-transform">→</span>
+          </Link>
+        </div>
+        <FeaturedProjects />
+        <div className="mt-8 md:hidden text-center">
+          <Link 
+            href="/projects" 
+            className="inline-flex items-center gap-2 text-violet hover:text-violet/80 transition-colors text-sm font-medium"
+          >
+            More
             <span>→</span>
           </Link>
         </div>

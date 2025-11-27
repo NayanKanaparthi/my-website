@@ -10,11 +10,11 @@ export default function Navigation() {
 
   const navItems = [
     { href: '/', label: 'Home' },
-    { href: '/work', label: 'Work' },
     { href: '/ventures', label: 'Ventures' },
-    { href: '/projects', label: 'Projects' },
     { href: '/blogs', label: 'Blogs' },
-    { href: '/about', label: 'About' },
+    { href: '/projects', label: 'Projects' },
+    { href: '/work', label: 'Case Studies' },
+    { href: '/about', label: 'Resume' },
     { href: '/contact', label: 'Contact' },
   ]
 

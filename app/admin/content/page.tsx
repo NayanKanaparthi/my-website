@@ -560,6 +560,22 @@ function AboutEditor({ data, onChange }: { data: any; onChange: (data: any) => v
     updateField(type, experiences)
   }
 
+  const addEducation = () => {
+    const education = data.education || []
+    updateField('education', [...education, { university: '', major: '', relevantCoursework: '', location: '', year: '', universityLogo: '' }])
+  }
+
+  const removeEducation = (index: number) => {
+    const education = data.education || []
+    updateField('education', education.filter((_: any, i: number) => i !== index))
+  }
+
+  const updateEducation = (index: number, field: string, value: string) => {
+    const education = [...(data.education || [])]
+    education[index] = { ...education[index], [field]: value }
+    updateField('education', education)
+  }
+
   const updateSkill = (category: string, index: number, value: string) => {
     const skills = { ...data.skills }
     skills[category] = [...skills[category]]
@@ -677,6 +693,44 @@ function AboutEditor({ data, onChange }: { data: any; onChange: (data: any) => v
       </div>
 
       <div>
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-semibold text-navy">Education</h2>
+          <button onClick={addEducation} className="px-4 py-2 bg-violet text-white rounded-lg text-sm font-medium hover:bg-violet/90">
+            + Add Education
+          </button>
+        </div>
+        {(data.education || []).map((item: any, index: number) => (
+          <div key={index} className="bg-offwhite p-4 rounded-lg border border-navy/10 mb-4">
+            <div className="flex justify-between items-start mb-3">
+              <h3 className="font-semibold text-navy">Education {index + 1}</h3>
+              <button onClick={() => removeEducation(index)} className="text-red-600 hover:text-red-700 text-sm">Delete</button>
+            </div>
+            <div className="space-y-3">
+              <div className="grid grid-cols-2 gap-4">
+                <input type="text" value={item.university || ''} onChange={(e) => updateEducation(index, 'university', e.target.value)} placeholder="University" className="px-3 py-2 border border-navy/20 rounded" />
+                <input type="text" value={item.major || ''} onChange={(e) => updateEducation(index, 'major', e.target.value)} placeholder="Major" className="px-3 py-2 border border-navy/20 rounded" />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <input type="text" value={item.location || ''} onChange={(e) => updateEducation(index, 'location', e.target.value)} placeholder="Location" className="px-3 py-2 border border-navy/20 rounded" />
+                <input type="text" value={item.year || ''} onChange={(e) => updateEducation(index, 'year', e.target.value)} placeholder="Year" className="px-3 py-2 border border-navy/20 rounded" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-navy mb-1">Relevant Coursework</label>
+                <textarea value={item.relevantCoursework || ''} onChange={(e) => updateEducation(index, 'relevantCoursework', e.target.value)} placeholder="Relevant Coursework" rows={2} className="w-full px-3 py-2 border border-navy/20 rounded" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-navy mb-1">University Logo</label>
+                <ImageUpload
+                  value={item.universityLogo || ''}
+                  onChange={(url) => updateEducation(index, 'universityLogo', url)}
+                />
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div>
         <h2 className="text-xl font-semibold text-navy mb-4">Skills</h2>
         {Object.keys(data.skills || {}).map((category) => (
           <div key={category} className="mb-6">
@@ -763,6 +817,12 @@ function LogoUpload({ onUpload }: { onUpload: (url: string) => void }) {
 function HomeEditor({ data, onChange }: { data: any; onChange: (data: any) => void }) {
   const [workItems, setWorkItems] = useState<any[]>([])
   const [loadingWork, setLoadingWork] = useState(false)
+  const [posts, setPosts] = useState<any[]>([])
+  const [loadingPosts, setLoadingPosts] = useState(false)
+  const [ventures, setVentures] = useState<any[]>([])
+  const [loadingVentures, setLoadingVentures] = useState(false)
+  const [projects, setProjects] = useState<any[]>([])
+  const [loadingProjects, setLoadingProjects] = useState(false)
 
   useEffect(() => {
     const loadWorkItems = async () => {
@@ -782,6 +842,66 @@ function HomeEditor({ data, onChange }: { data: any; onChange: (data: any) => vo
       }
     }
     loadWorkItems()
+  }, [])
+
+  useEffect(() => {
+    const loadPosts = async () => {
+      setLoadingPosts(true)
+      try {
+        const response = await fetch('/api/admin/posts', {
+          credentials: 'include',
+        })
+        const result = await response.json()
+        if (response.ok && Array.isArray(result.posts)) {
+          setPosts(result.posts.filter((p: any) => p.published !== false))
+        }
+      } catch (error) {
+        console.error('Error loading posts:', error)
+      } finally {
+        setLoadingPosts(false)
+      }
+    }
+    loadPosts()
+  }, [])
+
+  useEffect(() => {
+    const loadVentures = async () => {
+      setLoadingVentures(true)
+      try {
+        const response = await fetch('/api/admin/content?type=ventures', {
+          credentials: 'include',
+        })
+        const result = await response.json()
+        if (response.ok) {
+          setVentures(Array.isArray(result.data) ? result.data : [])
+        }
+      } catch (error) {
+        console.error('Error loading ventures:', error)
+      } finally {
+        setLoadingVentures(false)
+      }
+    }
+    loadVentures()
+  }, [])
+
+  useEffect(() => {
+    const loadProjects = async () => {
+      setLoadingProjects(true)
+      try {
+        const response = await fetch('/api/admin/content?type=projects', {
+          credentials: 'include',
+        })
+        const result = await response.json()
+        if (response.ok) {
+          setProjects(Array.isArray(result.data) ? result.data : [])
+        }
+      } catch (error) {
+        console.error('Error loading projects:', error)
+      } finally {
+        setLoadingProjects(false)
+      }
+    }
+    loadProjects()
   }, [])
 
   const updateField = (path: string[], value: any) => {
@@ -810,6 +930,60 @@ function HomeEditor({ data, onChange }: { data: any; onChange: (data: any) => vo
   const removeFeaturedWork = (index: number) => {
     const featuredWork = Array.isArray(data.featuredWork) ? data.featuredWork : []
     updateField(['featuredWork'], featuredWork.filter((_: any, i: number) => i !== index))
+  }
+
+  const addFeaturedBlog = (slug: string) => {
+    const featuredBlogs = Array.isArray(data.featuredBlogs) ? data.featuredBlogs : []
+    if (featuredBlogs.length >= 3) {
+      alert('Maximum 3 featured blogs allowed')
+      return
+    }
+    if (featuredBlogs.includes(slug)) {
+      alert('This blog is already featured')
+      return
+    }
+    updateField(['featuredBlogs'], [...featuredBlogs, slug])
+  }
+
+  const removeFeaturedBlog = (index: number) => {
+    const featuredBlogs = Array.isArray(data.featuredBlogs) ? data.featuredBlogs : []
+    updateField(['featuredBlogs'], featuredBlogs.filter((_: any, i: number) => i !== index))
+  }
+
+  const addFeaturedVenture = (index: number) => {
+    const featuredVentures = Array.isArray(data.featuredVentures) ? data.featuredVentures : []
+    if (featuredVentures.length >= 3) {
+      alert('Maximum 3 featured ventures allowed')
+      return
+    }
+    if (featuredVentures.includes(index)) {
+      alert('This venture is already featured')
+      return
+    }
+    updateField(['featuredVentures'], [...featuredVentures, index])
+  }
+
+  const removeFeaturedVenture = (index: number) => {
+    const featuredVentures = Array.isArray(data.featuredVentures) ? data.featuredVentures : []
+    updateField(['featuredVentures'], featuredVentures.filter((_: any, i: number) => i !== index))
+  }
+
+  const addFeaturedProject = (index: number) => {
+    const featuredProjects = Array.isArray(data.featuredProjects) ? data.featuredProjects : []
+    if (featuredProjects.length >= 3) {
+      alert('Maximum 3 featured projects allowed')
+      return
+    }
+    if (featuredProjects.includes(index)) {
+      alert('This project is already featured')
+      return
+    }
+    updateField(['featuredProjects'], [...featuredProjects, index])
+  }
+
+  const removeFeaturedProject = (index: number) => {
+    const featuredProjects = Array.isArray(data.featuredProjects) ? data.featuredProjects : []
+    updateField(['featuredProjects'], featuredProjects.filter((_: any, i: number) => i !== index))
   }
 
   return (
@@ -922,6 +1096,264 @@ function HomeEditor({ data, onChange }: { data: any; onChange: (data: any) => vo
                       ) : (
                         <button
                           onClick={() => addFeaturedWork(work.slug)}
+                          disabled={!canAdd}
+                          className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                            canAdd
+                              ? 'bg-violet text-white hover:bg-violet/90'
+                              : 'bg-navy/10 text-navy/40 cursor-not-allowed'
+                          }`}
+                        >
+                          {canAdd ? 'Add' : 'Max 3'}
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Featured Blogs */}
+      <div>
+        <div className="flex justify-between items-center mb-4">
+          <div>
+            <h2 className="text-xl font-semibold text-navy">Featured Blogs</h2>
+            <p className="text-sm text-navy/60 mt-1">Select up to 3 blog posts to feature on the homepage</p>
+          </div>
+        </div>
+        
+        <div className="space-y-3 mb-6">
+          {(Array.isArray(data.featuredBlogs) ? data.featuredBlogs : []).map((slug: string, index: number) => {
+            const post = posts.find((p: any) => p.slug === slug)
+            return (
+              <div key={index} className="bg-offwhite p-4 rounded-lg border border-navy/10 flex items-center justify-between">
+                <div className="flex-1">
+                  <div className="font-semibold text-navy mb-1">
+                    {post ? post.title : slug}
+                  </div>
+                </div>
+                <button
+                  onClick={() => removeFeaturedBlog(index)}
+                  className="text-red-600 hover:text-red-700 text-sm font-medium px-3 py-1"
+                >
+                  Remove
+                </button>
+              </div>
+            )
+          })}
+          {(!Array.isArray(data.featuredBlogs) || data.featuredBlogs.length === 0) && (
+            <div className="text-center py-8 text-navy/50 border border-dashed border-navy/20 rounded-lg">
+              <p>No featured blogs selected</p>
+              <p className="text-sm mt-1">Select from the list below</p>
+            </div>
+          )}
+        </div>
+
+        <div>
+          <h3 className="text-lg font-semibold text-navy mb-4">Select Blog Posts</h3>
+          {loadingPosts ? (
+            <div className="text-center py-8 text-navy/60">Loading posts...</div>
+          ) : posts.length === 0 ? (
+            <div className="text-center py-8 text-navy/60">
+              <p>No blog posts available.</p>
+            </div>
+          ) : (
+            <div className="space-y-2 max-h-96 overflow-y-auto">
+              {posts.map((post: any) => {
+                const isFeatured = Array.isArray(data.featuredBlogs) && data.featuredBlogs.includes(post.slug)
+                const canAdd = !Array.isArray(data.featuredBlogs) || data.featuredBlogs.length < 3
+                return (
+                  <div
+                    key={post.slug}
+                    className={`p-4 rounded-lg border ${
+                      isFeatured
+                        ? 'bg-violet/5 border-violet/30'
+                        : 'bg-white border-navy/10 hover:border-navy/20'
+                    } transition-colors`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex-1">
+                        <div className="font-semibold text-navy">{post.title}</div>
+                      </div>
+                      {isFeatured ? (
+                        <span className="text-sm font-medium text-violet px-3 py-1">Featured</span>
+                      ) : (
+                        <button
+                          onClick={() => addFeaturedBlog(post.slug)}
+                          disabled={!canAdd}
+                          className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                            canAdd
+                              ? 'bg-violet text-white hover:bg-violet/90'
+                              : 'bg-navy/10 text-navy/40 cursor-not-allowed'
+                          }`}
+                        >
+                          {canAdd ? 'Add' : 'Max 3'}
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Featured Ventures */}
+      <div>
+        <div className="flex justify-between items-center mb-4">
+          <div>
+            <h2 className="text-xl font-semibold text-navy">Featured Ventures</h2>
+            <p className="text-sm text-navy/60 mt-1">Select up to 3 ventures to feature on the homepage</p>
+          </div>
+        </div>
+        
+        <div className="space-y-3 mb-6">
+          {(Array.isArray(data.featuredVentures) ? data.featuredVentures : []).map((idx: number, index: number) => {
+            const venture = ventures[idx]
+            return (
+              <div key={index} className="bg-offwhite p-4 rounded-lg border border-navy/10 flex items-center justify-between">
+                <div className="flex-1">
+                  <div className="font-semibold text-navy mb-1">
+                    {venture ? venture.title : `Venture ${idx}`}
+                  </div>
+                </div>
+                <button
+                  onClick={() => removeFeaturedVenture(index)}
+                  className="text-red-600 hover:text-red-700 text-sm font-medium px-3 py-1"
+                >
+                  Remove
+                </button>
+              </div>
+            )
+          })}
+          {(!Array.isArray(data.featuredVentures) || data.featuredVentures.length === 0) && (
+            <div className="text-center py-8 text-navy/50 border border-dashed border-navy/20 rounded-lg">
+              <p>No featured ventures selected</p>
+              <p className="text-sm mt-1">Select from the list below</p>
+            </div>
+          )}
+        </div>
+
+        <div>
+          <h3 className="text-lg font-semibold text-navy mb-4">Select Ventures</h3>
+          {loadingVentures ? (
+            <div className="text-center py-8 text-navy/60">Loading ventures...</div>
+          ) : ventures.length === 0 ? (
+            <div className="text-center py-8 text-navy/60">
+              <p>No ventures available.</p>
+            </div>
+          ) : (
+            <div className="space-y-2 max-h-96 overflow-y-auto">
+              {ventures.map((venture: any, idx: number) => {
+                const isFeatured = Array.isArray(data.featuredVentures) && data.featuredVentures.includes(idx)
+                const canAdd = !Array.isArray(data.featuredVentures) || data.featuredVentures.length < 3
+                return (
+                  <div
+                    key={idx}
+                    className={`p-4 rounded-lg border ${
+                      isFeatured
+                        ? 'bg-violet/5 border-violet/30'
+                        : 'bg-white border-navy/10 hover:border-navy/20'
+                    } transition-colors`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex-1">
+                        <div className="font-semibold text-navy">{venture.title}</div>
+                      </div>
+                      {isFeatured ? (
+                        <span className="text-sm font-medium text-violet px-3 py-1">Featured</span>
+                      ) : (
+                        <button
+                          onClick={() => addFeaturedVenture(idx)}
+                          disabled={!canAdd}
+                          className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                            canAdd
+                              ? 'bg-violet text-white hover:bg-violet/90'
+                              : 'bg-navy/10 text-navy/40 cursor-not-allowed'
+                          }`}
+                        >
+                          {canAdd ? 'Add' : 'Max 3'}
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Featured Projects */}
+      <div>
+        <div className="flex justify-between items-center mb-4">
+          <div>
+            <h2 className="text-xl font-semibold text-navy">Featured Projects</h2>
+            <p className="text-sm text-navy/60 mt-1">Select up to 3 projects to feature on the homepage</p>
+          </div>
+        </div>
+        
+        <div className="space-y-3 mb-6">
+          {(Array.isArray(data.featuredProjects) ? data.featuredProjects : []).map((idx: number, index: number) => {
+            const project = projects[idx]
+            return (
+              <div key={index} className="bg-offwhite p-4 rounded-lg border border-navy/10 flex items-center justify-between">
+                <div className="flex-1">
+                  <div className="font-semibold text-navy mb-1">
+                    {project ? project.title : `Project ${idx}`}
+                  </div>
+                </div>
+                <button
+                  onClick={() => removeFeaturedProject(index)}
+                  className="text-red-600 hover:text-red-700 text-sm font-medium px-3 py-1"
+                >
+                  Remove
+                </button>
+              </div>
+            )
+          })}
+          {(!Array.isArray(data.featuredProjects) || data.featuredProjects.length === 0) && (
+            <div className="text-center py-8 text-navy/50 border border-dashed border-navy/20 rounded-lg">
+              <p>No featured projects selected</p>
+              <p className="text-sm mt-1">Select from the list below</p>
+            </div>
+          )}
+        </div>
+
+        <div>
+          <h3 className="text-lg font-semibold text-navy mb-4">Select Projects</h3>
+          {loadingProjects ? (
+            <div className="text-center py-8 text-navy/60">Loading projects...</div>
+          ) : projects.length === 0 ? (
+            <div className="text-center py-8 text-navy/60">
+              <p>No projects available.</p>
+            </div>
+          ) : (
+            <div className="space-y-2 max-h-96 overflow-y-auto">
+              {projects.map((project: any, idx: number) => {
+                const isFeatured = Array.isArray(data.featuredProjects) && data.featuredProjects.includes(idx)
+                const canAdd = !Array.isArray(data.featuredProjects) || data.featuredProjects.length < 3
+                return (
+                  <div
+                    key={idx}
+                    className={`p-4 rounded-lg border ${
+                      isFeatured
+                        ? 'bg-violet/5 border-violet/30'
+                        : 'bg-white border-navy/10 hover:border-navy/20'
+                    } transition-colors`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex-1">
+                        <div className="font-semibold text-navy">{project.title}</div>
+                      </div>
+                      {isFeatured ? (
+                        <span className="text-sm font-medium text-violet px-3 py-1">Featured</span>
+                      ) : (
+                        <button
+                          onClick={() => addFeaturedProject(idx)}
                           disabled={!canAdd}
                           className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                             canAdd

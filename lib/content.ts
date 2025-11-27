@@ -103,11 +103,21 @@ export interface Experiment {
   tags: string[]
 }
 
+export interface Education {
+  university: string
+  major: string
+  relevantCoursework: string
+  location: string
+  year: string
+  universityLogo?: string
+}
+
 export interface AboutContent {
   bio: string
   image?: string
   professionalExperience: Experience[]
   leadershipExperience: Experience[]
+  education: Education[]
   skills: {
     Strategy: string[]
     AI: string[]
@@ -123,6 +133,9 @@ export interface HomeContent {
     image?: string
   }
   featuredWork: string[] // Array of work item slugs (max 3)
+  featuredBlogs: string[] // Array of blog post slugs (max 3)
+  featuredVentures: number[] // Array of venture indices (max 3)
+  featuredProjects: number[] // Array of project indices (max 3)
   institutions: Array<string | { image: string; name?: string }> // Array of institution logos (image URLs or objects with image/name)
   socialLinks?: {
     twitter?: string
@@ -279,6 +292,7 @@ export async function getAboutContent(): Promise<AboutContent> {
     bio: '',
     professionalExperience: [],
     leadershipExperience: [],
+    education: [],
     skills: {
       Strategy: [],
       AI: [],
@@ -295,6 +309,9 @@ export async function getHomeContent(): Promise<HomeContent> {
       subtitle: 'Founder, strategist, and AI builder exploring the frontiers of technology and business.',
     },
     featuredWork: [], // Array of work item slugs (max 3)
+    featuredBlogs: [], // Array of blog post slugs (max 3)
+    featuredVentures: [], // Array of venture indices (max 3)
+    featuredProjects: [], // Array of project indices (max 3)
     institutions: [],
   })
 }
