@@ -988,16 +988,23 @@ function HomeEditor({ data, onChange }: { data: any; onChange: (data: any) => vo
   }
 
   const addFeaturedVideo = (url: string) => {
-    const featuredVideos = Array.isArray(data.featuredVideos) ? data.featuredVideos : []
-    if (featuredVideos.length >= 3) {
-      alert('Maximum 3 featured videos allowed')
-      return
+    try {
+      const featuredVideos = Array.isArray(data.featuredVideos) ? data.featuredVideos : []
+      if (featuredVideos.length >= 3) {
+        alert('Maximum 3 featured videos allowed')
+        return
+      }
+      if (featuredVideos.includes(url)) {
+        alert('This video is already featured')
+        return
+      }
+      const newVideos = [...featuredVideos, url]
+      updateField(['featuredVideos'], newVideos)
+      console.log('Video added successfully:', url, 'Total videos:', newVideos.length)
+    } catch (error) {
+      console.error('Error in addFeaturedVideo:', error)
+      throw error
     }
-    if (featuredVideos.includes(url)) {
-      alert('This video is already featured')
-      return
-    }
-    updateField(['featuredVideos'], [...featuredVideos, url])
   }
 
   const removeFeaturedVideo = (index: number) => {
@@ -1014,14 +1021,16 @@ function HomeEditor({ data, onChange }: { data: any; onChange: (data: any) => vo
     
     // Improved URL validation - handle query parameters and various formats
     const cleanUrl = url.trim()
-    const isValid = 
-      cleanUrl.includes('youtube.com') || 
-      cleanUrl.includes('youtu.be') || 
-      /^[a-zA-Z0-9_-]{11}$/.test(cleanUrl) ||
-      /^https?:\/\/(www\.)?(youtube\.com|youtu\.be)/.test(cleanUrl)
+    
+    // More lenient validation - check for YouTube domain or video ID pattern
+    const hasYouTubeDomain = cleanUrl.includes('youtube.com') || cleanUrl.includes('youtu.be')
+    const isVideoId = /^[a-zA-Z0-9_-]{11}$/.test(cleanUrl)
+    const hasYouTubePattern = /youtube\.com|youtu\.be/.test(cleanUrl)
+    
+    const isValid = hasYouTubeDomain || hasYouTubePattern || isVideoId
     
     if (!isValid) {
-      alert('Please enter a valid YouTube URL or video ID (11 characters)\n\nExamples:\n- https://www.youtube.com/watch?v=VIDEO_ID\n- https://youtu.be/VIDEO_ID\n- VIDEO_ID (11 characters)')
+      alert('Please enter a valid YouTube URL or video ID\n\nExamples:\n- https://www.youtube.com/watch?v=VIDEO_ID\n- https://youtu.be/VIDEO_ID\n- https://youtu.be/VIDEO_ID?si=...\n- VIDEO_ID (11 characters)')
       return
     }
     
@@ -1032,8 +1041,19 @@ function HomeEditor({ data, onChange }: { data: any; onChange: (data: any) => vo
       return
     }
     
-    addFeaturedVideo(cleanUrl)
-    setVideoUrlInput('') // Clear input after successful add
+    // Check max limit
+    if (featuredVideos.length >= 3) {
+      alert('Maximum 3 featured videos allowed')
+      return
+    }
+    
+    try {
+      addFeaturedVideo(cleanUrl)
+      setVideoUrlInput('') // Clear input after successful add
+    } catch (error) {
+      console.error('Error adding video:', error)
+      alert('Failed to add video. Please try again.')
+    }
   }
 
   return (
