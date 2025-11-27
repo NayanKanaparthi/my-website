@@ -909,6 +909,9 @@ function HomeEditor({ data, onChange }: { data: any; onChange: (data: any) => vo
     const newData = { ...data }
     let current: any = newData
     for (let i = 0; i < path.length - 1; i++) {
+      if (!current[path[i]]) {
+        current[path[i]] = {}
+      }
       current = current[path[i]] = { ...current[path[i]] }
     }
     current[path[path.length - 1]] = value
@@ -1032,6 +1035,11 @@ function HomeEditor({ data, onChange }: { data: any; onChange: (data: any) => vo
     if (!isValid) {
       alert('Please enter a valid YouTube URL or video ID\n\nExamples:\n- https://www.youtube.com/watch?v=VIDEO_ID\n- https://youtu.be/VIDEO_ID\n- https://youtu.be/VIDEO_ID?si=...\n- VIDEO_ID (11 characters)')
       return
+    }
+    
+    // Ensure featuredVideos array exists
+    if (!data.featuredVideos) {
+      data.featuredVideos = []
     }
     
     // Check if already added
