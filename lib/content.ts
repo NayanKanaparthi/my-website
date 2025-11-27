@@ -313,6 +313,7 @@ export async function getHomeContent(): Promise<HomeContent> {
     featuredBlogs: [], // Array of blog post slugs (max 3)
     featuredVentures: [], // Array of venture indices (max 3)
     featuredProjects: [], // Array of project indices (max 3)
+    featuredVideos: [], // Array of YouTube video URLs or IDs (max 3)
     institutions: [],
   })
 }
