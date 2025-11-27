@@ -48,35 +48,8 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Featured Work */}
-      <section className="max-w-7xl mx-auto px-6 sm:px-8 py-20">
-        <div className="flex items-center justify-between mb-12">
-          <div>
-            <h2 className="text-3xl font-semibold text-navy mb-3">Featured Work</h2>
-            <p className="text-navy/60 text-lg">Selected projects and case studies</p>
-          </div>
-          <Link 
-            href="/work" 
-            className="hidden md:flex items-center gap-2 text-violet hover:text-violet/80 transition-colors text-sm font-medium group"
-          >
-            More
-            <span className="group-hover:translate-x-1 transition-transform">→</span>
-          </Link>
-        </div>
-        <FeaturedWork />
-        <div className="mt-8 md:hidden text-center">
-          <Link 
-            href="/work" 
-            className="inline-flex items-center gap-2 text-violet hover:text-violet/80 transition-colors text-sm font-medium"
-          >
-            More
-            <span>→</span>
-          </Link>
-        </div>
-      </section>
-
       {/* Featured Blogs */}
-      <section className="max-w-7xl mx-auto px-6 sm:px-8 py-20 border-t border-navy/10">
+      <section className="max-w-7xl mx-auto px-6 sm:px-8 py-20">
         <div className="flex items-center justify-between mb-12">
           <div>
             <h2 className="text-3xl font-semibold text-navy mb-3">Featured Blogs</h2>
@@ -148,6 +121,33 @@ export default async function Home() {
         <div className="mt-8 md:hidden text-center">
           <Link 
             href="/projects" 
+            className="inline-flex items-center gap-2 text-violet hover:text-violet/80 transition-colors text-sm font-medium"
+          >
+            More
+            <span>→</span>
+          </Link>
+        </div>
+      </section>
+
+      {/* Featured Work */}
+      <section className="max-w-7xl mx-auto px-6 sm:px-8 py-20 border-t border-navy/10">
+        <div className="flex items-center justify-between mb-12">
+          <div>
+            <h2 className="text-3xl font-semibold text-navy mb-3">Featured Work</h2>
+            <p className="text-navy/60 text-lg">Selected projects and case studies</p>
+          </div>
+          <Link 
+            href="/work" 
+            className="hidden md:flex items-center gap-2 text-violet hover:text-violet/80 transition-colors text-sm font-medium group"
+          >
+            More
+            <span className="group-hover:translate-x-1 transition-transform">→</span>
+          </Link>
+        </div>
+        <FeaturedWork />
+        <div className="mt-8 md:hidden text-center">
+          <Link 
+            href="/work" 
             className="inline-flex items-center gap-2 text-violet hover:text-violet/80 transition-colors text-sm font-medium"
           >
             More
