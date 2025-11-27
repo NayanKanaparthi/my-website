@@ -138,17 +138,22 @@ export default function ContentManagementPage() {
 function ContentEditor({ type, data, onChange }: { type: ContentType; data: any; onChange: (data: any) => void }) {
   if (!data) return null
 
+  const handleChange = (newData: any) => {
+    console.log('ContentEditor onChange called for type:', type, 'New data keys:', Object.keys(newData || {}))
+    onChange(newData)
+  }
+
   switch (type) {
     case 'work':
-      return <WorkEditor data={data} onChange={onChange} />
+      return <WorkEditor data={data} onChange={handleChange} />
     case 'ventures':
-      return <VenturesEditor data={data} onChange={onChange} />
+      return <VenturesEditor data={data} onChange={handleChange} />
     case 'projects':
-      return <ProjectsEditor data={data} onChange={onChange} />
+      return <ProjectsEditor data={data} onChange={handleChange} />
     case 'about':
-      return <AboutEditor data={data} onChange={onChange} />
+      return <AboutEditor data={data} onChange={handleChange} />
     case 'home':
-      return <HomeEditor data={data} onChange={onChange} />
+      return <HomeEditor data={data} onChange={handleChange} />
     default:
       return null
   }
@@ -906,16 +911,22 @@ function HomeEditor({ data, onChange }: { data: any; onChange: (data: any) => vo
   }, [])
 
   const updateField = (path: string[], value: any) => {
-    const newData = { ...data }
-    let current: any = newData
-    for (let i = 0; i < path.length - 1; i++) {
-      if (!current[path[i]]) {
-        current[path[i]] = {}
+    try {
+      const newData = JSON.parse(JSON.stringify(data)) // Deep clone
+      let current: any = newData
+      for (let i = 0; i < path.length - 1; i++) {
+        if (!current[path[i]]) {
+          current[path[i]] = {}
+        }
+        current = current[path[i]] = { ...current[path[i]] }
       }
-      current = current[path[i]] = { ...current[path[i]] }
+      current[path[path.length - 1]] = value
+      console.log('updateField called:', path, 'New data:', JSON.stringify(newData).substring(0, 200))
+      onChange(newData)
+    } catch (error) {
+      console.error('Error in updateField:', error)
+      alert('Error updating data. Please try again.')
     }
-    current[path[path.length - 1]] = value
-    onChange(newData)
   }
 
   const addFeaturedWork = (slug: string) => {
@@ -992,11 +1003,11 @@ function HomeEditor({ data, onChange }: { data: any; onChange: (data: any) => vo
 
   const addFeaturedVideo = (embedCode: string) => {
     try {
-      console.log('addFeaturedVideo called with:', embedCode.substring(0, 50))
-      const featuredVideos = Array.isArray(data.featuredVideos) ? data.featuredVideos : []
-      console.log('Current featured videos:', featuredVideos.length)
+      console.log('addFeaturedVideo called')
+      const currentVideos = Array.isArray(data?.featuredVideos) ? data.featuredVideos : []
+      console.log('Current videos count:', currentVideos.length)
       
-      if (featuredVideos.length >= 3) {
+      if (currentVideos.length >= 3) {
         alert('Maximum 3 featured videos allowed')
         return
       }
@@ -1005,7 +1016,8 @@ function HomeEditor({ data, onChange }: { data: any; onChange: (data: any) => vo
       const videoIdMatch = embedCode.match(/youtube\.com\/embed\/([^"&\s?]+)/)
       if (videoIdMatch) {
         const videoId = videoIdMatch[1]
-        const alreadyExists = featuredVideos.some((code: string) => {
+        const alreadyExists = currentVideos.some((code: string) => {
+          if (typeof code !== 'string') return false
           const existingMatch = code.match(/youtube\.com\/embed\/([^"&\s?]+)/)
           return existingMatch && existingMatch[1] === videoId
         })
@@ -1015,14 +1027,21 @@ function HomeEditor({ data, onChange }: { data: any; onChange: (data: any) => vo
         }
       }
       
-      const newVideos = [...featuredVideos, embedCode]
-      console.log('Updating with new videos array:', newVideos.length)
-      updateField(['featuredVideos'], newVideos)
-      console.log('Video added successfully. Total videos:', newVideos.length)
+      const newVideos = [...currentVideos, embedCode]
+      console.log('New videos array length:', newVideos.length)
+      
+      // Create a new data object with the updated videos
+      const updatedData = {
+        ...data,
+        featuredVideos: newVideos
+      }
+      
+      console.log('Calling onChange with updated data, featuredVideos:', updatedData.featuredVideos?.length)
+      onChange(updatedData)
+      console.log('onChange called successfully')
     } catch (error) {
       console.error('Error in addFeaturedVideo:', error)
       alert('Error adding video: ' + (error instanceof Error ? error.message : 'Unknown error'))
-      throw error
     }
   }
 
