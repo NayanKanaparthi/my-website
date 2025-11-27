@@ -823,6 +823,7 @@ function HomeEditor({ data, onChange }: { data: any; onChange: (data: any) => vo
   const [loadingVentures, setLoadingVentures] = useState(false)
   const [projects, setProjects] = useState<any[]>([])
   const [loadingProjects, setLoadingProjects] = useState(false)
+  const [videoUrlInput, setVideoUrlInput] = useState('')
 
   useEffect(() => {
     const loadWorkItems = async () => {
@@ -1002,6 +1003,37 @@ function HomeEditor({ data, onChange }: { data: any; onChange: (data: any) => vo
   const removeFeaturedVideo = (index: number) => {
     const featuredVideos = Array.isArray(data.featuredVideos) ? data.featuredVideos : []
     updateField(['featuredVideos'], featuredVideos.filter((_: any, i: number) => i !== index))
+  }
+
+  const handleAddVideo = () => {
+    const url = videoUrlInput.trim()
+    if (!url) {
+      alert('Please enter a video URL')
+      return
+    }
+    
+    // Improved URL validation - handle query parameters and various formats
+    const cleanUrl = url.trim()
+    const isValid = 
+      cleanUrl.includes('youtube.com') || 
+      cleanUrl.includes('youtu.be') || 
+      /^[a-zA-Z0-9_-]{11}$/.test(cleanUrl) ||
+      /^https?:\/\/(www\.)?(youtube\.com|youtu\.be)/.test(cleanUrl)
+    
+    if (!isValid) {
+      alert('Please enter a valid YouTube URL or video ID (11 characters)\n\nExamples:\n- https://www.youtube.com/watch?v=VIDEO_ID\n- https://youtu.be/VIDEO_ID\n- VIDEO_ID (11 characters)')
+      return
+    }
+    
+    // Check if already added
+    const featuredVideos = Array.isArray(data.featuredVideos) ? data.featuredVideos : []
+    if (featuredVideos.includes(cleanUrl)) {
+      alert('This video is already in the featured list')
+      return
+    }
+    
+    addFeaturedVideo(cleanUrl)
+    setVideoUrlInput('') // Clear input after successful add
   }
 
   return (
@@ -1401,24 +1433,40 @@ function HomeEditor({ data, onChange }: { data: any; onChange: (data: any) => vo
         
         {/* Selected Featured Videos */}
         <div className="space-y-3 mb-6">
-          {(Array.isArray(data.featuredVideos) ? data.featuredVideos : []).map((url: string, index: number) => (
-            <div key={index} className="bg-offwhite p-4 rounded-lg border border-navy/10 flex items-center justify-between">
-              <div className="flex-1">
-                <div className="font-medium text-navy mb-1 break-all">
-                  {url}
+          {(Array.isArray(data.featuredVideos) ? data.featuredVideos : []).map((url: string, index: number) => {
+            // Extract video ID for display - handle various URL formats
+            let videoId = url
+            const patterns = [
+              /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/,
+              /^([a-zA-Z0-9_-]{11})$/,
+            ]
+            for (const pattern of patterns) {
+              const match = url.match(pattern)
+              if (match && match[1]) {
+                videoId = match[1]
+                break
+              }
+            }
+            
+            return (
+              <div key={index} className="bg-offwhite p-4 rounded-lg border border-navy/10 flex items-center justify-between">
+                <div className="flex-1">
+                  <div className="font-medium text-navy mb-1 break-all text-sm">
+                    {url.length > 60 ? url.substring(0, 60) + '...' : url}
+                  </div>
+                  <div className="text-xs text-navy/60">
+                    Video ID: {videoId.length > 11 ? videoId.substring(0, 11) : videoId} • Video {index + 1}
+                  </div>
                 </div>
-                <div className="text-sm text-navy/60">
-                  Video {index + 1}
-                </div>
+                <button
+                  onClick={() => removeFeaturedVideo(index)}
+                  className="text-red-600 hover:text-red-700 text-sm font-medium px-3 py-1"
+                >
+                  Remove
+                </button>
               </div>
-              <button
-                onClick={() => removeFeaturedVideo(index)}
-                className="text-red-600 hover:text-red-700 text-sm font-medium px-3 py-1"
-              >
-                Remove
-              </button>
-            </div>
-          ))}
+            )
+          })}
           {(!Array.isArray(data.featuredVideos) || data.featuredVideos.length === 0) && (
             <div className="text-center py-8 text-navy/50 border border-dashed border-navy/20 rounded-lg">
               <p>No featured videos added</p>
@@ -1433,31 +1481,24 @@ function HomeEditor({ data, onChange }: { data: any; onChange: (data: any) => vo
             <div>
               <label className="block text-sm font-medium text-navy mb-2">YouTube Video URL</label>
               <p className="text-xs text-navy/60 mb-2">
-                Enter a YouTube video URL (e.g., https://www.youtube.com/watch?v=VIDEO_ID or https://youtu.be/VIDEO_ID)
+                Enter a YouTube video URL or video ID (e.g., https://www.youtube.com/watch?v=VIDEO_ID, https://youtu.be/VIDEO_ID, or just the VIDEO_ID)
               </p>
               <div className="flex gap-2">
                 <input
-                  type="url"
-                  id="video-url-input"
-                  placeholder="https://www.youtube.com/watch?v=..."
-                  className="flex-1 px-4 py-3 border border-navy/20 rounded-lg"
+                  type="text"
+                  value={videoUrlInput}
+                  onChange={(e) => setVideoUrlInput(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault()
+                      handleAddVideo()
+                    }
+                  }}
+                  placeholder="https://www.youtube.com/watch?v=... or https://youtu.be/..."
+                  className="flex-1 px-4 py-3 border border-navy/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet focus:border-transparent"
                 />
                 <button
-                  onClick={() => {
-                    const input = document.getElementById('video-url-input') as HTMLInputElement
-                    const url = input?.value?.trim()
-                    if (!url) {
-                      alert('Please enter a video URL')
-                      return
-                    }
-                    // Basic URL validation
-                    if (!url.includes('youtube.com') && !url.includes('youtu.be') && !/^[a-zA-Z0-9_-]{11}$/.test(url)) {
-                      alert('Please enter a valid YouTube URL or video ID')
-                      return
-                    }
-                    addFeaturedVideo(url)
-                    if (input) input.value = ''
-                  }}
+                  onClick={handleAddVideo}
                   disabled={!Array.isArray(data.featuredVideos) || data.featuredVideos.length >= 3}
                   className={`px-6 py-3 rounded-lg text-sm font-medium transition-colors ${
                     (!Array.isArray(data.featuredVideos) || data.featuredVideos.length < 3)
