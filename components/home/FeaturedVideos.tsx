@@ -16,14 +16,14 @@ export default async function FeaturedVideos() {
       embedCode.includes('youtube.com/embed') && 
       embedCode.includes('</iframe>')
     )
-    .slice(0, 3) // Ensure max 3 items
+    .slice(0, 4) // Show up to 4 videos
 
   if (validVideos.length === 0) {
     return null
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       {validVideos.map((embedCode: string, idx: number) => (
         <div
           key={idx}
