@@ -162,106 +162,224 @@ export default function AdminEditor({ initialPost }: AdminEditorProps) {
     let markdown = plain
     
     if (html) {
-      // Better HTML to markdown conversion
+      // Better HTML to markdown conversion for LinkedIn and other sources
       const tempDiv = document.createElement('div')
       tempDiv.innerHTML = html
+      
+      // Helper function to check if element is bold
+      const isBold = (el: Element): boolean => {
+        const style = window.getComputedStyle(el)
+        const fontWeight = style.fontWeight
+        const isBoldTag = el.tagName === 'STRONG' || el.tagName === 'B'
+        const isBoldStyle = fontWeight === 'bold' || fontWeight === '700' || parseInt(fontWeight) >= 600
+        const hasBoldClass = el.className && /bold|strong|font-weight|fw-/.test(el.className.toLowerCase())
+        return isBoldTag || isBoldStyle || hasBoldClass
+      }
+      
+      // Helper function to check if element is italic
+      const isItalic = (el: Element): boolean => {
+        const style = window.getComputedStyle(el)
+        const fontStyle = style.fontStyle
+        const isItalicTag = el.tagName === 'EM' || el.tagName === 'I'
+        return isItalicTag || fontStyle === 'italic'
+      }
+      
+      // Helper function to detect heading level from text or element
+      const detectHeading = (text: string, el: Element): number | null => {
+        // Check if it's an actual heading tag
+        const tagMatch = el.tagName.match(/^H([1-6])$/)
+        if (tagMatch) return parseInt(tagMatch[1])
+        
+        // Check for numbered headings like "2.2)", "1.1.1)", etc.
+        const numberedMatch = text.match(/^(\d+(?:\.\d+)*)\)\s+/)
+        if (numberedMatch) {
+          const depth = numberedMatch[1].split('.').length
+          return Math.min(depth + 1, 6) // Convert to heading level (2.2) -> H3
+        }
+        
+        // Check for common heading patterns
+        if (/^(Old Model|New Model|Why|How|What|When|Where|Conclusion|Summary|Introduction|Overview)/i.test(text.trim())) {
+          return 2
+        }
+        
+        // Check font size or class for heading detection
+        const style = window.getComputedStyle(el)
+        const fontSize = parseFloat(style.fontSize)
+        if (fontSize >= 24) return 1
+        if (fontSize >= 20) return 2
+        if (fontSize >= 18) return 3
+        
+        return null
+      }
       
       // Process images first
       tempDiv.querySelectorAll('img').forEach(img => {
         const src = img.getAttribute('src') || ''
         const alt = img.getAttribute('alt') || ''
-        img.outerHTML = `![${alt}](${src})\n\n`
+        img.replaceWith(document.createTextNode(`![${alt}](${src})\n\n`))
       })
       
-      // Convert headings (process from h6 to h1 to avoid nested replacements)
-      tempDiv.querySelectorAll('h6').forEach(el => {
+      // Convert headings - check all potential heading elements
+      const allElements = Array.from(tempDiv.querySelectorAll('*'))
+      allElements.forEach(el => {
         const text = el.textContent?.trim() || ''
-        el.outerHTML = `###### ${text}\n\n`
+        if (!text) return
+        
+        const headingLevel = detectHeading(text, el)
+        if (headingLevel) {
+          // Remove any nested formatting before converting
+          const cleanText = text.replace(/\*\*/g, '').replace(/\*/g, '').trim()
+          el.replaceWith(document.createTextNode(`${'#'.repeat(headingLevel)} ${cleanText}\n\n`))
+        }
       })
-      tempDiv.querySelectorAll('h5').forEach(el => {
-        const text = el.textContent?.trim() || ''
-        el.outerHTML = `##### ${text}\n\n`
-      })
-      tempDiv.querySelectorAll('h4').forEach(el => {
-        const text = el.textContent?.trim() || ''
-        el.outerHTML = `#### ${text}\n\n`
-      })
-      tempDiv.querySelectorAll('h3').forEach(el => {
-        const text = el.textContent?.trim() || ''
-        el.outerHTML = `### ${text}\n\n`
-      })
-      tempDiv.querySelectorAll('h2').forEach(el => {
-        const text = el.textContent?.trim() || ''
-        el.outerHTML = `## ${text}\n\n`
-      })
-      tempDiv.querySelectorAll('h1').forEach(el => {
-        const text = el.textContent?.trim() || ''
-        el.outerHTML = `# ${text}\n\n`
-      })
+      
+      // Process actual heading tags
+      for (let level = 6; level >= 1; level--) {
+        tempDiv.querySelectorAll(`h${level}`).forEach(el => {
+          const text = el.textContent?.trim() || ''
+          if (text) {
+            const cleanText = text.replace(/\*\*/g, '').replace(/\*/g, '').trim()
+            el.replaceWith(document.createTextNode(`${'#'.repeat(level)} ${cleanText}\n\n`))
+          }
+        })
+      }
       
       // Convert links before other formatting
       tempDiv.querySelectorAll('a').forEach(el => {
         const href = el.getAttribute('href') || ''
         const text = el.textContent?.trim() || ''
-        el.outerHTML = `[${text}](${href})`
-      })
-      
-      // Convert bold and italic (process bold first, then italic)
-      tempDiv.querySelectorAll('strong, b').forEach(el => {
-        const text = el.textContent?.trim() || ''
-        if (text) el.outerHTML = `**${text}**`
-      })
-      tempDiv.querySelectorAll('em, i').forEach(el => {
-        const text = el.textContent?.trim() || ''
-        if (text && !el.closest('strong, b')) el.outerHTML = `*${text}*`
-      })
-      
-      // Convert lists
-      tempDiv.querySelectorAll('ul').forEach(ul => {
-        const items: string[] = []
-        ul.querySelectorAll('li').forEach(li => {
-          const text = li.textContent?.trim() || ''
-          if (text) items.push(`- ${text}`)
-        })
-        if (items.length > 0) {
-          ul.outerHTML = items.join('\n') + '\n\n'
+        if (text && href) {
+          el.replaceWith(document.createTextNode(`[${text}](${href})`))
+        } else if (text) {
+          el.replaceWith(document.createTextNode(text))
         }
       })
-      tempDiv.querySelectorAll('ol').forEach(ol => {
-        const items: string[] = []
-        ol.querySelectorAll('li').forEach((li, i) => {
-          const text = li.textContent?.trim() || ''
-          if (text) items.push(`${i + 1}. ${text}`)
+      
+      // Convert bold text (handle nested cases)
+      const processBold = (container: Element) => {
+        const boldElements = Array.from(container.querySelectorAll('*')).filter(isBold)
+        boldElements.forEach(el => {
+          if (el.closest('pre, code')) return // Skip code blocks
+          const text = el.textContent?.trim() || ''
+          if (text && !text.startsWith('**') && !text.endsWith('**')) {
+            // Only wrap if not already wrapped and not inside another bold
+            const parent = el.parentElement
+            if (!parent || !isBold(parent)) {
+              el.replaceWith(document.createTextNode(`**${text}**`))
+            }
+          }
         })
-        if (items.length > 0) {
-          ol.outerHTML = items.join('\n') + '\n\n'
+      }
+      processBold(tempDiv)
+      
+      // Convert italic text
+      tempDiv.querySelectorAll('em, i').forEach(el => {
+        if (el.closest('pre, code, strong, b')) return
+        const text = el.textContent?.trim() || ''
+        if (text && !text.startsWith('*') && !text.endsWith('*')) {
+          el.replaceWith(document.createTextNode(`*${text}*`))
+        }
+      })
+      
+      // Convert lists - handle nested lists
+      const processList = (list: Element, isOrdered: boolean, indent: number = 0) => {
+        const items: string[] = []
+        const prefix = '  '.repeat(indent)
+        list.querySelectorAll(':scope > li').forEach((li, i) => {
+          let text = li.textContent?.trim() || ''
+          // Clean up any remaining formatting artifacts
+          text = text.replace(/\*\*\*/g, '').replace(/\*\*/g, '').replace(/\*/g, '').trim()
+          
+          // Check for nested lists
+          const nestedUl = li.querySelector(':scope > ul')
+          const nestedOl = li.querySelector(':scope > ol')
+          if (nestedUl) {
+            const nestedText = processList(nestedUl, false, indent + 1)
+            text += '\n' + nestedText
+          } else if (nestedOl) {
+            const nestedText = processList(nestedOl, true, indent + 1)
+            text += '\n' + nestedText
+          }
+          
+          if (text) {
+            const marker = isOrdered ? `${i + 1}.` : '-'
+            items.push(`${prefix}${marker} ${text}`)
+          }
+        })
+        return items.join('\n')
+      }
+      
+      tempDiv.querySelectorAll('ul').forEach(ul => {
+        const listMarkdown = processList(ul, false)
+        if (listMarkdown) {
+          ul.replaceWith(document.createTextNode(listMarkdown + '\n\n'))
+        }
+      })
+      
+      tempDiv.querySelectorAll('ol').forEach(ol => {
+        const listMarkdown = processList(ol, true)
+        if (listMarkdown) {
+          ol.replaceWith(document.createTextNode(listMarkdown + '\n\n'))
         }
       })
       
       // Convert blockquotes
       tempDiv.querySelectorAll('blockquote').forEach(el => {
         const text = el.textContent?.trim() || ''
-        if (text) el.outerHTML = `> ${text}\n\n`
+        if (text) {
+          el.replaceWith(document.createTextNode(`> ${text}\n\n`))
+        }
       })
       
       // Convert code blocks
       tempDiv.querySelectorAll('pre code').forEach(el => {
         const text = el.textContent || ''
         const lang = el.className.match(/language-(\w+)/)?.[1] || ''
-        el.closest('pre')?.replaceWith(document.createTextNode(`\`\`\`${lang}\n${text}\n\`\`\`\n\n`))
+        const pre = el.closest('pre')
+        if (pre) {
+          pre.replaceWith(document.createTextNode(`\`\`\`${lang}\n${text}\n\`\`\`\n\n`))
+        }
       })
+      
       tempDiv.querySelectorAll('code').forEach(el => {
         if (!el.closest('pre')) {
           const text = el.textContent?.trim() || ''
-          if (text) el.outerHTML = `\`${text}\``
+          if (text) {
+            el.replaceWith(document.createTextNode(`\`${text}\``))
+          }
+        }
+      })
+      
+      // Convert paragraphs to proper line breaks
+      tempDiv.querySelectorAll('p, div').forEach(el => {
+        if (el.closest('li, blockquote, pre')) return
+        const text = el.textContent?.trim() || ''
+        if (text && !el.querySelector('ul, ol, h1, h2, h3, h4, h5, h6')) {
+          // Only convert if it doesn't contain block elements
+          if (el.tagName === 'P' || (el.tagName === 'DIV' && !el.querySelector('*'))) {
+            el.replaceWith(document.createTextNode(text + '\n\n'))
+          }
         }
       })
       
       // Get the final markdown
       markdown = tempDiv.textContent || tempDiv.innerText || plain
       
-      // Clean up extra whitespace but preserve structure
-      markdown = markdown.replace(/\n{3,}/g, '\n\n').trim()
+      // Clean up formatting artifacts
+      markdown = markdown
+        .replace(/\*\*\*\*/g, '') // Remove quadruple asterisks
+        .replace(/\*\*\*/g, '') // Remove triple asterisks
+        .replace(/\*\*:\*\*/g, ':') // Fix **:** patterns
+        .replace(/\*\*([^*]+)\*\*\*\*/g, '**$1**') // Fix **text****
+        .replace(/\n{3,}/g, '\n\n') // Max 2 newlines
+        .replace(/[ \t]+\n/g, '\n') // Remove trailing spaces
+        .trim()
+      
+      // Fix common LinkedIn formatting issues
+      markdown = markdown
+        .replace(/(\*\*[^*]+\*\*)\*\*/g, '$1') // Remove trailing ** after bold
+        .replace(/\*\*(\*\*[^*]+\*\*)\*\*/g, '$1') // Fix nested bold
+        .replace(/([^*])\*\*\*\*([^*])/g, '$1$2') // Remove **** in middle of text
     }
     
     const textarea = contentRef.current
