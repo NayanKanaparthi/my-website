@@ -990,22 +990,38 @@ function HomeEditor({ data, onChange }: { data: any; onChange: (data: any) => vo
     updateField(['featuredProjects'], featuredProjects.filter((_: any, i: number) => i !== index))
   }
 
-  const addFeaturedVideo = (url: string) => {
+  const addFeaturedVideo = (embedCode: string) => {
     try {
+      console.log('addFeaturedVideo called with:', embedCode.substring(0, 50))
       const featuredVideos = Array.isArray(data.featuredVideos) ? data.featuredVideos : []
+      console.log('Current featured videos:', featuredVideos.length)
+      
       if (featuredVideos.length >= 3) {
         alert('Maximum 3 featured videos allowed')
         return
       }
-      if (featuredVideos.includes(url)) {
-        alert('This video is already featured')
-        return
+      
+      // Check for duplicates by video ID
+      const videoIdMatch = embedCode.match(/youtube\.com\/embed\/([^"&\s?]+)/)
+      if (videoIdMatch) {
+        const videoId = videoIdMatch[1]
+        const alreadyExists = featuredVideos.some((code: string) => {
+          const existingMatch = code.match(/youtube\.com\/embed\/([^"&\s?]+)/)
+          return existingMatch && existingMatch[1] === videoId
+        })
+        if (alreadyExists) {
+          alert('This video is already featured')
+          return
+        }
       }
-      const newVideos = [...featuredVideos, url]
+      
+      const newVideos = [...featuredVideos, embedCode]
+      console.log('Updating with new videos array:', newVideos.length)
       updateField(['featuredVideos'], newVideos)
-      console.log('Video added successfully:', url, 'Total videos:', newVideos.length)
+      console.log('Video added successfully. Total videos:', newVideos.length)
     } catch (error) {
       console.error('Error in addFeaturedVideo:', error)
+      alert('Error adding video: ' + (error instanceof Error ? error.message : 'Unknown error'))
       throw error
     }
   }
@@ -1016,7 +1032,10 @@ function HomeEditor({ data, onChange }: { data: any; onChange: (data: any) => vo
   }
 
   const handleAddVideo = () => {
+    console.log('handleAddVideo called')
     const embedCode = videoUrlInput.trim()
+    console.log('Input value:', embedCode.substring(0, 50))
+    
     if (!embedCode) {
       alert('Please paste the YouTube embed code')
       return
@@ -1024,19 +1043,21 @@ function HomeEditor({ data, onChange }: { data: any; onChange: (data: any) => vo
     
     // Validate that it's an iframe embed code
     const isIframe = embedCode.includes('<iframe') && embedCode.includes('youtube.com/embed') && embedCode.includes('</iframe>')
+    console.log('Is valid iframe:', isIframe)
     
     if (!isIframe) {
       alert('Please paste a valid YouTube embed code (iframe).\n\nTo get the embed code:\n1. Go to YouTube video\n2. Click "Share"\n3. Click "Embed"\n4. Copy the iframe code')
       return
     }
     
-    // Ensure featuredVideos array exists
-    if (!data.featuredVideos) {
-      data.featuredVideos = []
+    // Check max limit first
+    const featuredVideos = Array.isArray(data.featuredVideos) ? data.featuredVideos : []
+    if (featuredVideos.length >= 3) {
+      alert('Maximum 3 featured videos allowed')
+      return
     }
     
     // Check if already added (compare by extracting video ID)
-    const featuredVideos = Array.isArray(data.featuredVideos) ? data.featuredVideos : []
     const videoIdMatch = embedCode.match(/youtube\.com\/embed\/([^"&\s?]+)/)
     if (videoIdMatch) {
       const videoId = videoIdMatch[1]
@@ -1050,15 +1071,11 @@ function HomeEditor({ data, onChange }: { data: any; onChange: (data: any) => vo
       }
     }
     
-    // Check max limit
-    if (featuredVideos.length >= 3) {
-      alert('Maximum 3 featured videos allowed')
-      return
-    }
-    
     try {
+      console.log('Calling addFeaturedVideo...')
       addFeaturedVideo(embedCode)
       setVideoUrlInput('') // Clear input after successful add
+      console.log('Video added, input cleared')
     } catch (error) {
       console.error('Error adding video:', error)
       alert('Failed to add video. Please try again.')
@@ -1524,11 +1541,17 @@ function HomeEditor({ data, onChange }: { data: any; onChange: (data: any) => vo
                   className="w-full px-4 py-3 border border-navy/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet focus:border-transparent font-mono text-sm"
                 />
                 <button
-                  onClick={handleAddVideo}
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    console.log('Button clicked')
+                    handleAddVideo()
+                  }}
                   disabled={!Array.isArray(data.featuredVideos) || data.featuredVideos.length >= 3}
                   className={`w-full px-6 py-3 rounded-lg text-sm font-medium transition-colors ${
                     (!Array.isArray(data.featuredVideos) || data.featuredVideos.length < 3)
-                      ? 'bg-violet text-white hover:bg-violet/90'
+                      ? 'bg-violet text-white hover:bg-violet/90 cursor-pointer'
                       : 'bg-navy/10 text-navy/40 cursor-not-allowed'
                   }`}
                 >
