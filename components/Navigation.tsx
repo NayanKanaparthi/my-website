@@ -15,6 +15,7 @@ export default function Navigation() {
     { href: '/projects', label: 'Projects' },
     { href: '/work', label: 'Case Studies' },
     { href: '/about', label: 'Resume' },
+    { href: 'https://www.youtube.com/@llnayanll/videos', label: 'YouTube', external: true },
     { href: '/contact', label: 'Contact' },
   ]
 
@@ -28,19 +29,34 @@ export default function Navigation() {
           
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`text-sm font-medium transition-colors ${
-                  pathname === item.href
-                    ? 'text-violet'
-                    : 'text-navy/70 hover:text-navy'
-                }`}
-              >
-                {item.label}
-              </Link>
-            ))}
+            {navItems.map((item) => {
+              if (item.external) {
+                return (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm font-medium transition-colors text-navy/70 hover:text-navy"
+                  >
+                    {item.label}
+                  </a>
+                )
+              }
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`text-sm font-medium transition-colors ${
+                    pathname === item.href
+                      ? 'text-violet'
+                      : 'text-navy/70 hover:text-navy'
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              )
+            })}
           </div>
 
           {/* Mobile Menu Button */}
@@ -62,20 +78,36 @@ export default function Navigation() {
         {/* Mobile Navigation */}
         {isOpen && (
           <div className="md:hidden py-4 space-y-4">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`block text-sm font-medium transition-colors ${
-                  pathname === item.href
-                    ? 'text-violet'
-                    : 'text-navy/70 hover:text-navy'
-                }`}
-                onClick={() => setIsOpen(false)}
-              >
-                {item.label}
-              </Link>
-            ))}
+            {navItems.map((item) => {
+              if (item.external) {
+                return (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block text-sm font-medium transition-colors text-navy/70 hover:text-navy"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {item.label}
+                  </a>
+                )
+              }
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`block text-sm font-medium transition-colors ${
+                    pathname === item.href
+                      ? 'text-violet'
+                      : 'text-navy/70 hover:text-navy'
+                  }`}
+                  onClick={() => setIsOpen(false)}
+                >
+                  {item.label}
+                </Link>
+              )
+            })}
           </div>
         )}
       </div>

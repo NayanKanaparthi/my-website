@@ -136,6 +136,7 @@ export interface HomeContent {
   featuredBlogs: string[] // Array of blog post slugs (max 3)
   featuredVentures: number[] // Array of venture indices (max 3)
   featuredProjects: number[] // Array of project indices (max 3)
+  featuredVideos: string[] // Array of YouTube video URLs or IDs (max 3)
   institutions: Array<string | { image: string; name?: string }> // Array of institution logos (image URLs or objects with image/name)
   socialLinks?: {
     twitter?: string

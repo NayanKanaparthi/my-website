@@ -3,6 +3,7 @@ import FeaturedWork from '@/components/home/FeaturedWork'
 import FeaturedBlogs from '@/components/home/FeaturedBlogs'
 import FeaturedVentures from '@/components/home/FeaturedVentures'
 import FeaturedProjects from '@/components/home/FeaturedProjects'
+import FeaturedVideos from '@/components/home/FeaturedVideos'
 import InstitutionLogos from '@/components/home/InstitutionLogos'
 import { getHomeContent } from '@/lib/content'
 
@@ -153,6 +154,37 @@ export default async function Home() {
             More
             <span>→</span>
           </Link>
+        </div>
+      </section>
+
+      {/* Featured Videos */}
+      <section className="max-w-7xl mx-auto px-6 sm:px-8 py-20 border-t border-navy/10">
+        <div className="flex items-center justify-between mb-12">
+          <div>
+            <h2 className="text-3xl font-semibold text-navy mb-3">Featured Videos</h2>
+            <p className="text-navy/60 text-lg">Latest videos and content</p>
+          </div>
+          <a 
+            href="https://www.youtube.com/@llnayanll/videos"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden md:flex items-center gap-2 text-violet hover:text-violet/80 transition-colors text-sm font-medium group"
+          >
+            More
+            <span className="group-hover:translate-x-1 transition-transform">→</span>
+          </a>
+        </div>
+        <FeaturedVideos />
+        <div className="mt-8 md:hidden text-center">
+          <a 
+            href="https://www.youtube.com/@llnayanll/videos"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-violet hover:text-violet/80 transition-colors text-sm font-medium"
+          >
+            More
+            <span>→</span>
+          </a>
         </div>
       </section>
 

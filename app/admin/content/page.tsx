@@ -986,6 +986,24 @@ function HomeEditor({ data, onChange }: { data: any; onChange: (data: any) => vo
     updateField(['featuredProjects'], featuredProjects.filter((_: any, i: number) => i !== index))
   }
 
+  const addFeaturedVideo = (url: string) => {
+    const featuredVideos = Array.isArray(data.featuredVideos) ? data.featuredVideos : []
+    if (featuredVideos.length >= 3) {
+      alert('Maximum 3 featured videos allowed')
+      return
+    }
+    if (featuredVideos.includes(url)) {
+      alert('This video is already featured')
+      return
+    }
+    updateField(['featuredVideos'], [...featuredVideos, url])
+  }
+
+  const removeFeaturedVideo = (index: number) => {
+    const featuredVideos = Array.isArray(data.featuredVideos) ? data.featuredVideos : []
+    updateField(['featuredVideos'], featuredVideos.filter((_: any, i: number) => i !== index))
+  }
+
   return (
     <div className="space-y-8">
       <div>
@@ -1370,6 +1388,88 @@ function HomeEditor({ data, onChange }: { data: any; onChange: (data: any) => vo
               })}
             </div>
           )}
+        </div>
+      </div>
+
+      <div>
+        <div className="flex justify-between items-center mb-4">
+          <div>
+            <h2 className="text-xl font-semibold text-navy">Featured Videos</h2>
+            <p className="text-sm text-navy/60 mt-1">Add up to 3 YouTube video URLs to feature on the homepage</p>
+          </div>
+        </div>
+        
+        {/* Selected Featured Videos */}
+        <div className="space-y-3 mb-6">
+          {(Array.isArray(data.featuredVideos) ? data.featuredVideos : []).map((url: string, index: number) => (
+            <div key={index} className="bg-offwhite p-4 rounded-lg border border-navy/10 flex items-center justify-between">
+              <div className="flex-1">
+                <div className="font-medium text-navy mb-1 break-all">
+                  {url}
+                </div>
+                <div className="text-sm text-navy/60">
+                  Video {index + 1}
+                </div>
+              </div>
+              <button
+                onClick={() => removeFeaturedVideo(index)}
+                className="text-red-600 hover:text-red-700 text-sm font-medium px-3 py-1"
+              >
+                Remove
+              </button>
+            </div>
+          ))}
+          {(!Array.isArray(data.featuredVideos) || data.featuredVideos.length === 0) && (
+            <div className="text-center py-8 text-navy/50 border border-dashed border-navy/20 rounded-lg">
+              <p>No featured videos added</p>
+              <p className="text-sm mt-1">Add YouTube video URLs below</p>
+            </div>
+          )}
+        </div>
+
+        {/* Add New Video */}
+        <div className="border-2 border-dashed border-navy/20 rounded-lg p-6">
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-navy mb-2">YouTube Video URL</label>
+              <p className="text-xs text-navy/60 mb-2">
+                Enter a YouTube video URL (e.g., https://www.youtube.com/watch?v=VIDEO_ID or https://youtu.be/VIDEO_ID)
+              </p>
+              <div className="flex gap-2">
+                <input
+                  type="url"
+                  id="video-url-input"
+                  placeholder="https://www.youtube.com/watch?v=..."
+                  className="flex-1 px-4 py-3 border border-navy/20 rounded-lg"
+                />
+                <button
+                  onClick={() => {
+                    const input = document.getElementById('video-url-input') as HTMLInputElement
+                    const url = input?.value?.trim()
+                    if (!url) {
+                      alert('Please enter a video URL')
+                      return
+                    }
+                    // Basic URL validation
+                    if (!url.includes('youtube.com') && !url.includes('youtu.be') && !/^[a-zA-Z0-9_-]{11}$/.test(url)) {
+                      alert('Please enter a valid YouTube URL or video ID')
+                      return
+                    }
+                    addFeaturedVideo(url)
+                    if (input) input.value = ''
+                  }}
+                  disabled={!Array.isArray(data.featuredVideos) || data.featuredVideos.length >= 3}
+                  className={`px-6 py-3 rounded-lg text-sm font-medium transition-colors ${
+                    (!Array.isArray(data.featuredVideos) || data.featuredVideos.length < 3)
+                      ? 'bg-violet text-white hover:bg-violet/90'
+                      : 'bg-navy/10 text-navy/40 cursor-not-allowed'
+                  }`}
+                >
+                  {(!Array.isArray(data.featuredVideos) || data.featuredVideos.length < 3) ? 'Add Video' : 'Max 3'}
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
