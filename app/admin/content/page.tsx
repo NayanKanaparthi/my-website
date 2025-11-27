@@ -618,6 +618,44 @@ function AboutEditor({ data, onChange }: { data: any; onChange: (data: any) => v
 
       <div>
         <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-semibold text-navy">Education</h2>
+          <button onClick={addEducation} className="px-4 py-2 bg-violet text-white rounded-lg text-sm font-medium hover:bg-violet/90">
+            + Add Education
+          </button>
+        </div>
+        {(data.education || []).map((item: any, index: number) => (
+          <div key={index} className="bg-offwhite p-4 rounded-lg border border-navy/10 mb-4">
+            <div className="flex justify-between items-start mb-3">
+              <h3 className="font-semibold text-navy">Education {index + 1}</h3>
+              <button onClick={() => removeEducation(index)} className="text-red-600 hover:text-red-700 text-sm">Delete</button>
+            </div>
+            <div className="space-y-3">
+              <div className="grid grid-cols-2 gap-4">
+                <input type="text" value={item.university || ''} onChange={(e) => updateEducation(index, 'university', e.target.value)} placeholder="University" className="px-3 py-2 border border-navy/20 rounded" />
+                <input type="text" value={item.major || ''} onChange={(e) => updateEducation(index, 'major', e.target.value)} placeholder="Major" className="px-3 py-2 border border-navy/20 rounded" />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <input type="text" value={item.location || ''} onChange={(e) => updateEducation(index, 'location', e.target.value)} placeholder="Location" className="px-3 py-2 border border-navy/20 rounded" />
+                <input type="text" value={item.year || ''} onChange={(e) => updateEducation(index, 'year', e.target.value)} placeholder="Year" className="px-3 py-2 border border-navy/20 rounded" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-navy mb-1">Relevant Coursework</label>
+                <textarea value={item.relevantCoursework || ''} onChange={(e) => updateEducation(index, 'relevantCoursework', e.target.value)} placeholder="Relevant Coursework" rows={2} className="w-full px-3 py-2 border border-navy/20 rounded" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-navy mb-1">University Logo</label>
+                <ImageUpload
+                  value={item.universityLogo || ''}
+                  onChange={(url) => updateEducation(index, 'universityLogo', url)}
+                />
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div>
+        <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-semibold text-navy">Professional Experience</h2>
           <button onClick={() => addExperience('professionalExperience')} className="px-4 py-2 bg-violet text-white rounded-lg text-sm font-medium hover:bg-violet/90">
             + Add Experience
@@ -687,44 +725,6 @@ function AboutEditor({ data, onChange }: { data: any; onChange: (data: any) => v
                 />
               </div>
               <textarea value={item.description || ''} onChange={(e) => updateExperience('leadershipExperience', index, 'description', e.target.value)} placeholder="Description" rows={3} className="w-full px-3 py-2 border border-navy/20 rounded" />
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <div>
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold text-navy">Education</h2>
-          <button onClick={addEducation} className="px-4 py-2 bg-violet text-white rounded-lg text-sm font-medium hover:bg-violet/90">
-            + Add Education
-          </button>
-        </div>
-        {(data.education || []).map((item: any, index: number) => (
-          <div key={index} className="bg-offwhite p-4 rounded-lg border border-navy/10 mb-4">
-            <div className="flex justify-between items-start mb-3">
-              <h3 className="font-semibold text-navy">Education {index + 1}</h3>
-              <button onClick={() => removeEducation(index)} className="text-red-600 hover:text-red-700 text-sm">Delete</button>
-            </div>
-            <div className="space-y-3">
-              <div className="grid grid-cols-2 gap-4">
-                <input type="text" value={item.university || ''} onChange={(e) => updateEducation(index, 'university', e.target.value)} placeholder="University" className="px-3 py-2 border border-navy/20 rounded" />
-                <input type="text" value={item.major || ''} onChange={(e) => updateEducation(index, 'major', e.target.value)} placeholder="Major" className="px-3 py-2 border border-navy/20 rounded" />
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <input type="text" value={item.location || ''} onChange={(e) => updateEducation(index, 'location', e.target.value)} placeholder="Location" className="px-3 py-2 border border-navy/20 rounded" />
-                <input type="text" value={item.year || ''} onChange={(e) => updateEducation(index, 'year', e.target.value)} placeholder="Year" className="px-3 py-2 border border-navy/20 rounded" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-navy mb-1">Relevant Coursework</label>
-                <textarea value={item.relevantCoursework || ''} onChange={(e) => updateEducation(index, 'relevantCoursework', e.target.value)} placeholder="Relevant Coursework" rows={2} className="w-full px-3 py-2 border border-navy/20 rounded" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-navy mb-1">University Logo</label>
-                <ImageUpload
-                  value={item.universityLogo || ''}
-                  onChange={(url) => updateEducation(index, 'universityLogo', url)}
-                />
-              </div>
             </div>
           </div>
         ))}
