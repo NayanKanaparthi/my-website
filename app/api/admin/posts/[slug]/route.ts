@@ -3,8 +3,10 @@ import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
 import { isAuthenticated } from '@/lib/auth'
+import { put, del as deleteBlob } from '@vercel/blob'
 
 const postsDirectory = path.join(process.cwd(), 'content/posts')
+const isProduction = process.env.VERCEL === '1' || process.env.NODE_ENV === 'production'
 
 export async function PUT(
   request: NextRequest,
@@ -43,10 +45,40 @@ export async function PUT(
       })
       .join('\n')}\n---\n\n${data.content || ''}`
 
-    const filePath = path.join(postsDirectory, `${slug}.md`)
-    fs.writeFileSync(filePath, content, 'utf8')
+    if (isProduction) {
+      // Use Vercel Blob Storage in production
+      if (!process.env.BLOB_READ_WRITE_TOKEN) {
+        return NextResponse.json(
+          { 
+            error: 'Vercel Blob Storage is not configured. Please add Blob storage in your Vercel project.'
+          },
+          { status: 500 }
+        )
+      }
 
-    return NextResponse.json({ slug, success: true })
+      try {
+        const blob = await put(`posts/${slug}.md`, content, {
+          access: 'public',
+          contentType: 'text/markdown',
+        })
+        return NextResponse.json({ slug, success: true, url: blob.url })
+      } catch (blobError) {
+        console.error('Blob upload error:', blobError)
+        const errorMessage = blobError instanceof Error ? blobError.message : 'Unknown error'
+        return NextResponse.json(
+          { 
+            error: `Failed to update post in Blob storage: ${errorMessage}`
+          },
+          { status: 500 }
+        )
+      }
+    } else {
+      // Development: Save to local file system
+      const filePath = path.join(postsDirectory, `${slug}.md`)
+      fs.writeFileSync(filePath, content, 'utf8')
+
+      return NextResponse.json({ slug, success: true })
+    }
   } catch (error) {
     console.error('Error updating post:', error)
     return NextResponse.json({ error: 'Failed to update post' }, { status: 500 })
@@ -64,14 +96,37 @@ export async function DELETE(
 
   try {
     const slug = params.slug
-    const filePath = path.join(postsDirectory, `${slug}.md`)
 
-    if (fs.existsSync(filePath)) {
-      fs.unlinkSync(filePath)
-      return NextResponse.json({ success: true })
+    if (isProduction) {
+      // Use Vercel Blob Storage in production
+      if (!process.env.BLOB_READ_WRITE_TOKEN) {
+        return NextResponse.json(
+          { 
+            error: 'Vercel Blob Storage is not configured.'
+          },
+          { status: 500 }
+        )
+      }
+
+      try {
+        await deleteBlob(`posts/${slug}.md`)
+        return NextResponse.json({ success: true })
+      } catch (blobError) {
+        console.error('Blob delete error:', blobError)
+        // If blob doesn't exist, that's okay - return success
+        return NextResponse.json({ success: true })
+      }
+    } else {
+      // Development: Delete from local file system
+      const filePath = path.join(postsDirectory, `${slug}.md`)
+
+      if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath)
+        return NextResponse.json({ success: true })
+      }
+
+      return NextResponse.json({ error: 'Post not found' }, { status: 404 })
     }
-
-    return NextResponse.json({ error: 'Post not found' }, { status: 404 })
   } catch (error) {
     console.error('Error deleting post:', error)
     return NextResponse.json({ error: 'Failed to delete post' }, { status: 500 })
