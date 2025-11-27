@@ -1016,24 +1016,17 @@ function HomeEditor({ data, onChange }: { data: any; onChange: (data: any) => vo
   }
 
   const handleAddVideo = () => {
-    const url = videoUrlInput.trim()
-    if (!url) {
-      alert('Please enter a video URL')
+    const embedCode = videoUrlInput.trim()
+    if (!embedCode) {
+      alert('Please paste the YouTube embed code')
       return
     }
     
-    // Improved URL validation - handle query parameters and various formats
-    const cleanUrl = url.trim()
+    // Validate that it's an iframe embed code
+    const isIframe = embedCode.includes('<iframe') && embedCode.includes('youtube.com/embed') && embedCode.includes('</iframe>')
     
-    // More lenient validation - check for YouTube domain or video ID pattern
-    const hasYouTubeDomain = cleanUrl.includes('youtube.com') || cleanUrl.includes('youtu.be')
-    const isVideoId = /^[a-zA-Z0-9_-]{11}$/.test(cleanUrl)
-    const hasYouTubePattern = /youtube\.com|youtu\.be/.test(cleanUrl)
-    
-    const isValid = hasYouTubeDomain || hasYouTubePattern || isVideoId
-    
-    if (!isValid) {
-      alert('Please enter a valid YouTube URL or video ID\n\nExamples:\n- https://www.youtube.com/watch?v=VIDEO_ID\n- https://youtu.be/VIDEO_ID\n- https://youtu.be/VIDEO_ID?si=...\n- VIDEO_ID (11 characters)')
+    if (!isIframe) {
+      alert('Please paste a valid YouTube embed code (iframe).\n\nTo get the embed code:\n1. Go to YouTube video\n2. Click "Share"\n3. Click "Embed"\n4. Copy the iframe code')
       return
     }
     
@@ -1042,11 +1035,19 @@ function HomeEditor({ data, onChange }: { data: any; onChange: (data: any) => vo
       data.featuredVideos = []
     }
     
-    // Check if already added
+    // Check if already added (compare by extracting video ID)
     const featuredVideos = Array.isArray(data.featuredVideos) ? data.featuredVideos : []
-    if (featuredVideos.includes(cleanUrl)) {
-      alert('This video is already in the featured list')
-      return
+    const videoIdMatch = embedCode.match(/youtube\.com\/embed\/([^"&\s?]+)/)
+    if (videoIdMatch) {
+      const videoId = videoIdMatch[1]
+      const alreadyExists = featuredVideos.some((code: string) => {
+        const existingMatch = code.match(/youtube\.com\/embed\/([^"&\s?]+)/)
+        return existingMatch && existingMatch[1] === videoId
+      })
+      if (alreadyExists) {
+        alert('This video is already in the featured list')
+        return
+      }
     }
     
     // Check max limit
@@ -1056,7 +1057,7 @@ function HomeEditor({ data, onChange }: { data: any; onChange: (data: any) => vo
     }
     
     try {
-      addFeaturedVideo(cleanUrl)
+      addFeaturedVideo(embedCode)
       setVideoUrlInput('') // Clear input after successful add
     } catch (error) {
       console.error('Error adding video:', error)
@@ -1455,50 +1456,47 @@ function HomeEditor({ data, onChange }: { data: any; onChange: (data: any) => vo
         <div className="flex justify-between items-center mb-4">
           <div>
             <h2 className="text-xl font-semibold text-navy">Featured Videos</h2>
-            <p className="text-sm text-navy/60 mt-1">Add up to 3 YouTube video URLs to feature on the homepage</p>
+            <p className="text-sm text-navy/60 mt-1">Add up to 3 YouTube embed codes to feature on the homepage</p>
           </div>
         </div>
         
         {/* Selected Featured Videos */}
         <div className="space-y-3 mb-6">
-          {(Array.isArray(data.featuredVideos) ? data.featuredVideos : []).map((url: string, index: number) => {
-            // Extract video ID for display - handle various URL formats
-            let videoId = url
-            const patterns = [
-              /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/,
-              /^([a-zA-Z0-9_-]{11})$/,
-            ]
-            for (const pattern of patterns) {
-              const match = url.match(pattern)
-              if (match && match[1]) {
-                videoId = match[1]
-                break
-              }
-            }
+          {(Array.isArray(data.featuredVideos) ? data.featuredVideos : []).map((embedCode: string, index: number) => {
+            // Extract video ID for display
+            const videoIdMatch = embedCode.match(/youtube\.com\/embed\/([^"&\s?]+)/)
+            const videoId = videoIdMatch ? videoIdMatch[1] : 'Unknown'
             
             return (
-              <div key={index} className="bg-offwhite p-4 rounded-lg border border-navy/10 flex items-center justify-between">
-                <div className="flex-1">
-                  <div className="font-medium text-navy mb-1 break-all text-sm">
-                    {url.length > 60 ? url.substring(0, 60) + '...' : url}
+              <div key={index} className="bg-offwhite p-4 rounded-lg border border-navy/10">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex-1">
+                    <div className="font-medium text-navy mb-1">
+                      Video {index + 1}
+                    </div>
+                    <div className="text-xs text-navy/60">
+                      Video ID: {videoId}
+                    </div>
                   </div>
-                  <div className="text-xs text-navy/60">
-                    Video ID: {videoId.length > 11 ? videoId.substring(0, 11) : videoId} • Video {index + 1}
+                  <button
+                    onClick={() => removeFeaturedVideo(index)}
+                    className="text-red-600 hover:text-red-700 text-sm font-medium px-3 py-1"
+                  >
+                    Remove
+                  </button>
+                </div>
+                <div className="mt-2 p-2 bg-white rounded border border-navy/10">
+                  <div className="text-xs text-navy/50 font-mono break-all max-h-20 overflow-y-auto">
+                    {embedCode.substring(0, 100)}...
                   </div>
                 </div>
-                <button
-                  onClick={() => removeFeaturedVideo(index)}
-                  className="text-red-600 hover:text-red-700 text-sm font-medium px-3 py-1"
-                >
-                  Remove
-                </button>
               </div>
             )
           })}
           {(!Array.isArray(data.featuredVideos) || data.featuredVideos.length === 0) && (
             <div className="text-center py-8 text-navy/50 border border-dashed border-navy/20 rounded-lg">
               <p>No featured videos added</p>
-              <p className="text-sm mt-1">Add YouTube video URLs below</p>
+              <p className="text-sm mt-1">Paste YouTube embed codes below</p>
             </div>
           )}
         </div>
@@ -1507,34 +1505,34 @@ function HomeEditor({ data, onChange }: { data: any; onChange: (data: any) => vo
         <div className="border-2 border-dashed border-navy/20 rounded-lg p-6">
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-navy mb-2">YouTube Video URL</label>
+              <label className="block text-sm font-medium text-navy mb-2">YouTube Embed Code</label>
               <p className="text-xs text-navy/60 mb-2">
-                Enter a YouTube video URL or video ID (e.g., https://www.youtube.com/watch?v=VIDEO_ID, https://youtu.be/VIDEO_ID, or just the VIDEO_ID)
+                Paste the embed code from YouTube (click Share → Embed on any YouTube video, then copy the iframe code)
               </p>
-              <div className="flex gap-2">
-                <input
-                  type="text"
+              <div className="space-y-2">
+                <textarea
                   value={videoUrlInput}
                   onChange={(e) => setVideoUrlInput(e.target.value)}
                   onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
+                    if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
                       e.preventDefault()
                       handleAddVideo()
                     }
                   }}
-                  placeholder="https://www.youtube.com/watch?v=... or https://youtu.be/..."
-                  className="flex-1 px-4 py-3 border border-navy/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet focus:border-transparent"
+                  placeholder='<iframe width="560" height="315" src="https://www.youtube.com/embed/VIDEO_ID" ...></iframe>'
+                  rows={4}
+                  className="w-full px-4 py-3 border border-navy/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet focus:border-transparent font-mono text-sm"
                 />
                 <button
                   onClick={handleAddVideo}
                   disabled={!Array.isArray(data.featuredVideos) || data.featuredVideos.length >= 3}
-                  className={`px-6 py-3 rounded-lg text-sm font-medium transition-colors ${
+                  className={`w-full px-6 py-3 rounded-lg text-sm font-medium transition-colors ${
                     (!Array.isArray(data.featuredVideos) || data.featuredVideos.length < 3)
                       ? 'bg-violet text-white hover:bg-violet/90'
                       : 'bg-navy/10 text-navy/40 cursor-not-allowed'
                   }`}
                 >
-                  {(!Array.isArray(data.featuredVideos) || data.featuredVideos.length < 3) ? 'Add Video' : 'Max 3'}
+                  {(!Array.isArray(data.featuredVideos) || data.featuredVideos.length < 3) ? 'Add Video' : 'Max 3 Videos'}
                 </button>
               </div>
             </div>
