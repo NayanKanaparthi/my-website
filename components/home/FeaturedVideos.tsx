@@ -24,19 +24,27 @@ export default async function FeaturedVideos() {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      {validVideos.map((embedCode: string, idx: number) => (
-        <div
-          key={idx}
-          className="group bg-white rounded-xl overflow-hidden border border-navy/10 hover:border-violet/30 hover:shadow-xl transition-all duration-300 relative"
-        >
-          <div className="relative aspect-video bg-navy/5">
-            <div 
-              dangerouslySetInnerHTML={{ __html: embedCode }}
-              className="w-full h-full"
-            />
+      {validVideos.map((embedCode: string, idx: number) => {
+        // Make iframe responsive by updating width and height attributes
+        const responsiveEmbedCode = embedCode
+          .replace(/width="[^"]*"/, 'width="100%"')
+          .replace(/height="[^"]*"/, 'height="100%"')
+          .replace(/style="[^"]*"/, '')
+        
+        return (
+          <div
+            key={idx}
+            className="group bg-white rounded-xl overflow-hidden border border-navy/10 hover:border-violet/30 hover:shadow-xl transition-all duration-300"
+          >
+            <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+              <div 
+                dangerouslySetInnerHTML={{ __html: responsiveEmbedCode }}
+                className="absolute top-0 left-0 w-full h-full"
+              />
+            </div>
           </div>
-        </div>
-      ))}
+        )
+      })}
     </div>
   )
 }

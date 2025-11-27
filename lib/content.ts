@@ -304,7 +304,7 @@ export async function getAboutContent(): Promise<AboutContent> {
 }
 
 export async function getHomeContent(): Promise<HomeContent> {
-  return readContent<HomeContent>('home.json', {
+  const content = await readContent<HomeContent>('home.json', {
     hero: {
       title: 'Building at the intersection of strategy, AI, and quantitative thinking',
       subtitle: 'Founder, strategist, and AI builder exploring the frontiers of technology and business.',
@@ -316,6 +316,24 @@ export async function getHomeContent(): Promise<HomeContent> {
     featuredVideos: [], // Array of YouTube video URLs or IDs (max 3)
     institutions: [],
   })
+  
+  // Always check file for featuredVideos to ensure latest videos from repository are used
+  // This ensures that videos added to the file are displayed even if Redis has older content
+  try {
+    const filePath = getContentPath('home.json')
+    if (fs.existsSync(filePath)) {
+      const fileContent = JSON.parse(fs.readFileSync(filePath, 'utf8'))
+      if (fileContent.featuredVideos && Array.isArray(fileContent.featuredVideos) && fileContent.featuredVideos.length > 0) {
+        // Merge file's featuredVideos with content from Redis/file
+        content.featuredVideos = fileContent.featuredVideos
+      }
+    }
+  } catch (error) {
+    // If file read fails, just use the content from readContent
+    console.error('Error reading featuredVideos from file:', error)
+  }
+  
+  return content
 }
 
 export async function getProjects(): Promise<Project[]> {
