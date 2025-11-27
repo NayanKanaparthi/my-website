@@ -171,9 +171,11 @@ export default function AdminEditor({ initialPost }: AdminEditorProps) {
         const style = window.getComputedStyle(el)
         const fontWeight = style.fontWeight
         const isBoldTag = el.tagName === 'STRONG' || el.tagName === 'B'
-        const isBoldStyle = fontWeight === 'bold' || fontWeight === '700' || parseInt(fontWeight) >= 600
-        const hasBoldClass = el.className && /bold|strong|font-weight|fw-/.test(el.className.toLowerCase())
-        return isBoldTag || isBoldStyle || hasBoldClass
+        const fontWeightNum = parseInt(fontWeight, 10)
+        const isBoldStyle = fontWeight === 'bold' || fontWeight === '700' || (!isNaN(fontWeightNum) && fontWeightNum >= 600)
+        const className = typeof el.className === 'string' ? el.className : (el.className as any)?.baseVal || ''
+        const hasBoldClass = className && /bold|strong|font-weight|fw-/.test(className.toLowerCase())
+        return isBoldTag || isBoldStyle || !!hasBoldClass
       }
       
       // Helper function to check if element is italic
