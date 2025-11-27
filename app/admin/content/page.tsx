@@ -49,12 +49,17 @@ export default function ContentManagementPage() {
   const saveContent = async () => {
     setSaving(true)
     try {
+      console.log('Saving content for type:', activeTab)
+      console.log('Data being saved:', JSON.stringify(data).substring(0, 500))
+      console.log('featuredVideos in data:', data?.featuredVideos)
+      
       const response = await fetch('/api/admin/content', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ type: activeTab, data }),
         credentials: 'include',
       })
+      
       if (!response.ok) {
         if (response.status === 401) {
           // Unauthorized - redirect to login
@@ -62,13 +67,19 @@ export default function ContentManagementPage() {
           return
         }
         const errorData = await response.json().catch(() => ({}))
+        console.error('Save failed:', response.status, errorData)
         throw new Error(errorData.error || `Failed to save content: ${response.statusText}`)
       }
+      
+      const result = await response.json()
+      console.log('Save successful:', result)
       alert('Content saved successfully!')
+      
+      // Reload content to ensure we have the latest from server
+      await loadContent()
     } catch (error) {
       console.error('Error saving content:', error)
       alert(error instanceof Error ? error.message : 'Failed to save content. Please try again.')
-      alert('Error saving content')
     } finally {
       setSaving(false)
     }
