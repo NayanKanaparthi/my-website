@@ -90,7 +90,7 @@ export async function getPostSlugs(): Promise<string[]> {
         const keys = await redisClient.keys('post:*')
         const redisSlugs = keys
           .map((key: string) => key.replace('post:', ''))
-        redisSlugs.forEach(slug => slugs.add(slug))
+        redisSlugs.forEach((slug: string) => slugs.add(slug))
       } catch (error) {
         console.error('Error listing posts from Redis:', error)
       }
