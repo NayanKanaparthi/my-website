@@ -2,9 +2,26 @@ import { NextRequest, NextResponse } from 'next/server'
 import { writeFile } from 'fs/promises'
 import path from 'path'
 import { isAuthenticated } from '@/lib/auth'
-import { put } from '@vercel/blob'
+import { createClient } from '@supabase/supabase-js'
 
 const isProduction = process.env.VERCEL === '1' || process.env.NODE_ENV === 'production'
+
+// Initialize Supabase client
+function getSupabaseClient() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+
+  if (!supabaseUrl || !supabaseServiceKey) {
+    return null
+  }
+
+  return createClient(supabaseUrl, supabaseServiceKey, {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false
+    }
+  })
+}
 
 export async function POST(request: NextRequest) {
   const authenticated = await isAuthenticated()
@@ -36,36 +53,56 @@ export async function POST(request: NextRequest) {
     const originalName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_')
     const filename = `${timestamp}-${originalName}`
 
-    // Use Vercel Blob Storage in production, file system in development
+    // Use Supabase Storage in production, file system in development
     if (isProduction) {
-      // Check if Blob storage is configured before attempting upload
-      if (!process.env.BLOB_READ_WRITE_TOKEN) {
+      const supabase = getSupabaseClient()
+      
+      if (!supabase) {
         return NextResponse.json(
           { 
-            error: 'Vercel Blob Storage is not configured. Please add Blob storage in your Vercel project. ' +
-                   'Go to your Vercel project → Storage → Create Database → Blob. ' +
-                   'After adding Blob storage, redeploy your project. ' +
-                   'The BLOB_READ_WRITE_TOKEN will be automatically added as an environment variable.'
+            error: 'Supabase Storage is not configured. Please set NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY environment variables. ' +
+                   'See MIGRATION.md for setup instructions.'
           },
           { status: 500 }
         )
       }
 
       try {
-        // Upload to Vercel Blob Storage
-        const blob = await put(`uploads/${filename}`, buffer, {
-          access: 'public',
-          contentType: file.type,
-        })
+        // Upload to Supabase Storage
+        const bucketName = process.env.SUPABASE_STORAGE_BUCKET || 'portfolio-assets'
+        const filePath = `uploads/${filename}`
         
-        return NextResponse.json({ url: blob.url, success: true })
-      } catch (blobError) {
-        console.error('Blob upload error:', blobError)
-        const errorMessage = blobError instanceof Error ? blobError.message : 'Unknown error'
+        const { data, error } = await supabase.storage
+          .from(bucketName)
+          .upload(filePath, buffer, {
+            contentType: file.type,
+            upsert: false, // Don't overwrite existing files
+          })
+
+        if (error) {
+          console.error('Supabase upload error:', error)
+          return NextResponse.json(
+            { 
+              error: `Failed to upload to Supabase Storage: ${error.message}. ` +
+                     'Please verify that Supabase Storage is properly configured.'
+            },
+            { status: 500 }
+          )
+        }
+
+        // Get public URL
+        const { data: urlData } = supabase.storage
+          .from(bucketName)
+          .getPublicUrl(filePath)
+
+        return NextResponse.json({ url: urlData.publicUrl, success: true })
+      } catch (uploadError) {
+        console.error('Upload error:', uploadError)
+        const errorMessage = uploadError instanceof Error ? uploadError.message : 'Unknown error'
         return NextResponse.json(
           { 
-            error: `Failed to upload to Blob storage: ${errorMessage}. ` +
-                   'Please verify that Blob storage is properly configured in your Vercel project.'
+            error: `Failed to upload file: ${errorMessage}. ` +
+                   'Please verify that Supabase Storage is properly configured.'
           },
           { status: 500 }
         )

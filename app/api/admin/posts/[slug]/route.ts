@@ -3,7 +3,6 @@ import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
 import { isAuthenticated } from '@/lib/auth'
-import { put, del as deleteBlob } from '@vercel/blob'
 
 const postsDirectory = path.join(process.cwd(), 'content/posts')
 const isProduction = process.env.VERCEL === '1' || process.env.NODE_ENV === 'production'
@@ -46,28 +45,31 @@ export async function PUT(
       .join('\n')}\n---\n\n${data.content || ''}`
 
     if (isProduction) {
-      // Use Vercel Blob Storage in production
-      if (!process.env.BLOB_READ_WRITE_TOKEN) {
-        return NextResponse.json(
-          { 
-            error: 'Vercel Blob Storage is not configured. Please add Blob storage in your Vercel project.'
-          },
-          { status: 500 }
-        )
-      }
-
+      // Use Redis in production
       try {
-        const blob = await put(`posts/${slug}.md`, content, {
-          access: 'public',
-          contentType: 'text/markdown',
-        })
-        return NextResponse.json({ slug, success: true, url: blob.url })
-      } catch (blobError) {
-        console.error('Blob upload error:', blobError)
-        const errorMessage = blobError instanceof Error ? blobError.message : 'Unknown error'
+        const { Redis } = require('@upstash/redis')
+        let redis
+        
+        try {
+          redis = Redis.fromEnv()
+        } catch {
+          const url = process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL
+          const token = process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN
+          if (!url || !token) {
+            throw new Error('Redis environment variables not found')
+          }
+          redis = new Redis({ url, token })
+        }
+
+        const key = `post:${slug}`
+        await redis.set(key, content)
+        return NextResponse.json({ slug, success: true })
+      } catch (redisError) {
+        console.error('Redis update error:', redisError)
+        const errorMessage = redisError instanceof Error ? redisError.message : 'Unknown error'
         return NextResponse.json(
           { 
-            error: `Failed to update post in Blob storage: ${errorMessage}`
+            error: `Failed to update post in Redis: ${errorMessage}`
           },
           { status: 500 }
         )
@@ -98,22 +100,28 @@ export async function DELETE(
     const slug = params.slug
 
     if (isProduction) {
-      // Use Vercel Blob Storage in production
-      if (!process.env.BLOB_READ_WRITE_TOKEN) {
-        return NextResponse.json(
-          { 
-            error: 'Vercel Blob Storage is not configured.'
-          },
-          { status: 500 }
-        )
-      }
-
+      // Use Redis in production
       try {
-        await deleteBlob(`posts/${slug}.md`)
+        const { Redis } = require('@upstash/redis')
+        let redis
+        
+        try {
+          redis = Redis.fromEnv()
+        } catch {
+          const url = process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL
+          const token = process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN
+          if (!url || !token) {
+            throw new Error('Redis environment variables not found')
+          }
+          redis = new Redis({ url, token })
+        }
+
+        const key = `post:${slug}`
+        await redis.del(key)
         return NextResponse.json({ success: true })
-      } catch (blobError) {
-        console.error('Blob delete error:', blobError)
-        // If blob doesn't exist, that's okay - return success
+      } catch (redisError) {
+        console.error('Redis delete error:', redisError)
+        // If post doesn't exist, that's okay - return success
         return NextResponse.json({ success: true })
       }
     } else {

@@ -10,9 +10,9 @@
     "generate-hash": "node scripts/generate-password-hash.js"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.39.0",
     "@types/nodemailer": "^7.0.4",
     "@upstash/redis": "^1.35.7",
-    "@vercel/blob": "^2.0.0",
     "bcryptjs": "^2.4.3",
     "date-fns": "^3.0.6",
     "gray-matter": "^4.0.3",

@@ -2,7 +2,6 @@ import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
 import { readTime } from './utils'
-import { list, head } from '@vercel/blob'
 
 export interface Post {
   slug: string
@@ -22,6 +21,51 @@ export interface Post {
 const postsDirectory = path.join(process.cwd(), 'content/posts')
 const isProduction = process.env.VERCEL === '1' || process.env.NODE_ENV === 'production'
 
+// Lazy initialization of Upstash Redis (same pattern as content.ts)
+let redis: any = null
+let redisInitialized = false
+
+function getRedisClient() {
+  if (!isProduction) {
+    return null
+  }
+
+  if (!redisInitialized) {
+    try {
+      const { Redis } = require('@upstash/redis')
+      
+      try {
+        redis = Redis.fromEnv()
+        if (redis) {
+          redisInitialized = true
+          return redis
+        }
+      } catch (fromEnvError) {
+        // Fall through to manual initialization
+      }
+      
+      const url = process.env.UPSTASH_REDIS_REST_URL || 
+                  process.env.KV_REST_API_URL
+      const token = process.env.UPSTASH_REDIS_REST_TOKEN || 
+                    process.env.KV_REST_API_TOKEN
+      
+      if (url && token) {
+        redis = new Redis({
+          url: url,
+          token: token,
+        })
+        redisInitialized = true
+        return redis
+      }
+    } catch (error) {
+      console.error('Failed to initialize Upstash Redis for posts:', error)
+      redisInitialized = true
+    }
+  }
+  
+  return redis
+}
+
 export async function getPostSlugs(): Promise<string[]> {
   const slugs = new Set<string>()
 
@@ -37,16 +81,19 @@ export async function getPostSlugs(): Promise<string[]> {
     }
   }
 
-  // In production, also get slugs from Blob Storage (posts created after deployment)
+  // In production, also get slugs from Redis (posts created after deployment)
   if (isProduction) {
-    try {
-      const { blobs } = await list({ prefix: 'posts/' })
-      const blobSlugs = blobs
-        .filter((blob) => blob.pathname.endsWith('.md'))
-        .map((blob) => blob.pathname.replace('posts/', '').replace(/\.md$/, ''))
-      blobSlugs.forEach(slug => slugs.add(slug))
-    } catch (error) {
-      console.error('Error listing posts from Blob Storage:', error)
+    const redisClient = getRedisClient()
+    if (redisClient) {
+      try {
+        // Get all post keys from Redis
+        const keys = await redisClient.keys('post:*')
+        const redisSlugs = keys
+          .map((key: string) => key.replace('post:', ''))
+        redisSlugs.forEach(slug => slugs.add(slug))
+      } catch (error) {
+        console.error('Error listing posts from Redis:', error)
+      }
     }
   }
 
@@ -63,23 +110,24 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
       try {
         fileContents = fs.readFileSync(fullPath, 'utf8')
       } catch (error) {
-        // Filesystem read failed, try Blob Storage
-        console.log(`Filesystem read failed for ${slug}, trying Blob Storage`)
+        // Filesystem read failed, try Redis
+        console.log(`Filesystem read failed for ${slug}, trying Redis`)
       }
     }
 
-    // If not found in filesystem and in production, try Blob Storage
+    // If not found in filesystem and in production, try Redis
     if (!fileContents && isProduction) {
-      try {
-        const blob = await head(`posts/${slug}.md`)
-        if (blob) {
-          const response = await fetch(blob.url)
-          if (response.ok) {
-            fileContents = await response.text()
+      const redisClient = getRedisClient()
+      if (redisClient) {
+        try {
+          const key = `post:${slug}`
+          const content = await redisClient.get(key)
+          if (content) {
+            fileContents = typeof content === 'string' ? content : JSON.stringify(content)
           }
+        } catch (error) {
+          console.error(`Error fetching post ${slug} from Redis:`, error)
         }
-      } catch (error) {
-        console.error(`Error fetching post ${slug} from Blob Storage:`, error)
       }
     }
 

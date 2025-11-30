@@ -83,13 +83,13 @@ Replace the placeholder in `app/about/page.tsx` with your actual photo:
      - `UPSTASH_REDIS_REST_TOKEN`
    - These are automatically available to your application
 
-2. **Set up Vercel Blob Storage (Required for Image/File Uploads)**
-   - Go to your Vercel project dashboard
-   - Click on **Storage** → **Create Database** → **Blob**
-   - Follow the prompts to create your Blob storage
-   - Vercel will automatically add the required environment variable:
-     - `BLOB_READ_WRITE_TOKEN`
-   - This is automatically available to your application
+2. **Set up Supabase Storage (Required for Image/File Uploads)**
+   - Go to [https://supabase.com](https://supabase.com) and create a free account
+   - Create a new project
+   - Go to **Storage** → **New bucket**
+   - Create a bucket named `portfolio-assets` and make it **Public**
+   - Go to **Settings** → **API** to get your credentials
+   - See `MIGRATION.md` for detailed setup instructions
 
 2. **Set Environment Variables**
    In your Vercel project settings, add:
@@ -97,7 +97,11 @@ Replace the placeholder in `app/about/page.tsx` with your actual photo:
    ADMIN_PASSWORD_HASH=your_generated_hash_here
    JWT_SECRET=your_random_secret_string_here
    NODE_ENV=production
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+   SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
+   SUPABASE_STORAGE_BUCKET=portfolio-assets
    ```
+   See `MIGRATION.md` for detailed instructions on getting these Supabase values.
 
 3. **Deploy**
    - Push your code to GitHub

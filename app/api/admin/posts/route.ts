@@ -4,7 +4,6 @@ import path from 'path'
 import matter from 'gray-matter'
 import { isAuthenticated } from '@/lib/auth'
 import { getAllPosts } from '@/lib/posts'
-import { put } from '@vercel/blob'
 
 const postsDirectory = path.join(process.cwd(), 'content/posts')
 const isProduction = process.env.VERCEL === '1' || process.env.NODE_ENV === 'production'
@@ -62,31 +61,32 @@ export async function POST(request: NextRequest) {
       .join('\n')}\n---\n\n${data.content || ''}`
 
     if (isProduction) {
-      // Use Vercel Blob Storage in production
-      if (!process.env.BLOB_READ_WRITE_TOKEN) {
-        return NextResponse.json(
-          { 
-            error: 'Vercel Blob Storage is not configured. Please add Blob storage in your Vercel project. ' +
-                   'Go to your Vercel project → Storage → Create Database → Blob. ' +
-                   'After adding Blob storage, redeploy your project.'
-          },
-          { status: 500 }
-        )
-      }
-
+      // Use Redis in production
       try {
-        const blob = await put(`posts/${slug}.md`, content, {
-          access: 'public',
-          contentType: 'text/markdown',
-        })
-        return NextResponse.json({ slug, success: true, url: blob.url })
-      } catch (blobError) {
-        console.error('Blob upload error:', blobError)
-        const errorMessage = blobError instanceof Error ? blobError.message : 'Unknown error'
+        const { Redis } = require('@upstash/redis')
+        let redis
+        
+        try {
+          redis = Redis.fromEnv()
+        } catch {
+          const url = process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL
+          const token = process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN
+          if (!url || !token) {
+            throw new Error('Redis environment variables not found')
+          }
+          redis = new Redis({ url, token })
+        }
+
+        const key = `post:${slug}`
+        await redis.set(key, content)
+        return NextResponse.json({ slug, success: true })
+      } catch (redisError) {
+        console.error('Redis save error:', redisError)
+        const errorMessage = redisError instanceof Error ? redisError.message : 'Unknown error'
         return NextResponse.json(
           { 
-            error: `Failed to save post to Blob storage: ${errorMessage}. ` +
-                   'Please verify that Blob storage is properly configured in your Vercel project.'
+            error: `Failed to save post to Redis: ${errorMessage}. ` +
+                   'Please verify that Upstash Redis is properly configured in your Vercel project.'
           },
           { status: 500 }
         )
