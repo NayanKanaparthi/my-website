@@ -28,7 +28,8 @@ export default function ImageUpload({ value, onChange }: ImageUploadProps) {
         const data = await response.json()
         onChange(data.url)
       } else {
-        alert('Failed to upload image')
+        const errorData = await response.json().catch(() => ({ error: 'Failed to upload image' }))
+        alert(errorData.error || 'Failed to upload image')
       }
     } catch (error) {
       console.error('Upload error:', error)

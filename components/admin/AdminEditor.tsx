@@ -65,7 +65,8 @@ export default function AdminEditor({ initialPost }: AdminEditorProps) {
         setPdfFile(data.url)
         setUsePdf(true)
       } else {
-        alert('Failed to upload PDF')
+        const errorData = await response.json().catch(() => ({ error: 'Failed to upload PDF' }))
+        alert(errorData.error || 'Failed to upload PDF')
       }
     } catch (error) {
       console.error('PDF upload error:', error)
@@ -99,7 +100,8 @@ export default function AdminEditor({ initialPost }: AdminEditorProps) {
         const data = await response.json()
         setCoverImage(data.url)
       } else {
-        alert('Failed to upload image')
+        const errorData = await response.json().catch(() => ({ error: 'Failed to upload image' }))
+        alert(errorData.error || 'Failed to upload image')
       }
     } catch (error) {
       console.error('Image upload error:', error)

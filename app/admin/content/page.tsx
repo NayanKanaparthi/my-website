@@ -798,7 +798,8 @@ function LogoUpload({ onUpload }: { onUpload: (url: string) => void }) {
         // Reset input
         e.target.value = ''
       } else {
-        alert('Failed to upload logo')
+        const errorData = await response.json().catch(() => ({ error: 'Failed to upload logo' }))
+        alert(errorData.error || 'Failed to upload logo')
       }
     } catch (error) {
       console.error('Upload error:', error)
