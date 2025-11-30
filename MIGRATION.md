@@ -155,3 +155,4 @@ If you encounter issues:
 - **Bandwidth**: Free tier is 2 GB/month. For a personal portfolio, this should be plenty
 - **Upgrade**: If you need more, Supabase Pro is $25/month with 100 GB storage
 
+
