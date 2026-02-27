@@ -170,9 +170,41 @@ function ContentEditor({ type, data, onChange }: { type: ContentType; data: any;
   }
 }
 
+function moveItem<T>(array: T[], fromIndex: number, direction: 'up' | 'down'): T[] {
+  const toIndex = direction === 'up' ? fromIndex - 1 : fromIndex + 1
+  if (toIndex < 0 || toIndex >= array.length) return array
+  const newArray = [...array]
+  const [removed] = newArray.splice(fromIndex, 1)
+  newArray.splice(toIndex, 0, removed)
+  return newArray
+}
+
+function ReorderButtons({ index, total, onMove }: { index: number; total: number; onMove: (direction: 'up' | 'down') => void }) {
+  return (
+    <div className="flex items-center gap-1">
+      <button
+        onClick={() => onMove('up')}
+        disabled={index === 0}
+        className="px-2 py-1 text-navy/60 hover:text-navy hover:bg-navy/10 rounded disabled:opacity-30 disabled:hover:bg-transparent text-sm"
+        title="Move up"
+      >
+        ↑
+      </button>
+      <button
+        onClick={() => onMove('down')}
+        disabled={index === total - 1}
+        className="px-2 py-1 text-navy/60 hover:text-navy hover:bg-navy/10 rounded disabled:opacity-30 disabled:hover:bg-transparent text-sm"
+        title="Move down"
+      >
+        ↓
+      </button>
+    </div>
+  )
+}
+
 function WorkEditor({ data, onChange }: { data: any[]; onChange: (data: any[]) => void }) {
   const addItem = () => {
-    onChange([...data, {
+    onChange([{
       slug: '',
       title: '',
       client: '',
@@ -185,7 +217,7 @@ function WorkEditor({ data, onChange }: { data: any[]; onChange: (data: any[]) =
       implementation: [],
       outcomes: [],
       learnings: [],
-    }])
+    }, ...data])
   }
 
   const removeItem = (index: number) => {
@@ -213,12 +245,15 @@ function WorkEditor({ data, onChange }: { data: any[]; onChange: (data: any[]) =
         <div key={index} className="bg-offwhite p-6 rounded-lg border border-navy/10">
           <div className="flex justify-between items-start mb-4">
             <h3 className="text-lg font-semibold text-navy">Item {index + 1}</h3>
-            <button
-              onClick={() => removeItem(index)}
-              className="text-red-600 hover:text-red-700 text-sm"
-            >
-              Delete
-            </button>
+            <div className="flex items-center gap-2">
+              <ReorderButtons index={index} total={data.length} onMove={(dir) => onChange(moveItem(data, index, dir))} />
+              <button
+                onClick={() => removeItem(index)}
+                className="text-red-600 hover:text-red-700 text-sm"
+              >
+                Delete
+              </button>
+            </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
@@ -343,7 +378,7 @@ function WorkEditor({ data, onChange }: { data: any[]; onChange: (data: any[]) =
 
 function VenturesEditor({ data, onChange }: { data: any[]; onChange: (data: any[]) => void }) {
   const addItem = () => {
-    onChange([...data, { title: '', description: '', status: 'Active', year: new Date().getFullYear().toString(), link: '', image: '' }])
+    onChange([{ title: '', description: '', status: 'Active', year: new Date().getFullYear().toString(), link: '', image: '' }, ...data])
   }
 
   const removeItem = (index: number) => {
@@ -368,7 +403,10 @@ function VenturesEditor({ data, onChange }: { data: any[]; onChange: (data: any[
         <div key={index} className="bg-offwhite p-6 rounded-lg border border-navy/10">
           <div className="flex justify-between items-start mb-4">
             <h3 className="text-lg font-semibold text-navy">Venture {index + 1}</h3>
-            <button onClick={() => removeItem(index)} className="text-red-600 hover:text-red-700 text-sm">Delete</button>
+            <div className="flex items-center gap-2">
+              <ReorderButtons index={index} total={data.length} onMove={(dir) => onChange(moveItem(data, index, dir))} />
+              <button onClick={() => removeItem(index)} className="text-red-600 hover:text-red-700 text-sm">Delete</button>
+            </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
@@ -421,7 +459,7 @@ function ProjectsEditor({ data, onChange }: { data: any[]; onChange: (data: any[
   const projects = Array.isArray(data) ? data : []
 
   const addItem = () => {
-    onChange([...projects, { title: '', description: '', image: '', githubLink: '', projectLink: '', type: 'project', category: '', date: '', tags: [] }])
+    onChange([{ title: '', description: '', image: '', githubLink: '', projectLink: '', type: 'project', category: '', date: '', tags: [] }, ...projects])
   }
 
   const removeItem = (index: number) => {
@@ -449,12 +487,15 @@ function ProjectsEditor({ data, onChange }: { data: any[]; onChange: (data: any[
         <div key={index} className="bg-offwhite p-6 rounded-lg border border-navy/10">
           <div className="flex justify-between items-start mb-4">
             <h3 className="text-lg font-semibold text-navy">Project {index + 1}</h3>
-            <button
-              onClick={() => removeItem(index)}
-              className="text-red-600 hover:text-red-700 text-sm"
-            >
-              Delete
-            </button>
+            <div className="flex items-center gap-2">
+              <ReorderButtons index={index} total={projects.length} onMove={(dir) => onChange(moveItem(projects, index, dir))} />
+              <button
+                onClick={() => removeItem(index)}
+                className="text-red-600 hover:text-red-700 text-sm"
+              >
+                Delete
+              </button>
+            </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
@@ -562,7 +603,7 @@ function AboutEditor({ data, onChange }: { data: any; onChange: (data: any) => v
 
   const addExperience = (type: 'professionalExperience' | 'leadershipExperience') => {
     const experiences = data[type] || []
-    updateField(type, [...experiences, { title: '', company: '', location: '', startDate: '', endDate: '', description: '', companyImage: '' }])
+    updateField(type, [{ title: '', company: '', location: '', startDate: '', endDate: '', description: '', companyImage: '' }, ...experiences])
   }
 
   const removeExperience = (type: 'professionalExperience' | 'leadershipExperience', index: number) => {
@@ -576,14 +617,24 @@ function AboutEditor({ data, onChange }: { data: any; onChange: (data: any) => v
     updateField(type, experiences)
   }
 
+  const moveExperience = (type: 'professionalExperience' | 'leadershipExperience', index: number, direction: 'up' | 'down') => {
+    const experiences = [...(data[type] || [])]
+    updateField(type, moveItem(experiences, index, direction))
+  }
+
   const addEducation = () => {
     const education = data.education || []
-    updateField('education', [...education, { university: '', major: '', relevantCoursework: '', location: '', year: '', universityLogo: '' }])
+    updateField('education', [{ university: '', major: '', relevantCoursework: '', location: '', year: '', universityLogo: '' }, ...education])
   }
 
   const removeEducation = (index: number) => {
     const education = data.education || []
     updateField('education', education.filter((_: any, i: number) => i !== index))
+  }
+
+  const moveEducation = (index: number, direction: 'up' | 'down') => {
+    const education = [...(data.education || [])]
+    updateField('education', moveItem(education, index, direction))
   }
 
   const updateEducation = (index: number, field: string, value: string) => {
@@ -643,7 +694,10 @@ function AboutEditor({ data, onChange }: { data: any; onChange: (data: any) => v
           <div key={index} className="bg-offwhite p-4 rounded-lg border border-navy/10 mb-4">
             <div className="flex justify-between items-start mb-3">
               <h3 className="font-semibold text-navy">Education {index + 1}</h3>
-              <button onClick={() => removeEducation(index)} className="text-red-600 hover:text-red-700 text-sm">Delete</button>
+              <div className="flex items-center gap-2">
+                <ReorderButtons index={index} total={(data.education || []).length} onMove={(dir) => moveEducation(index, dir)} />
+                <button onClick={() => removeEducation(index)} className="text-red-600 hover:text-red-700 text-sm">Delete</button>
+              </div>
             </div>
             <div className="space-y-3">
               <div className="grid grid-cols-2 gap-4">
@@ -681,7 +735,10 @@ function AboutEditor({ data, onChange }: { data: any; onChange: (data: any) => v
           <div key={index} className="bg-offwhite p-4 rounded-lg border border-navy/10 mb-4">
             <div className="flex justify-between items-start mb-3">
               <h3 className="font-semibold text-navy">Experience {index + 1}</h3>
-              <button onClick={() => removeExperience('professionalExperience', index)} className="text-red-600 hover:text-red-700 text-sm">Delete</button>
+              <div className="flex items-center gap-2">
+                <ReorderButtons index={index} total={(data.professionalExperience || []).length} onMove={(dir) => moveExperience('professionalExperience', index, dir)} />
+                <button onClick={() => removeExperience('professionalExperience', index)} className="text-red-600 hover:text-red-700 text-sm">Delete</button>
+              </div>
             </div>
             <div className="space-y-3">
               <div className="grid grid-cols-2 gap-4">
@@ -719,7 +776,10 @@ function AboutEditor({ data, onChange }: { data: any; onChange: (data: any) => v
           <div key={index} className="bg-offwhite p-4 rounded-lg border border-navy/10 mb-4">
             <div className="flex justify-between items-start mb-3">
               <h3 className="font-semibold text-navy">Experience {index + 1}</h3>
-              <button onClick={() => removeExperience('leadershipExperience', index)} className="text-red-600 hover:text-red-700 text-sm">Delete</button>
+              <div className="flex items-center gap-2">
+                <ReorderButtons index={index} total={(data.leadershipExperience || []).length} onMove={(dir) => moveExperience('leadershipExperience', index, dir)} />
+                <button onClick={() => removeExperience('leadershipExperience', index)} className="text-red-600 hover:text-red-700 text-sm">Delete</button>
+              </div>
             </div>
             <div className="space-y-3">
               <div className="grid grid-cols-2 gap-4">
