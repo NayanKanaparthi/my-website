@@ -63,7 +63,7 @@ export default async function Home() {
               className="inline-flex items-center justify-center lg:justify-start gap-2 text-sm text-navy/50 hover:text-violet transition-colors"
             >
               <span className="w-2 h-2 bg-violet rounded-full animate-pulse"></span>
-              <span>Available for consulting & collaborations</span>
+              <span>Open to collaborations & new opportunities</span>
             </Link>
           </div>
         </div>

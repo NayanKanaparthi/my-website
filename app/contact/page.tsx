@@ -88,17 +88,9 @@ export default function ContactPage() {
       <div className="mb-12">
         <h1 className="text-4xl md:text-5xl font-semibold text-navy mb-4">Contact</h1>
         <p className="text-xl text-navy/70 max-w-2xl mb-6">
-          I take on a small number of consulting engagements alongside my graduate work, and I&apos;m
-          open to AI Engineer and AI Solutions roles.
+          I&apos;m open to AI Engineer and AI Solutions roles, research collaborations, and speaking
+          opportunities.
         </p>
-        <div className="bg-white rounded-lg border border-navy/10 p-6 mb-6">
-          <p className="text-sm font-medium text-navy mb-3">Consulting engagements typically look like:</p>
-          <ul className="space-y-2 text-navy/70 text-sm">
-            <li className="flex gap-2"><span className="text-violet">•</span> AI adoption strategy: where AI actually moves your numbers, and how to get your team using it</li>
-            <li className="flex gap-2"><span className="text-violet">•</span> Building AI systems: RAG assistants, LLM workflows, and evaluation pipelines, production-grade</li>
-            <li className="flex gap-2"><span className="text-violet">•</span> Team enablement workshops: practical LLM training like the sessions I led for US and UK procurement teams at Avis Budget Group</li>
-          </ul>
-        </div>
         <p className="text-navy/70">
           Fastest way to reach me:{' '}
           <a href="mailto:nk4286@nyu.edu" className="text-violet hover:underline font-medium">
