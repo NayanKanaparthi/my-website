@@ -25,8 +25,35 @@ const papers = [
   },
 ]
 
+const studies = [
+  {
+    title: 'A Structured Methodology for AI-Native Entrepreneurship',
+    venue: 'Berkley Center for Entrepreneurship, NYU Stern',
+    status: 'In Progress · 2026',
+    description:
+      'Original research defining the first ordered, structured, empirically grounded methodology for ' +
+      'building AI-native startups: a codified method for the AI-native era, analogous to Disciplined ' +
+      'Entrepreneurship or Lean Startup, which predate AI-native building. Built from deep case studies of ' +
+      '~12 AI-native startups (Cursor, Cognition, Perplexity, Replit, and others) drawn from a landscape ' +
+      'catalog of ~50 companies, each profiled on a fixed template covering how they build, what they sell, ' +
+      'validation approach, scaling levers, and failure modes. The methodology feeds an AI-powered ' +
+      'founder-advising tool for NYU founders, gated on validation of the framework itself.',
+    keywords: ['AI-Native Startups', 'Entrepreneurship Methodology', 'Case-Study Research', 'Founder Tools'],
+  },
+  {
+    title: 'ADHD-Attention LLM: Can Loosening Attention Make Models More Creative?',
+    venue: 'Independent Study · Mechanistic Interpretability',
+    status: 'Completed · 2026',
+    description:
+      'Tested three attention interventions (attention dropout, pre-softmax temperature flattening, and ' +
+      'head dropout) on Qwen 2.5 to probe whether loosening attention increases LLM creativity. The result ' +
+      'is a clean negative finding with mechanistic failure analysis: an honest null result rather than a ' +
+      'manufactured positive, written up publicly as "I Tried to Give an LLM ADHD."',
+    keywords: ['Mechanistic Interpretability', 'Attention Mechanisms', 'LLM Internals', 'Negative Results'],
+  },
+]
+
 const ongoing = [
-  'Defining the first structured, empirically grounded methodology for AI-native entrepreneurship, built from deep case studies of AI-native startups (Berkley Center for Entrepreneurship, NYU Stern)',
   'Energy constraints and grid bottlenecks shaping AI data center strategy and platform scalability',
 ]
 
@@ -86,6 +113,37 @@ export default function ResearchPage() {
             </div>
           </article>
         ))}
+      </div>
+
+      <div className="mt-16">
+        <h2 className="text-2xl font-semibold text-navy mb-6">Active & Independent Research</h2>
+        <div className="space-y-8">
+          {studies.map((study) => (
+            <article
+              key={study.title}
+              className="bg-white rounded-lg border border-navy/10 hover:border-violet/30 hover:shadow-lg transition-all duration-300 group p-8"
+            >
+              <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4 gap-2">
+                <h3 className="text-xl font-semibold text-navy group-hover:text-violet transition-colors max-w-3xl">
+                  {study.title}
+                </h3>
+                <span className="text-sm text-navy/50 whitespace-nowrap">{study.status}</span>
+              </div>
+              <p className="text-sm font-medium text-violet mb-4">{study.venue}</p>
+              <p className="text-navy/70 leading-relaxed serif max-w-3xl mb-6">{study.description}</p>
+              <div className="flex flex-wrap gap-2">
+                {study.keywords.map((keyword) => (
+                  <span
+                    key={keyword}
+                    className="text-xs font-medium px-3 py-1 rounded-full text-navy/60 bg-navy/5"
+                  >
+                    {keyword}
+                  </span>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
       </div>
 
       <div className="mt-16">
