@@ -7,7 +7,6 @@ import { getHomeContent } from '@/lib/content'
 
 const proofPoints = [
   { stat: '97.7% adoption', context: 'AI learning tools across 265 Scholars, Goldman Sachs BiB × NYU Stern' },
-  { stat: '$1M+ recovery target', context: 'AWS audit pipeline for Global Procurement at Avis Budget Group' },
   { stat: '6,000+ downloads', context: 'AIGIS, open-source AI governance CLI on npm and PyPI' },
   { stat: 'SSRN Recent Top Paper', context: 'Published research on AI infrastructure economics' },
 ]
@@ -74,7 +73,7 @@ export default async function Home() {
 
       {/* Proof Bar */}
       <section className="max-w-6xl mx-auto px-6 sm:px-8 pb-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 border-y border-navy/10 py-8">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 border-y border-navy/10 py-8">
           {proofPoints.map((point) => (
             <div key={point.stat} className="text-center lg:text-left">
               <div className="text-xl font-semibold text-navy mb-1">{point.stat}</div>
