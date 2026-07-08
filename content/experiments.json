@@ -1,1 +1,51 @@
-[]
+[
+  {
+    "title": "ADHD-Attention LLM",
+    "description": "Tested three attention interventions — attention dropout, pre-softmax temperature flattening, and head dropout — on Qwen 2.5 to probe whether loosening attention increases LLM creativity. Delivered a clean negative result with mechanistic failure analysis, written up publicly as \"I Tried to Give an LLM ADHD.\"",
+    "status": "Completed",
+    "tags": [
+      "Mechanistic Interpretability",
+      "LLM Internals",
+      "PyTorch"
+    ]
+  },
+  {
+    "title": "StatArb Lab",
+    "description": "A paper-trading market-neutral statistical-arbitrage rig: sector-constrained Engle-Granger cointegration pair selection, an Ornstein-Uhlenbeck half-life filter for mean-reversion speed, rolling z-score entry/exit signals, walk-forward replay with no lookahead, and a \"loser-autopsy\" module that dissects losing trades.",
+    "status": "Active",
+    "tags": [
+      "Quant Finance",
+      "Backtesting",
+      "Python"
+    ]
+  },
+  {
+    "title": "Code Review Council (Claude Skill)",
+    "description": "A custom Claude Skill that runs checkpoint reviews using a council of five independent QA advisors — each auditing the codebase from a different angle (bugs, architecture, security, future-proofing, performance) — who then peer-review each other's findings and produce a unified verdict with a PASS / WARN / HOLD badge.",
+    "status": "Shipped",
+    "tags": [
+      "Claude Skills",
+      "Multi-Agent",
+      "Developer Tools"
+    ]
+  },
+  {
+    "title": "Venture Assessor (Claude Skill)",
+    "description": "An Anthropic Claude Skill for evidence-first startup idea evaluation: market research, competitor mapping, beachhead market selection, TAM sizing, validation design, and go-to-market hypothesis generation.",
+    "status": "Shipped",
+    "tags": [
+      "Claude Skills",
+      "Entrepreneurship"
+    ]
+  },
+  {
+    "title": "Risk Lab",
+    "description": "A quantitative risk and stress-testing simulator using Monte Carlo methods and dynamic factor models (VIX, rates, market, and oil shocks) to analyze portfolio resilience under extreme market scenarios. Built with Python and Streamlit.",
+    "status": "Active",
+    "tags": [
+      "Quant Finance",
+      "Monte Carlo",
+      "Streamlit"
+    ]
+  }
+]

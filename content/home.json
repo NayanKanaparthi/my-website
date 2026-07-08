@@ -1,20 +1,28 @@
 {
   "hero": {
-    "title": "Building at the intersection of Technology and Business Strategy",
-    "subtitle": "Strategist and AI builder applying quantitative thinking to business, management, and innovation.",
-    "image": "/uploads/1763842923990-1695654532765.jpeg"
+    "title": "I build production AI systems — and get organizations to actually adopt them.",
+    "subtitle": "AI engineering, adoption science, and technical product strategy — at NYU, Goldman Sachs, and Avis Budget Group.",
+    "image": "https://rgjbldklvuetedpmkhwy.supabase.co/storage/v1/object/public/Portfolio-assets/uploads/1764517230811-WhatsApp_Image_2025-11-27_at_15.59.38_e83f9adc.jpg"
   },
   "featuredWork": [
-    "advantage-ecosystem-questlabs"
+    "anticipate-predictive-urban-safety",
+    "aigis-ai-governance-cli",
+    "tokenomics-ai-optimization"
   ],
-  "featuredBlogs": [],
-  "featuredVentures": [],
-  "featuredProjects": [],
-  "featuredVideos": [
-    "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/eQNY0mtc534?si=axtJEM4XHSFEG1Wv\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
-    "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/JlLudLf2T2I?si=a2QimtEzlUKO9Qqb\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
-    "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/9wdGHiRTta4?si=uVWSrlKQFZoWMeVY\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
-    "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/5vGrRCmFy9c?si=EMZBypXax7-6ETjI\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
+  "featuredBlogs": [
+    "deepscout-building-a-search-grounded-ai-browser-agent-with-fine-tuned-3b-models",
+    "swiggy-vs-zomato-a-business-case-study-on-tech-strategy-profitability",
+    "rewiring-for-digital-transformation-the-strategic-foundation-part-1"
+  ],
+  "featuredVentures": [
+    0,
+    3,
+    1
+  ],
+  "featuredProjects": [
+    0,
+    1,
+    2
   ],
   "playbooks": [],
   "institutions": [
@@ -41,10 +49,52 @@
     {
       "image": "/uploads/1763998640709-Advantage.png",
       "name": ""
+    },
+    {
+      "image": "https://rgjbldklvuetedpmkhwy.supabase.co/storage/v1/object/public/Portfolio-assets/uploads/1764517257657-download__6_.png",
+      "name": ""
+    },
+    {
+      "image": "https://rgjbldklvuetedpmkhwy.supabase.co/storage/v1/object/public/Portfolio-assets/uploads/1764517263125-download__7_.png",
+      "name": ""
+    },
+    {
+      "image": "https://rgjbldklvuetedpmkhwy.supabase.co/storage/v1/object/public/Portfolio-assets/uploads/1764517269287-channels4_profile.jpg",
+      "name": ""
+    },
+    {
+      "image": "https://rgjbldklvuetedpmkhwy.supabase.co/storage/v1/object/public/Portfolio-assets/uploads/1764517273437-download__4_.png",
+      "name": ""
+    },
+    {
+      "image": "https://rgjbldklvuetedpmkhwy.supabase.co/storage/v1/object/public/Portfolio-assets/uploads/1764517291313-MS_Startups_FH_lockup_stack_alt_OnLght_RGB-removebg-preview.png",
+      "name": ""
+    },
+    {
+      "image": "https://rgjbldklvuetedpmkhwy.supabase.co/storage/v1/object/public/Portfolio-assets/uploads/1764517307431-mlh-facebook-ae6144c0a3605f15992ee2970616db8d-removebg-preview.png",
+      "name": ""
+    },
+    {
+      "image": "https://rgjbldklvuetedpmkhwy.supabase.co/storage/v1/object/public/Portfolio-assets/uploads/1764517337592-1645562238012.png",
+      "name": ""
+    },
+    {
+      "image": "https://rgjbldklvuetedpmkhwy.supabase.co/storage/v1/object/public/Portfolio-assets/uploads/1764517355900-SOLARIS.png",
+      "name": ""
+    },
+    {
+      "image": "https://rgjbldklvuetedpmkhwy.supabase.co/storage/v1/object/public/Portfolio-assets/uploads/1768447649118-BerkleyCenterLogo_Black_RGB.png",
+      "name": ""
     }
   ],
   "socialLinks": {
     "twitter": "https://x.com/NayanKanaparthi",
     "linkedin": "https://www.linkedin.com/in/nayan-kanaparthi/"
-  }
+  },
+  "featuredVideos": [
+    "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/eQNY0mtc534?si=axtJEM4XHSFEG1Wv\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/JlLudLf2T2I?si=a2QimtEzlUKO9Qqb\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/9wdGHiRTta4?si=uVWSrlKQFZoWMeVY\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+    "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/5vGrRCmFy9c?si=EMZBypXax7-6ETjI\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
+  ]
 }

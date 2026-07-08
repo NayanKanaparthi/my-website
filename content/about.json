@@ -1,30 +1,83 @@
 {
-  "bio": "test",
+  "bio": "NYU Graduate Student (MS, Management of Technology) | MIT-Trained Innovator | Building production AI systems — and getting organizations to actually adopt them | AI Solutions and Enablement Intern @ Avis Budget Group | AI Graduate Assistant @ Goldman Sachs Black in Business × NYU Stern | 2× SSRN-Published Researcher | Co-Founder, AdVantage Ecosystem",
   "timeline": [],
   "skills": {
     "Strategy": [
-      ""
+      "Strategic Market Analysis, Go-To-Market Strategy, Competitive Analysis, Digital Transformation, Business Development, Stakeholder Management, Innovation Strategy, AI Governance (NIST AI RMF, OWASP LLM, ISO 42001), Executive Communication, Financial Modeling, Project Management"
     ],
     "AI": [
-      ""
+      "Retrieval-Augmented Generation (RAG), LLM Fine-Tuning (QLoRA / LoRA), vLLM & GPU Inference Serving, Agentic Systems & Tool-Calling, Foundation-Model Video Pipelines (V-JEPA 2), Semantic Caching (FAISS, pgvector), Guardrails & Rate Limiting, LLM Evaluation & Benchmarking, Inference Cost Optimization, AWS Bedrock & Serverless AI, FastAPI, Docker & Kubernetes (EKS), Prompt Engineering, Model Context Protocol (MCP)"
     ],
     "Quantitative": [
-      ""
+      "Monte Carlo Simulation, Geometric Brownian Motion (GBM), Value at Risk (VaR / CVaR), Statistical Arbitrage & Cointegration, Portfolio Analytics, Financial Modeling, Python Analytics, SQL, Statistical Modeling, Data Visualization"
     ],
     "Product": [
-      ""
+      "Product Strategy, User Research, Rapid Prototyping, A/B Testing, Adoption Science & AI Enablement, Engagement Metrics, User Engagement Design, Gamification, Community-Led Growth, Technical Storytelling"
     ]
   },
-  "image": "/uploads/1763842729989-1695654532765.jpeg",
+  "image": "https://rgjbldklvuetedpmkhwy.supabase.co/storage/v1/object/public/Portfolio-assets/uploads/1764517216604-WhatsApp_Image_2025-11-27_at_15.59.38_e83f9adc.jpg",
   "professionalExperience": [
+    {
+      "title": "AI Solutions and Enablement Intern",
+      "company": "Avis Budget Group",
+      "location": "Parsippany, New Jersey",
+      "startDate": "Jun 2026",
+      "endDate": "Aug 2026",
+      "description": "Embedded with Global Procurement on a CEO-sponsored AI transformation initiative at Avis Budget Group (NASDAQ: CAR, ~25,000 employees), owning AI use cases end to end — from discovery and scoping through build and adoption — on the AI Solutions and Enablement team reporting to the Office of the CEO.\n- Designed an end-to-end AWS serverless pipeline to audit ~100,000 annual roadside-tow invoices, targeting recovery of $1M+ in identified supplier over-mileage (Lambda, Step Functions, RDS PostgreSQL, Amazon Location, Bedrock, CDK), now being containerized for deployment on AWS EKS (Kubernetes)\n- Built a commodities market-intelligence agent on AWS Bedrock that gives procurement early warning on supply and price shocks — grounded, source-verified alerts with a layered anti-hallucination system: span-level citations, deterministic citation checks, and a separate-model entailment verifier\n- Designed and led live AI enablement workshops for the US and UK Procurement teams, covering practical LLM application, prompt engineering, and responsible-use guardrails, with live demos on core procurement workflows\n- Scoped a document-AI and anomaly-detection system to audit vendor repair invoices, expanding audit coverage from 50% toward 100%"
+    },
+    {
+      "title": "AI Graduate Assistant",
+      "company": "Goldman Sachs x NYU Stern School of Business",
+      "location": "New York City",
+      "startDate": "Feb 2026",
+      "endDate": "",
+      "description": "Building and deploying AI tools for the Goldman Sachs Black in Business program, delivered in partnership with NYU Stern — embedding structured AI systems into the learning and operational workflows of an entrepreneurship cohort of 265 Scholars.\n- Designed and operationalized an AI-assisted learning framework with module-specific prompt libraries; Module 1 measured 97.7% adoption (259 of 265 Scholars) and 96.5% rated the prompts helpful, with zero \"not at all helpful\" ratings\n- Built and shipped the SMART Goal Builder, a production web app (React, Vercel Edge Functions, LLM-guided conversational flow) that walks non-technical business owners from a vague aspiration to a polished SMART goal\n- Built and shipped the BiB Financial Benchmark Tool: Scholars compare their P&L margins against industry benchmarks across 37 industries — built from data aggregating ~4.5M privately held U.S. businesses — with AI-powered industry matching and plain-English interpretation\n- Designed data-minimization and governance guardrails aligned with institutional and sponsor risk expectations",
+      "companyImage": "https://rgjbldklvuetedpmkhwy.supabase.co/storage/v1/object/public/Portfolio-assets/uploads/1772226828267-ChatGPT_Image_Feb_27__2026__04_13_28_PM.png"
+    },
+    {
+      "title": "AI and Innovation Grad Assistant",
+      "company": "Berkley Center for Entrepreneurship- NYU Stern School of Business",
+      "location": "New York City",
+      "startDate": "Jan 2026",
+      "endDate": "",
+      "description": "Scoped and built end to end an AI-powered RAG knowledge assistant for NYU's Berkley Center for Entrepreneurship — serving 1,100+ startup teams per year with grounded, citation-backed answers — then hardened it to production grade.\n- Designed the full pipeline: web scraping, semantic chunking, FAISS vector search, query expansion, and streamed citation-backed responses (FastAPI + React)\n- Built a Postgres + pgvector semantic cache: 55% hit rate, 41x faster cached responses, 98% lower cost per cache hit\n- Hardened for production: grew the test suite from 33 to 207 backend tests, re-architected natively async end to end, and added Redis-backed rate limiting, OWASP-informed guardrails, and self-healing database pools\n- Leading original research to define the first structured methodology for building AI-native startups, and turning it into an AI advising tool for founders",
+      "companyImage": "https://rgjbldklvuetedpmkhwy.supabase.co/storage/v1/object/public/Portfolio-assets/uploads/1772226635599-images.png"
+    },
     {
       "title": "Graduate Research Assistant",
       "company": "NYU Stern",
-      "location": "New York",
-      "startDate": "Sept",
-      "endDate": "",
-      "description": "",
+      "location": "Manhattan, New York, United States",
+      "startDate": "Sept 2025",
+      "endDate": "Feb 2026",
+      "description": "Research assistant to Professor Michelle Greenwald, supporting cross-sector innovation research and AI-driven product strategy.\n- Co-researched and contributed to Forbes CMO Network articles on GenAI adoption, retail marketing, and founder-led brand strategy\n- Contributed to a forthcoming book on cross-sector innovation strategy\n- Led competitive evaluation of a GenAI innovation product: designed A/B testing, ran a 52-respondent blind user survey, and built the go-to-market strategy — customer profiles, segmentation of 3,000+ connections, and tiered outreach campaigns",
       "companyImage": "/uploads/1763842852505-sterb.png"
+    },
+    {
+      "title": "Co-Founder and CEO",
+      "company": "AdVantage Ecosystem ( By Vantage Sphere Pvt Ltd)",
+      "location": "Hyderabad, Telangana, India",
+      "startDate": "Jan 2023",
+      "endDate": "Aug 2025",
+      "description": "Co-founded and led a peer-learning startup impacting 1,000+ engineering students across India, with pilot cohorts in Laos and Germany.\n- Led product vision and hands-on development of Quest Labs, an AI-enabled learning platform built around narrative-driven tasks, intrinsic motivation, and real-world problem solving\n- Piloted with 160+ users over three months: ~33% improvement in engagement and intrinsic-motivation indicators and a 93% learner recommendation score\n- Built the three-pillar model — QuestLabs, Collaborative Spaces, Community Spaces — combining narrative gamification, structured challenges, and peer learning cycles\n- Authored and published a white paper on the learning methodology",
+      "companyImage": "https://rgjbldklvuetedpmkhwy.supabase.co/storage/v1/object/public/Portfolio-assets/uploads/1764613502004-Advantage.png"
+    },
+    {
+      "title": "Business Development and Strategy Intern",
+      "company": "Venkys.io",
+      "location": "Hyderabad, Telangana, India",
+      "startDate": "May 2024",
+      "endDate": "Aug 2024",
+      "description": "Business development and strategy for a software-engineering upskilling company.\n- Conducted market research and competitor analysis that steered a revised go-to-market plan\n- Led A/B-tested content campaigns to increase brand reach and partner inquiries\n- Served as Community Manager of the Core Coders Network — 3,000+ aspiring software engineers — launching initiatives that lifted weekly engagement around coding and DSA skill-building",
+      "companyImage": "https://rgjbldklvuetedpmkhwy.supabase.co/storage/v1/object/public/Portfolio-assets/uploads/1764613513983-venkys.webp"
+    },
+    {
+      "title": "Business Development Lead Intern",
+      "company": "Aveha Solutions Pvt Ltd",
+      "location": "Hyderabad, Telangana, India",
+      "startDate": "Apr 2023",
+      "endDate": "Jun 2023",
+      "description": "Identified new business opportunities, nurtured client relationships, and supported revenue generation. Conducted market and trend analyses, developed proposals and presentations, and collaborated with sales and marketing teams to execute targeted growth initiatives.",
+      "companyImage": "https://rgjbldklvuetedpmkhwy.supabase.co/storage/v1/object/public/Portfolio-assets/uploads/1764613528423-aveha_solutions_pvt_ltd_logo.jpeg"
     }
   ],
   "leadershipExperience": [
@@ -32,11 +85,80 @@
       "title": "Organizer",
       "company": "MLH- FrostHacks",
       "location": "Hyderabad",
-      "startDate": "",
-      "endDate": "",
-      "description": "",
+      "startDate": "Oct 2023",
+      "endDate": "Jan 2024",
+      "description": "Thrilled to have served as a Co-organizer at Frost Hacks, Hyderabad's premier hackathon in collaboration with Major League Hacking (MLH). In this dynamic role, I led a team of 55 people across five different domains to conduct a successful event, contributing to the strategic planning and execution of an event that bridges technology, innovation, and community building. From coordinating logistics and collaborating with sponsors to ensuring a seamless participant experience, I play a pivotal role in creating an environment where aspiring innovators can thrive. Excited to be part of a team that is not just organizing an event but crafting an experience that fosters creativity, learning, and lasting connections. Join me on this exciting journey as we redefine the hackathon landscape and empower the next generation of tech enthusiasts.",
       "companyImage": "/uploads/1763842788843-frost_hacks_vector_png_logo.png"
+    },
+    {
+      "title": "Beta MLSA, Founder & Lead ",
+      "company": "Microsoft Student Community Hyderabad ",
+      "location": "Hyderabad, Telangana, india",
+      "startDate": "Oct 2022",
+      "endDate": "Oct 2024",
+      "description": "founded and led the Microsoft Student Community Hyderabad, one of the largest student-led tech communities in the region. Over two years, I built a thriving ecosystem of 15+ high-impact workshops, conferences, and peer learning initiatives that engaged more than 1,500 students. I managed partnerships, outreach, event operations, and content strategy while enabling students to learn new technologies, collaborate, and grow together.",
+      "companyImage": "https://rgjbldklvuetedpmkhwy.supabase.co/storage/v1/object/public/Portfolio-assets/uploads/1764613538373-1737206113963-removebg-preview.png"
+    },
+    {
+      "title": "Community Manager & Blockchain Lead Mentor",
+      "company": "e-DAM",
+      "location": "Hyderabad, Telangana, India",
+      "startDate": "Dec 2022",
+      "endDate": "Feb 2023",
+      "description": "I served as Community Manager and Blockchain Lead Mentor at e-DAM, helping grow the community from a single college to seven campuses and reaching more than 5,000 students. I led mentorship programs, organized workshops and online learning initiatives, and built a structured environment for students to explore technology, blockchain fundamentals, and career opportunities. My focus was on scaling the community, enabling collaboration across campuses, and supporting students through guided learning paths and hands-on sessions.",
+      "companyImage": "https://rgjbldklvuetedpmkhwy.supabase.co/storage/v1/object/public/Portfolio-assets/uploads/1764613546327-Screenshot_2022-10-08-21-55-48-07_6012fa4d4ddec268fc5c7112cbb265e7-removebg-preview__1_.png"
+    },
+    {
+      "title": "CR/PR Executive",
+      "company": "TEDxIARE",
+      "location": "Hyderabad, Telangana, India",
+      "startDate": "Sept 2022",
+      "endDate": "Jan 2023",
+      "description": "As a CR/PR Executive for TEDx IARE’23, I secured key sponsorships and strategic partnerships that enabled the event to scale to 800+ attendees. I managed outreach, partner communication, and speaker coordination under tight deadlines, directly contributing to the successful execution of one of the campus’s highest-impact TEDx events.",
+      "companyImage": "https://rgjbldklvuetedpmkhwy.supabase.co/storage/v1/object/public/Portfolio-assets/uploads/1764613554367-download__4_.png"
+    },
+    {
+      "title": "Organising Committee Member- Undergrad summit 2k22",
+      "company": "Student Tribe (StuMagz)",
+      "location": "Hyderabad, Telangana, India",
+      "startDate": "Dec 2022",
+      "endDate": "Dec 2022",
+      "description": "I served as an Organizing Committee Member for UnderGrad Summit 2K22, a large student conclave hosted in collaboration with JNTUH Technology Business Incubator. I supported event planning, speaker coordination, and on-ground operations for a summit that brought together industry leaders, startup founders, and students for talks, panels, live internships, and campus-wide engagement.",
+      "companyImage": "https://rgjbldklvuetedpmkhwy.supabase.co/storage/v1/object/public/Portfolio-assets/uploads/1764613558802-channels4_profile.jpg"
     }
   ],
-  "education": []
+  "education": [
+    {
+      "university": "New York University",
+      "major": "Management of Technology",
+      "relevantCoursework": "Economics and Strategy, Corporate Finance, Data Visualisation, Technology Strategy",
+      "location": "New York, United States",
+      "year": "2025- 2027(expected)",
+      "universityLogo": "https://rgjbldklvuetedpmkhwy.supabase.co/storage/v1/object/public/Portfolio-assets/uploads/1764613465803-download__2_.png"
+    },
+    {
+      "university": " Massachusetts Institute of Technology",
+      "major": "Leadership, Innovation and Entrepreneurship",
+      "relevantCoursework": "Entrepreneurship, Markets, Corporate Innovation, Leadership",
+      "location": "Zagreb, Croatia (MIT Bootcamp)",
+      "year": "2024",
+      "universityLogo": "https://rgjbldklvuetedpmkhwy.supabase.co/storage/v1/object/public/Portfolio-assets/uploads/1764613477429-MIT-lockup-3line-red-removebg-preview.png"
+    },
+    {
+      "university": "CIIE IIM-Ahmedabad ",
+      "major": "Seed Innovation Bootcamp",
+      "relevantCoursework": "Market Research, Entrepreneurship",
+      "location": "Ahmedabad, Gujarat, India",
+      "year": "2023",
+      "universityLogo": "https://rgjbldklvuetedpmkhwy.supabase.co/storage/v1/object/public/Portfolio-assets/uploads/1764613482968-download__5_.png"
+    },
+    {
+      "university": "Jawaharlal Nehru Technological University Hyderabad (JNTUH)",
+      "major": "Computer Science and Engineering",
+      "relevantCoursework": "Computer Science",
+      "location": "Hyderabad, Telangana, India",
+      "year": "2021-2025",
+      "universityLogo": "https://rgjbldklvuetedpmkhwy.supabase.co/storage/v1/object/public/Portfolio-assets/uploads/1764613487865-JNTU_Hyderabad_logo.png"
+    }
+  ]
 }

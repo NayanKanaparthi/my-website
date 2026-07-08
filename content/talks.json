@@ -1,1 +1,23 @@
-[]
+[
+  {
+    "title": "AI Enablement Workshops for Procurement Teams",
+    "type": "Workshop",
+    "venue": "Avis Budget Group — US & UK Procurement",
+    "year": "2026",
+    "description": "Designed and led live AI enablement workshops for the US and UK Procurement teams: practical LLM application, the Context → Task → Format prompting framework, the jagged-frontier model for deciding which tasks to hand to AI versus keep human, and responsible-use ground rules — with live demos on core procurement workflows like RFP response triage, contract summarization, and supplier-risk briefings."
+  },
+  {
+    "title": "Technical Workshops & Bootcamps",
+    "type": "Teaching",
+    "venue": "Microsoft Student Community Hyderabad",
+    "year": "2022–2024",
+    "description": "Founded and led one of Hyderabad's largest student-led tech communities. Delivered 15+ large-scale workshops, conferences, and technical bootcamps reaching 1,500+ students, covering new technologies, peer learning, and career development."
+  },
+  {
+    "title": "Blockchain Mentorship Program",
+    "type": "Mentoring",
+    "venue": "e-DAM Community",
+    "year": "2022–2023",
+    "description": "Led structured blockchain mentorship as the community scaled from one campus to seven, reaching 5,000+ students — designing a blockchain-learning roadmap that enabled 100+ students to complete hands-on projects."
+  }
+]

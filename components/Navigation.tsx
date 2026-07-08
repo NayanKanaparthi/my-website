@@ -13,6 +13,7 @@ export default function Navigation() {
     { href: '/ventures', label: 'Ventures' },
     { href: '/blogs', label: 'Blogs' },
     { href: '/projects', label: 'Projects' },
+    { href: '/research', label: 'Research' },
     { href: '/work', label: 'Case Studies' },
     { href: '/about', label: 'Resume' },
     { href: 'https://www.youtube.com/@llnayanll/videos', label: 'YouTube', external: true },

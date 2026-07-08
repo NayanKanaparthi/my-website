@@ -1,21 +1,109 @@
 [
   {
+    "title": "AIGIS — Open-Source AI Governance CLI",
+    "description": "An open-source command-line tool that compiles a natural-language project description into a deterministic AI governance brief — mapping it against NIST AI RMF, OWASP Top 10 for LLMs, and ISO/IEC 42001, with byte-identical output and overclaim detection. Published on npm and PyPI with 6,000+ downloads and an endorsement from a former Washington Post CTO. Built on Agent-Computer Interface research: governance content structured for AI coding agents first, humans second.",
+    "githubLink": "https://github.com/NayanKanaparthi/aigis",
+    "projectLink": "https://www.npmjs.com/package/@aigis-ai/cli",
+    "type": "project",
+    "category": "Open Source, AI Governance, Developer Tools",
+    "date": "2026-04-20",
+    "tags": [
+      "AI",
+      "Open Source"
+    ]
+  },
+  {
+    "title": "Anticipate — Predictive Urban Safety System (NVIDIA Spark Hack NYC 2026)",
+    "description": "Predictive video anomaly detection built in 24 hours on an NVIDIA DGX Spark (GB10 Grace Blackwell). Uses Meta's V-JEPA 2 foundation model as a frozen video encoder with a custom attentive probe head (4.86M params) trained on UCF-Crime, ingesting live HLS streams from NYC DOT traffic cameras with ~1.1s end-to-end latency — fully on-device, no video ever leaves the machine. I owned the ML pipeline and backend engineering: encoder wrapper, probe architecture, training loop, FastAPI + WebSocket orchestration, and live stream ingestion.",
+    "githubLink": "https://github.com/yaojiejia/anticipate",
+    "projectLink": "https://github.com/yaojiejia/anticipate",
+    "type": "project",
+    "category": "AI/ML, Computer Vision, Real-Time Systems",
+    "date": "2026-04-12",
+    "tags": [
+      "AI",
+      "ML Engineering"
+    ]
+  },
+  {
+    "title": "DeepScout — Search-Grounded AI Browser Agent",
+    "description": "An end-to-end agentic browser agent powered by two fine-tuned 3B models — one for query generation, one for evidence reasoning — so the whole loop runs locally instead of calling a frontier API. Covers the full LLM lifecycle: teacher distillation, QLoRA fine-tuning, GRPO reinforcement learning with rule-based rewards, NVFP4 quantization-aware training (~6 GB → ~1.7 GB), and vLLM multi-LoRA GPU serving, wired into a Chrome extension that produces cited answers from live web results.",
+    "githubLink": "https://github.com/NayanKanaparthi/deepscout-research-agent",
+    "projectLink": "https://github.com/NayanKanaparthi/deepscout-research-agent",
+    "type": "project",
+    "category": "AI/ML, Fine-Tuning, Agentic Systems",
+    "date": "2026-03-02",
+    "tags": [
+      "AI",
+      "LLM"
+    ]
+  },
+  {
+    "title": "Veritas RAG — Local-First Retrieval Engine",
+    "description": "A portable, local-first retrieval engine that packages knowledge into a shippable \"retrieval artifact\" for fast, offline, privacy-preserving search — no vector database, no server. BM25 sparse retrieval benchmarked at ~2–3 ms P50 latency and ~230 ms cold start on a ~10k-chunk corpus, with published failure analysis on semantic queries and a hybrid retrieval roadmap.",
+    "githubLink": "https://github.com/NayanKanaparthi/Veritas-RAG",
+    "projectLink": "https://github.com/NayanKanaparthi/Veritas-RAG",
+    "type": "project",
+    "category": "AI/ML, Retrieval, Open Source",
+    "date": "2026-01-15",
+    "tags": [
+      "AI",
+      "RAG"
+    ]
+  },
+  {
     "title": "Quantitative-Risk-Simulator-using-Correlated-GBM-Monte-Carlo",
     "description": "Interactive portfolio risk simulator using correlated Geometric Brownian Motion (GBM) and Monte Carlo simulation. Estimates Value at Risk (VaR), Conditional VaR (CVaR), and probability of loss across multi-asset portfolios. Built with Python and Streamlit.",
     "image": "/uploads/1764006368220-1760297874056.jpeg",
     "githubLink": "https://github.com/NayanKanaparthi/Quantitative-Risk-Simulator-using-Correlated-GBM-Monte-Carlo",
     "projectLink": "https://github.com/NayanKanaparthi/Quantitative-Risk-Simulator-using-Correlated-GBM-Monte-Carlo",
-    "category": "Project, Fintech, Risk"
+    "category": "Project, Fintech, Risk",
+    "tags": [
+      "Finance"
+    ]
   },
   {
-    "title": "Reflexive Demand in the AI Infrastructure Boom",
-    "description": "Over the past few months, I have been researching a question that has been bothering me for a while. The AI infrastructure boom is growing at a scale we have never seen before, but what is actually driving it?\n\nEvery week there is news about multibillion dollar cloud commitments, data center expansions, GPU shortages, and record CapEx across the largest tech companies. The narrative focuses on AI demand, but when you dig into the financial data, the story becomes more complex.\n\nI decided to analyze the numbers myself.\n\nThis paper looks at the financial mechanics behind the AI build out from 2022 through 2025. It studies how vendor financing, long dated backlogs, capital intensity, and credit conditions are shaping today’s AI race. The work compares cash flow, CapEx, RPO, and debt issuance across Oracle, Nvidia, Microsoft, Amazon, and Google, and examines whether the boom reflects real adoption or a reflexive cycle driven by financing and belief.\n\nIt also looks at how this cycle resembles previous investment waves, including the dot com capex surge and late cycle credit expansions, while highlighting important differences in how demand is being created today.\n\nI built a full website that turns my research paper into an easy to read online experience, allowing readers to move through the paper in a clean format, view the charts and tables clearly, and explore the ideas without needing to download a PDF.",
-    "image": "/uploads/1764000360747-Screenshot_2025-11-22_215855.png",
-    "githubLink": "",
-    "projectLink": "https://reflexivedemand.netlify.app/",
+    "title": "Reflexive Demand in the AI Infrastructure Boom (Abstract ID: 5694302)",
+    "description": "“Reflexive Demand in the AI Infrastructure Boom” analyzes the financial mechanics behind the rapid AI buildout from 2022 to 2025. The paper studies how vendor financing, long-dated backlogs, capital intensity, and credit conditions are shaping the current AI cycle across companies like Nvidia, Oracle, Microsoft, Amazon, and Google. It examines whether today’s surge in AI infrastructure reflects real user demand or a reflexive loop driven by financing structures, incentives, and expectations. The research connects this cycle to past investment booms while highlighting what makes the AI wave structurally different.",
+    "image": "https://rgjbldklvuetedpmkhwy.supabase.co/storage/v1/object/public/Portfolio-assets/uploads/1765637576102-research_paper.png",
+    "githubLink": "https://github.com/NayanKanaparthi/Reflexive-Demand-in-the-AI-Infrastructure-Boom",
+    "projectLink": "https://papers.ssrn.com/abstract=5694302",
     "type": "paper",
     "category": "Research",
     "date": "2025-11-24",
+    "tags": [
+      "research"
+    ]
+  },
+  {
+    "title": "StatArb Lab — Statistical-Arbitrage Paper-Trading Rig",
+    "description": "A market-neutral statistical-arbitrage research rig: sector-constrained Engle-Granger cointegration pair selection, an Ornstein-Uhlenbeck half-life filter for mean-reversion speed, rolling z-score entry/exit signals, walk-forward replay with strict no-lookahead discipline, and a \"loser-autopsy\" module that dissects losing trades.",
+    "type": "project",
+    "category": "Quantitative Finance, Trading Research",
+    "tags": [
+      "Finance",
+      "Quant"
+    ]
+  },
+  {
+    "title": "ADHD-Attention LLM — Mechanistic Interpretability Study",
+    "description": "Tested three attention interventions — attention dropout, pre-softmax temperature flattening, and head dropout — on Qwen 2.5 to probe whether loosening attention increases LLM creativity. Delivered a clean negative result with mechanistic failure analysis, written up publicly as \"I Tried to Give an LLM ADHD.\"",
+    "type": "project",
+    "category": "Mechanistic Interpretability, Research",
+    "tags": [
+      "AI",
+      "Research"
+    ]
+  },
+  {
+    "title": "The Entrepreneur's Playbook An Interactive Guide to Building a Business That Matters",
+    "description": "The Entrepreneur’s Playbook is an interactive guide I created by synthesizing everything I learned during my MIT Bootcamp. It breaks down the full journey of building a meaningful business, from finding your starting point to defining value, validating the problem, developing a business model, and leading your team. Each section distils lessons from MIT’s innovation frameworks into actionable steps, exercises, and tools that help founders think clearly, test ideas fast, and build products that matter.",
+    "image": "https://hoagzx9zzcopdoba.public.blob.vercel-storage.com/uploads/1764200843507-Screenshot_2025-11-26_184656.png",
+    "githubLink": "",
+    "projectLink": "https://entrepreneurship-playbook.wasmer.app/",
+    "type": "website",
+    "category": "Entrepreneurship",
+    "date": "",
     "tags": []
   }
 ]

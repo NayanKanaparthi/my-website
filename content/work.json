@@ -1,8 +1,120 @@
 [
   {
+    "slug": "anticipate-predictive-urban-safety",
+    "title": "Anticipate: Predictive Urban Safety with Foundation-Model Video Intelligence",
+    "client": "NVIDIA Spark Hack NYC 2026 (4-person team)",
+    "year": "2026",
+    "category": "ML Engineering, Computer Vision, Real-Time Systems, Edge AI",
+    "context": "Built in 24 hours at NVIDIA Spark Hack NYC 2026 on an NVIDIA DGX Spark (GB10 Grace Blackwell, 128 GB unified memory). Anticipate detects dangerous physical dynamics in surveillance footage and generates structured incident reports — entirely on-device, so no video frame ever leaves the machine. I owned the ML pipeline and backend engineering on a 4-person team.",
+    "problem": "Urban surveillance produces far more footage than humans can watch, and privacy regulations often prohibit camera footage from leaving the premises. How do you build a video anomaly detection system that is fast enough for live streams, generalizes to scenes it was never trained on, and runs fully on-device with zero cloud dependency?",
+    "approach": "Used Meta's V-JEPA 2 self-supervised video world model (326M params, BF16) as a frozen encoder and designed a custom attentive probe head on top — LayerNorm, a learnable query token, multi-head cross-attention, and a feed-forward scorer (4.86M params) — betting that attentive pooling over the 8,192 V-JEPA tokens would generalize across domains instead of memorizing training artifacts. Trained the probe on UCF-Crime embeddings in ~3 minutes on the GB10, then wired the pipeline into a FastAPI + WebSocket server with live HLS ingestion from NYC DOT traffic cameras and an on-device LLM report generator.",
+    "frameworks": [
+      "Self-Supervised Video Foundation Models (V-JEPA 2)",
+      "Frozen Encoder + Trainable Probe",
+      "Attentive Pooling / Cross-Attention",
+      "BF16 Mixed-Precision Training",
+      "Real-Time Stream Processing"
+    ],
+    "implementation": [
+      "V-JEPA 2 encoder wrapper validated at 347 ms per 64-frame clip on the GB10",
+      "Custom attentive probe head (4,857,857 params) with FP32 BCELoss cast for BF16 numerical stability",
+      "Cached feature-extraction pipelines for mp4 and PNG-frame datasets (~1.1 s and ~410 ms per clip)",
+      "FastAPI + WebSocket server streaming telemetry and risk scores to a Next.js dashboard",
+      "Live HLS ingestion from three real NYC DOT traffic cameras, processed continuously in 5-second chunks",
+      "On-device Llama-3.1-8B report generator producing schema-constrained JSON incident reports",
+      "Docker + docker-compose deployment on the NVIDIA NGC PyTorch container with GPU passthrough"
+    ],
+    "outcomes": [
+      "End-to-end clip-to-risk-score latency of ~1.1 seconds, dominated by video decode rather than GPU inference",
+      "Cross-domain generalization demo: probe trained only on UCF-Crime fired correctly on 8 of 15 unseen clips across subway platforms, intersections, and construction sites",
+      "Out-of-distribution sanity check: synthetic test video scored 0.0025, suggesting the probe learned generalizable anomaly features",
+      "Live monitoring worked end-to-end on three real traffic cameras with varying risk scores across traffic conditions",
+      "Full privacy architecture: only structured JSON reports leave the device, never video"
+    ],
+    "learnings": [
+      "Frozen foundation model + small trainable head is a remarkably fast path to cross-domain video understanding",
+      "End-to-end latency budgets are won or lost in decode and I/O, not model inference",
+      "BF16 training needs deliberate numerical-stability workarounds (FP32 casts in loss functions)",
+      "A 24-hour hackathon demo is evidence of feasibility, not production readiness — the honest framing matters"
+    ]
+  },
+  {
+    "slug": "aigis-ai-governance-cli",
+    "title": "AIGIS: An Open-Source Compiler for AI Governance",
+    "client": "Open Source (npm + PyPI)",
+    "year": "2026",
+    "category": "Developer Tools, AI Governance, Open Source, Release Engineering",
+    "context": "Most AI governance tooling assumes a human will read the output — but AI coding agents consume context differently: limited windows, structure-parsing, explicit branching signals. AIGIS v2 was rebuilt around that gap. One command — aigis build \"customer support chatbot with order history\" — compiles a natural-language project description into a deterministic governance brief mapped against NIST AI RMF, OWASP Top 10 for LLMs, and ISO/IEC 42001.",
+    "problem": "Developers shipping AI features rarely know which governance obligations apply to them, and existing frameworks are hundreds of pages written for compliance teams. How do you make governance consumable by the AI coding agents that increasingly write the code — deterministically, auditably, and without safety-washing?",
+    "approach": "Rebuilt v1 (a content library) into v2 (a compiler): a deterministic layer (39-trigger curated resolver, byte-identical brief assembly verified by SHA-256), a content layer (governance procedures as markdown \"fat skills\"), and an agent layer (runtime reasoning delegated to the user's coding agent). Development was benchmark-driven: ~170 agent invocations across 8 steps, measuring precision, recall, and F1 for governance-trait classification, with honest disclosure of a recall regression.",
+    "frameworks": [
+      "Agent-Computer Interface design (SWE-agent, NeurIPS 2024)",
+      "Thin Harness / Fat Skills architecture",
+      "NIST AI RMF · OWASP LLM Top 10 · ISO/IEC 42001",
+      "Benchmark-Driven Development (precision / recall / F1)"
+    ],
+    "implementation": [
+      "Deterministic 39-trigger resolver with JSON-validated, schema-checked trigger-to-trait mappings",
+      "Overclaim recognizers: regex checks that catch safety-washing patterns and prevent false governance claims",
+      "Byte-identical brief generation — same input always produces the same SHA-256-verifiable output",
+      "Dual-registry publishing (npm @aigis-ai/cli + PyPI aigis-cli) with CI-enforced content parity between packages",
+      "IDE integration via rules files for Cursor, Claude Code, Copilot, and Windsurf"
+    ],
+    "outcomes": [
+      "6,000+ total downloads across npm and PyPI with zero paid promotion",
+      "446 downloads in the first 24 hours of the v2 launch",
+      "Endorsed by a former Washington Post CTO",
+      "Governance benchmark: precision 0.847 (+15% over no-tool baseline), F1 0.837 (+6%), rubric score 48.7/50 vs 27/50 baseline",
+      "Published full benchmark methodology including the recall regression — composite-metric integrity over single-metric wins"
+    ],
+    "learnings": [
+      "Content designed for agent consumption first is a different discipline from documentation for humans",
+      "Deterministic operations belong in code, domain judgment in content, runtime reasoning in the agent",
+      "Honest negative findings build more trust than inflated benchmarks",
+      "Launch-day distribution is a product surface: multi-registry parity and release engineering matter"
+    ]
+  },
+  {
+    "slug": "berkley-rag-production-hardening",
+    "title": "From Prototype to Production: Hardening a University RAG Assistant",
+    "client": "Berkley Center for Entrepreneurship, NYU Stern",
+    "year": "2026",
+    "category": "AI Engineering, RAG Systems, Production Reliability, Security",
+    "context": "NYU's Berkley Center for Entrepreneurship serves 1,100+ startup teams per year, and staff were drowning in repetitive program questions. I scoped and built an AI knowledge assistant grounded exclusively in verified institutional content — streaming, citation-backed answers with multi-turn follow-ups — then led the production-hardening effort that took it from working prototype to reliable internal tool.",
+    "problem": "A RAG prototype that answers correctly in a demo is not a production system. The real challenges: hallucination risk against institutional trust, abuse and cost exposure on the expensive LLM path, latency, and reliability under concurrent load — all on a university budget.",
+    "approach": "Grounded-first architecture: every answer must trace to approved sources with citations. Then production hardening in layers — a semantic cache in front of the LLM, a guardrail register covering rate limits and abuse controls executed before any expensive work, structured telemetry for product analytics, and a maker/checker review loop that drove open findings to zero.",
+    "frameworks": [
+      "Retrieval-Augmented Generation (FAISS, query expansion, semantic chunking)",
+      "OWASP LLM Top 10 threat modeling",
+      "Semantic Caching (Postgres + pgvector, HNSW)",
+      "Test-Driven Production Hardening"
+    ],
+    "implementation": [
+      "End-to-end pipeline: web scraping, semantic chunking, embeddings, FAISS similarity search, query expansion, streamed cited responses",
+      "Postgres + pgvector semantic cache with similarity-threshold gating, TTL, and content-versioned invalidation",
+      "Guardrail register (15 cases): session/IP rate limits, burst limits, concurrent-stream caps, prompt-size and loop detection — all before cache, retrieval, or generation",
+      "Natively async re-architecture (AsyncOpenAI, async connection pools, async SSE) proven under a 25-concurrent-stream test",
+      "Redis-backed sliding-window rate limiting with bounded in-memory fallback and fail-open degradation",
+      "Structured per-query telemetry: answer rate, cache hits, latency, cost, and failure reasons"
+    ],
+    "outcomes": [
+      "55% semantic cache hit rate; cached answers 41x faster (357 ms vs ~14.7 s) at 98% lower cost per hit",
+      "Resolved ~25 review findings — including 5 high-severity, one a cross-conversation cache leak — to zero open issues",
+      "Test suite grown from 33 to 207 backend tests plus 21 frontend tests, hermetic and deterministic",
+      "One slow request can no longer freeze others — verified with sabotage-tested concurrency suites",
+      "Serving 1,100+ startup teams per year with grounded, citation-backed answers"
+    ],
+    "learnings": [
+      "The distance between \"RAG demo\" and \"production RAG\" is mostly guardrails, caching, telemetry, and tests",
+      "Caching semantic answers requires content-versioned invalidation — stale answers are trust killers",
+      "Follow-up questions must bypass shared caches: history-dependent answers leak across conversations",
+      "A maker/checker agent review loop is a genuinely effective way to drive findings to zero"
+    ]
+  },
+  {
     "slug": "advantage-ecosystem-questlabs",
     "title": "AdVantage Ecosystem: Narrative-Based Learning and Motivation Architecture",
-    "client": "",
+    "client": "Vantage Sphere Pvt ltd",
     "year": "2023",
     "category": "EdTech, Strategy, Product, Learning Systems",
     "context": "Traditional online learning platforms suffer from low engagement, weak motivation loops, and poor real-world outcomes. Students often drop off due to lack of structure, feedback, and peer interaction. I designed AdVantage Ecosystem — with QuestLabs, Collaborative Spaces, and Community Spaces — to re-architect the motivation system of learning using narrative gamification, peer collaboration, and intrinsic motivator design.",
@@ -33,6 +145,219 @@
       "Peer accountability is one of the strongest engagement drivers",
       "AI can automate 80% of learning content transformation if structured well",
       "Intrinsic motivators outperform reward-based systems in long-term learning"
+    ]
+  },
+  {
+    "slug": "reflexive-demand-ai-boom",
+    "title": "Reflexive Demand in the AI Infrastructure Boom (2022–2025)",
+    "client": "Independent Research",
+    "year": "2025",
+    "category": "AI Infrastructure, Strategy, Economics, Finance",
+    "context": "Between 2022 and 2025, the AI industry experienced one of the fastest infrastructure buildouts in tech history. Companies announced multibillion-dollar GPU purchases, long-dated cloud commitments, and record CapEx spikes. While the narrative focused on “AI demand,” the underlying financial mechanics were unclear. I set out to analyze whether this boom was driven by real adoption or a reflexive cycle shaped by financing structures, incentives, and expectations.",
+    "problem": "AI infrastructure spending is accelerating exponentially, but the true drivers behind this boom are poorly understood. Are companies responding to genuine end-user demand, or is the growth being fueled by vendor financing, backlog structures, and supply constraints that amplify the appearance of demand? How can we distinguish real usage growth from reflexive cycles created by financial engineering?",
+    "approach": "I conducted a cross-company financial analysis of Nvidia, Oracle, Microsoft, Amazon, and Google using CapEx disclosures, backlog reports, cash flow statements, RPO growth, and debt issuance. By mapping financing flows, GPU supply constraints, long-dated customer commitments, and hyperscaler incentives, I built a model explaining how money, credit, and expectations interact to create a reflexive demand loop in AI infrastructure.",
+    "frameworks": [
+      "Reflexivity Theory",
+      "Capital Intensity Analysis",
+      "Cash Flow Modeling",
+      "Backlog & RPO Analysis",
+      "Vendor Financing Structures",
+      "Comparative Tech Valuation",
+      "Macro Cycle Analysis"
+    ],
+    "implementation": [
+      "Analyzed CapEx, RPO, and cash flow trends across 5 major AI infrastructure players",
+      "Mapped GPU supply constraints and backlog-driven demand shaping",
+      "Built comparative models showing CapEx–cash flow divergence",
+      "Examined vendor financing and long-dated customer commitments",
+      "Compared the 2022–2025 cycle to historical tech investment bubbles",
+      "Developed a reflexive demand model explaining reinforcement loops"
+    ],
+    "outcomes": [
+      "Identified how backlog financing and supply shortages inflate perceived demand",
+      "Revealed CapEx–cash flow imbalances indicating credit-driven expansion",
+      "Showed parallels between the AI boom and previous late-cycle investment waves",
+      "Provided a structured framework for analyzing future infrastructure cycles",
+      "Published a full paper and interactive website to make insights accessible"
+    ],
+    "learnings": [
+      "AI infrastructure growth is partly real and partly reflexively amplified",
+      "Vendor financing and long-term commitments drive recurring demand signals",
+      "Supply constraints can create the illusion of explosive demand",
+      "Cash flow stress at hyperscalers reveals long-term sustainability risks",
+      "Reflexive cycles emerge when financing, expectations, and scarcity reinforce each other"
+    ]
+  },
+  {
+    "slug": "portfolio-risk-simulator",
+    "title": "Portfolio Risk Simulator: Monte Carlo Modeling for Market Risk",
+    "client": "Independent Quant Project",
+    "year": "2025",
+    "category": "Quantitative Finance, Modeling, Simulation, Risk Analytics",
+    "context": "Most personal finance tools show static charts that fail to capture the randomness of markets. Beginners struggle to understand volatility, drawdowns, Value at Risk (VaR), and how uncertainty compounds over time. I built a web-based portfolio simulator that uses Geometric Brownian Motion (GBM), Monte Carlo simulations, and multi-asset correlation modeling to make portfolio risk intuitive and interactive for real users.",
+    "problem": "How do you help people understand portfolio risk in a world where asset prices move randomly, correlations shift, and volatility clusters? How do you visualize uncertainty, model future price paths, and explain concepts like VaR, CVaR, and probability of loss in a simple, accessible way?",
+    "approach": "I used stochastic calculus to derive GBM, built Monte Carlo simulation pipelines in Python, modeled multi-asset correlation using Cholesky decomposition, and wrapped everything in a Streamlit web interface. The goal was to turn complex quant finance concepts into a clean, user-friendly tool that generates realistic simulations and interpretable risk metrics.",
+    "frameworks": [
+      "Geometric Brownian Motion",
+      "Monte Carlo Simulation",
+      "Stochastic Calculus",
+      "Cholesky Decomposition",
+      "Risk Modeling",
+      "Value at Risk (VaR)",
+      "Conditional VaR",
+      "Portfolio Theory",
+      "Python Analytics"
+    ],
+    "implementation": [
+      "Derived GBM using Ito’s Lemma and implemented it in discrete-time form",
+      "Built Monte Carlo simulation engine for multi-asset portfolios",
+      "Used Cholesky decomposition to model cross-asset correlations",
+      "Integrated risk metrics including VaR, CVaR, volatility, and drawdown",
+      "Designed an interactive Streamlit interface for user inputs and visualization",
+      "Added automated interpretation text to explain results to non-quants"
+    ],
+    "outcomes": [
+      "Created a working risk simulator with realistic price path generation",
+      "Helped beginners understand stochastic processes through visualization",
+      "Enabled users to model portfolios with multiple assets and correlations",
+      "Built a foundation for future extensions like optimization and stress testing",
+      "Received positive feedback for simplifying complex quantitative ideas"
+    ],
+    "learnings": [
+      "Visualization dramatically improves understanding of stochastic modeling",
+      "Correlation structure is as important as volatility in portfolio behavior",
+      "GBM is a useful approximation but must be supplemented with stress testing",
+      "Users value interpretation as much as raw simulation output",
+      "Quantitative tools become powerful when paired with intuitive UX"
+    ]
+  },
+  {
+    "slug": "entrepreneurs-playbook-mit",
+    "title": "The Entrepreneur’s Playbook: Turning MIT Bootcamp Learnings into an Interactive Guide",
+    "client": "Independent Project (Based on MIT Bootcamp)",
+    "year": "2025",
+    "category": "Innovation, Strategy, Product Thinking, Framework Design",
+    "context": "During the MIT Bootcamp, I was exposed to world-class entrepreneurship frameworks on problem discovery, customer research, value definition, business models, and leadership. Most of these frameworks were powerful but scattered across lectures, notes, and exercises. I created The Entrepreneur’s Playbook to turn this scattered knowledge into a structured, interactive guide that founders can use to build meaningful products from first principles.",
+    "problem": "Entrepreneurs often get stuck because they lack a clear, step-by-step structure for taking a hunch, validating it, building value, and scaling. Traditional startup material is either too vague (“follow your passion”) or too tactical (“run ads”). There is no unified, interactive resource that translates MIT-level innovation principles into a practical journey.",
+    "approach": "I distilled dozens of hours of MIT Bootcamp lectures into a six-part interactive playbook covering: finding your starting point, customer discovery, defining value, building business models, proving it through experimentation, and leading a team. I converted theoretical models into actionable steps, added exercises, and designed a clean, user-friendly interface to guide founders through the process.",
+    "frameworks": [
+      "MIT Innovation Frameworks",
+      "Customer Discovery",
+      "Value Proposition Design",
+      "Lean Startup",
+      "Experimentation Cycles",
+      "Business Model Design",
+      "Leadership Principles",
+      "Problem-Solution Fit",
+      "Market Validation"
+    ],
+    "implementation": [
+      "Synthesized MIT Bootcamp lectures, notes, and frameworks",
+      "Structured content into six sequential modules",
+      "Designed interactive UI components for exercises and decision points",
+      "Converted complex theories into actionable steps and checklists",
+      "Created visual sections for clarity (e.g., hunch vs idea, tangible problem)",
+      "Launched the guide as a standalone web experience for founders"
+    ],
+    "outcomes": [
+      "Built a complete, structured learning experience from fragmented content",
+      "Helped early-stage founders clarify ideas and identify real problems",
+      "Made innovation frameworks accessible through clean UX and guided steps",
+      "Demonstrated ability to transform theory into practical productizable content",
+      "Received strong feedback from peers for clarity and usability"
+    ],
+    "learnings": [
+      "Structured thinking dramatically improves founder decision-making",
+      "Most founders fail due to unclear problem definition, not lack of ideas",
+      "Interactive learning formats outperform text-heavy content",
+      "Innovation frameworks become powerful when simplified into actions",
+      "Good product thinking requires clarity, sequencing, and user empathy"
+    ]
+  },
+  {
+    "slug": "tokenomics-ai-optimization",
+    "title": "Tokenomics: Building an AI Token Optimization Layer for Efficient LLM Workflows",
+    "client": "Independent Research & Engineering Project",
+    "year": "2025",
+    "category": "AI Engineering, Agentic Systems, Cost Optimization, LLM Infrastructure",
+    "context": "As LLM adoption grows, teams face rapidly increasing inference costs driven by inefficient prompts, long contexts, and redundant retrieval. Token usage often scales faster than value, creating a hidden cost spiral in AI systems. I built Tokenomics, an AI token optimization layer designed to reduce cost, latency, and context overhead while maintaining output quality.",
+    "problem": "LLM workflows frequently waste tokens due to unnecessary context, repeated information, and unoptimized retrieval. This leads to:\n• High inference costs\n• Slower response times\n• Inefficient pipeline design\n• Difficulty scaling multi-step agent systems\n\nThe challenge: How do you systematically reduce token usage while improving or preserving output quality?",
+    "approach": "I designed an optimization layer that sits between user prompts and the model. Tokenomics automatically compresses context, trims redundant data, prunes retrieval results, and restructures prompts. I used a chain-of-thought style agent pipeline to evaluate, transform, and optimize prompts before they reach the model. The system benchmarks cost savings and ensures fidelity through quality checks.",
+    "frameworks": [
+      "Agentic Workflows",
+      "Prompt Compression",
+      "Retrieval Optimization",
+      "Context Window Management",
+      "Token Efficiency Modeling",
+      "Benchmarking Frameworks",
+      "RAG Pipelines",
+      "LLM Systems Design"
+    ],
+    "implementation": [
+      "Built a multi-step optimization agent for prompt rewriting and context reduction",
+      "Implemented retrieval pruning to eliminate unnecessary document chunks",
+      "Designed context-ranking algorithms to prioritize high-signal information",
+      "Added token usage benchmarking for before/after comparisons",
+      "Engineered a quality guardrail to verify output fidelity",
+      "Developed an interface for integrating the layer into existing workflows"
+    ],
+    "outcomes": [
+      "Reduced token usage by optimizing prompts and compressing context",
+      "Lowered inference cost per request across multi-step agent pipelines",
+      "Improved response speed due to lower token load",
+      "Increased reliability by pruning irrelevant retrieval noise",
+      "Created a reusable token optimization module for future AI projects"
+    ],
+    "learnings": [
+      "Most AI cost problems come from context misuse, not model size",
+      "Retrieval pruning dramatically improves both cost and output clarity",
+      "Optimization layers should be model-agnostic to scale across platforms",
+      "Token efficiency directly improves user experience and system reliability",
+      "Agentic systems need guardrails to balance optimization with fidelity"
+    ]
+  },
+  {
+    "slug": "community-building-at-scale",
+    "title": "Building Learning Communities at Scale: Microsoft Student Community, e-DAM & TEDx",
+    "client": "Community Leadership Across Multiple Organizations",
+    "year": "2025",
+    "category": "Leadership, Community Building, Operations, Partnerships, Events",
+    "context": "Across India’s student ecosystem, most learners lack structured exposure to technology, industry mentorship, and real opportunities to grow. As a community leader across Microsoft Student Community Hyderabad, e-DAM, TEDx IARE, and UnderGrad Summit, I worked to build large-scale learning environments that connected students with workshops, experts, internships, and peer networks. These initiatives collectively reached more than 5,000 students across multiple campuses.",
+    "problem": "How do you build high-impact learning communities in environments where students have limited access to hands-on workshops, industry mentorship, and structured growth pathways?\nHow do you scale events, partnerships, and content across campuses while maintaining quality and engagement?",
+    "approach": "I built community programs using a mix of strategic partnerships, event design, content development, and operational systems. This included leading 15+ high-impact workshops, expanding communities across seven campuses, onboarding speakers and sponsors, coordinating large events (TEDx IARE, UnderGrad Summit), and designing a mentorship-driven learning model. My focus was on clarity, execution, and creating inclusive, high-energy environments.",
+    "frameworks": [
+      "Community-Led Growth",
+      "Event Operations",
+      "Partnership Development",
+      "Student Engagement Strategy",
+      "Leadership Systems",
+      "Program Design",
+      "Communication Strategy",
+      "Ecosystem Mapping"
+    ],
+    "implementation": [
+      "Scaled Microsoft Student Community Hyderabad to 1,500+ students through 15+ workshops and conferences",
+      "Expanded e-DAM from one campus to seven, impacting 5,000+ students",
+      "Built partnerships with startups, industry leaders, and educational organizations",
+      "Secured sponsorships and coordinated speakers for TEDx IARE (800+ attendees)",
+      "Organized UnderGrad Summit with talks, panels, and live internship drives",
+      "Developed content, marketing, and communication systems for community growth",
+      "Led cross-functional teams to run large events under tight deadlines"
+    ],
+    "outcomes": [
+      "Created one of Hyderabad’s most active student-led tech communities",
+      "Delivered 15+ workshops that provided hands-on learning to thousands",
+      "Grew e-DAM into a multi-campus ecosystem with mentorship-driven programs",
+      "Executed TEDx IARE successfully with 800+ participants and multiple partners",
+      "Enabled students to access internships, resources, and real industry exposure",
+      "Strengthened student leadership pipelines across campuses"
+    ],
+    "learnings": [
+      "Communities scale when you empower people, not when you centralize control",
+      "Partnerships accelerate growth faster than internal efforts",
+      "Clear communication and structure are the backbone of any event or program",
+      "Students engage most when learning is hands-on, social, and opportunity-driven",
+      "Leadership is about creating systems that outlast you"
     ]
   }
 ]
