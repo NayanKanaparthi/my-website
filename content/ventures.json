@@ -1,5 +1,12 @@
 [
   {
+    "title": "AIGIS",
+    "description": "An open-source AI governance CLI, published on npm and PyPI with 6,000+ downloads and an endorsement from a former Washington Post CTO. One command compiles a plain-English project description into a deterministic governance brief mapped against NIST AI RMF, OWASP Top 10 for LLMs, and ISO/IEC 42001. Built for the coding-agent era: governance content structured for AI agents first, humans second.",
+    "status": "Active",
+    "year": "2026",
+    "link": "https://github.com/NayanKanaparthi/aigis"
+  },
+  {
     "title": "Tokenomics",
     "description": "Tokenomics is a token-aware optimization and memory layer that sits between your application and LLM providers. It decides, per query, whether to answer from cache, compress the prompt, or route to the cheapest model that can do the job. Benchmarked at ~90% LLM API cost reduction with quality preserved, combining semantic caching, UCB bandit routing, prompt compression, and cascading inference.",
     "status": "Active",
