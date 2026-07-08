@@ -1,7 +1,7 @@
 [
   {
     "title": "ADHD-Attention LLM",
-    "description": "Tested three attention interventions — attention dropout, pre-softmax temperature flattening, and head dropout — on Qwen 2.5 to probe whether loosening attention increases LLM creativity. Delivered a clean negative result with mechanistic failure analysis, written up publicly as \"I Tried to Give an LLM ADHD.\"",
+    "description": "Tested three attention interventions (attention dropout, pre-softmax temperature flattening, and head dropout) on Qwen 2.5 to probe whether loosening attention increases LLM creativity. Delivered a clean negative result with mechanistic failure analysis, written up publicly as \"I Tried to Give an LLM ADHD.\"",
     "status": "Completed",
     "tags": [
       "Mechanistic Interpretability",
@@ -21,7 +21,7 @@
   },
   {
     "title": "Code Review Council (Claude Skill)",
-    "description": "A custom Claude Skill that runs checkpoint reviews using a council of five independent QA advisors — each auditing the codebase from a different angle (bugs, architecture, security, future-proofing, performance) — who then peer-review each other's findings and produce a unified verdict with a PASS / WARN / HOLD badge.",
+    "description": "A custom Claude Skill that runs checkpoint reviews using a council of five independent QA advisors, each auditing the codebase from a different angle (bugs, architecture, security, future-proofing, performance), who then peer-review each other's findings and produce a unified verdict with a PASS / WARN / HOLD badge.",
     "status": "Shipped",
     "tags": [
       "Claude Skills",

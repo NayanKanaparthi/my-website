@@ -1,7 +1,7 @@
 [
   {
     "title": "Tokenomics",
-    "description": "Tokenomics is a token-aware optimization and memory layer that sits between your application and LLM providers — deciding, per query, whether to answer from cache, compress the prompt, or route to the cheapest model that can do the job. Benchmarked at ~90% LLM API cost reduction with quality preserved, combining semantic caching, UCB bandit routing, prompt compression, and cascading inference.",
+    "description": "Tokenomics is a token-aware optimization and memory layer that sits between your application and LLM providers. It decides, per query, whether to answer from cache, compress the prompt, or route to the cheapest model that can do the job. Benchmarked at ~90% LLM API cost reduction with quality preserved, combining semantic caching, UCB bandit routing, prompt compression, and cascading inference.",
     "status": "Active",
     "year": "2025",
     "image": "/uploads/1764005954174-d1d0c211-7f13-49b7-9867-1519815cdd0d.png",
@@ -17,7 +17,7 @@
   },
   {
     "title": "The Solaris Mission (Community + Podcast)",
-    "description": "The Society for Outer Life and Advanced Research on Interstellar Settlements — a space-science community exploring astronomy, outer life, and interstellar settlement through a podcast, blog, and community content.",
+    "description": "The Society for Outer Life and Advanced Research on Interstellar Settlements: a space-science community exploring astronomy, outer life, and interstellar settlement through a podcast, blog, and community content.",
     "status": "Active",
     "year": "2025",
     "link": "https://open.spotify.com/show/2LKrwm7r6VNLtbxaFGfJLg?si=94a58a491972445f",

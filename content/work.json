@@ -5,9 +5,9 @@
     "client": "NVIDIA Spark Hack NYC 2026 (4-person team)",
     "year": "2026",
     "category": "ML Engineering, Computer Vision, Real-Time Systems, Edge AI",
-    "context": "Built in 24 hours at NVIDIA Spark Hack NYC 2026 on an NVIDIA DGX Spark (GB10 Grace Blackwell, 128 GB unified memory). Anticipate detects dangerous physical dynamics in surveillance footage and generates structured incident reports — entirely on-device, so no video frame ever leaves the machine. I owned the ML pipeline and backend engineering on a 4-person team.",
+    "context": "Built in 24 hours at NVIDIA Spark Hack NYC 2026 on an NVIDIA DGX Spark (GB10 Grace Blackwell, 128 GB unified memory). Anticipate detects dangerous physical dynamics in surveillance footage and generates structured incident reports, entirely on-device, so no video frame ever leaves the machine. I owned the ML pipeline and backend engineering on a 4-person team.",
     "problem": "Urban surveillance produces far more footage than humans can watch, and privacy regulations often prohibit camera footage from leaving the premises. How do you build a video anomaly detection system that is fast enough for live streams, generalizes to scenes it was never trained on, and runs fully on-device with zero cloud dependency?",
-    "approach": "Used Meta's V-JEPA 2 self-supervised video world model (326M params, BF16) as a frozen encoder and designed a custom attentive probe head on top — LayerNorm, a learnable query token, multi-head cross-attention, and a feed-forward scorer (4.86M params) — betting that attentive pooling over the 8,192 V-JEPA tokens would generalize across domains instead of memorizing training artifacts. Trained the probe on UCF-Crime embeddings in ~3 minutes on the GB10, then wired the pipeline into a FastAPI + WebSocket server with live HLS ingestion from NYC DOT traffic cameras and an on-device LLM report generator.",
+    "approach": "Used Meta's V-JEPA 2 self-supervised video world model (326M params, BF16) as a frozen encoder and designed a custom attentive probe head on top (LayerNorm, a learnable query token, multi-head cross-attention, and a feed-forward scorer; 4.86M params), betting that attentive pooling over the 8,192 V-JEPA tokens would generalize across domains instead of memorizing training artifacts. Trained the probe on UCF-Crime embeddings in ~3 minutes on the GB10, then wired the pipeline into a FastAPI + WebSocket server with live HLS ingestion from NYC DOT traffic cameras and an on-device LLM report generator.",
     "frameworks": [
       "Self-Supervised Video Foundation Models (V-JEPA 2)",
       "Frozen Encoder + Trainable Probe",
@@ -35,7 +35,7 @@
       "Frozen foundation model + small trainable head is a remarkably fast path to cross-domain video understanding",
       "End-to-end latency budgets are won or lost in decode and I/O, not model inference",
       "BF16 training needs deliberate numerical-stability workarounds (FP32 casts in loss functions)",
-      "A 24-hour hackathon demo is evidence of feasibility, not production readiness — the honest framing matters"
+      "A 24-hour hackathon demo is evidence of feasibility, not production readiness; the honest framing matters"
     ]
   },
   {
@@ -44,8 +44,8 @@
     "client": "Open Source (npm + PyPI)",
     "year": "2026",
     "category": "Developer Tools, AI Governance, Open Source, Release Engineering",
-    "context": "Most AI governance tooling assumes a human will read the output — but AI coding agents consume context differently: limited windows, structure-parsing, explicit branching signals. AIGIS v2 was rebuilt around that gap. One command — aigis build \"customer support chatbot with order history\" — compiles a natural-language project description into a deterministic governance brief mapped against NIST AI RMF, OWASP Top 10 for LLMs, and ISO/IEC 42001.",
-    "problem": "Developers shipping AI features rarely know which governance obligations apply to them, and existing frameworks are hundreds of pages written for compliance teams. How do you make governance consumable by the AI coding agents that increasingly write the code — deterministically, auditably, and without safety-washing?",
+    "context": "Most AI governance tooling assumes a human will read the output, but AI coding agents consume context differently: limited windows, structure-parsing, explicit branching signals. AIGIS v2 was rebuilt around that gap. One command, aigis build \"customer support chatbot with order history\", compiles a natural-language project description into a deterministic governance brief mapped against NIST AI RMF, OWASP Top 10 for LLMs, and ISO/IEC 42001.",
+    "problem": "Developers shipping AI features rarely know which governance obligations apply to them, and existing frameworks are hundreds of pages written for compliance teams. How do you make governance consumable by the AI coding agents that increasingly write the code, in a way that is deterministic, auditable, and free of safety-washing?",
     "approach": "Rebuilt v1 (a content library) into v2 (a compiler): a deterministic layer (39-trigger curated resolver, byte-identical brief assembly verified by SHA-256), a content layer (governance procedures as markdown \"fat skills\"), and an agent layer (runtime reasoning delegated to the user's coding agent). Development was benchmark-driven: ~170 agent invocations across 8 steps, measuring precision, recall, and F1 for governance-trait classification, with honest disclosure of a recall regression.",
     "frameworks": [
       "Agent-Computer Interface design (SWE-agent, NeurIPS 2024)",
@@ -56,7 +56,7 @@
     "implementation": [
       "Deterministic 39-trigger resolver with JSON-validated, schema-checked trigger-to-trait mappings",
       "Overclaim recognizers: regex checks that catch safety-washing patterns and prevent false governance claims",
-      "Byte-identical brief generation — same input always produces the same SHA-256-verifiable output",
+      "Byte-identical brief generation: the same input always produces the same SHA-256-verifiable output",
       "Dual-registry publishing (npm @aigis-ai/cli + PyPI aigis-cli) with CI-enforced content parity between packages",
       "IDE integration via rules files for Cursor, Claude Code, Copilot, and Windsurf"
     ],
@@ -65,7 +65,7 @@
       "446 downloads in the first 24 hours of the v2 launch",
       "Endorsed by a former Washington Post CTO",
       "Governance benchmark: precision 0.847 (+15% over no-tool baseline), F1 0.837 (+6%), rubric score 48.7/50 vs 27/50 baseline",
-      "Published full benchmark methodology including the recall regression — composite-metric integrity over single-metric wins"
+      "Published full benchmark methodology including the recall regression, choosing composite-metric integrity over single-metric wins"
     ],
     "learnings": [
       "Content designed for agent consumption first is a different discipline from documentation for humans",
@@ -80,9 +80,9 @@
     "client": "Berkley Center for Entrepreneurship, NYU Stern",
     "year": "2026",
     "category": "AI Engineering, RAG Systems, Production Reliability, Security",
-    "context": "NYU's Berkley Center for Entrepreneurship serves 1,100+ startup teams per year, and staff were drowning in repetitive program questions. I scoped and built an AI knowledge assistant grounded exclusively in verified institutional content — streaming, citation-backed answers with multi-turn follow-ups — then led the production-hardening effort that took it from working prototype to reliable internal tool.",
-    "problem": "A RAG prototype that answers correctly in a demo is not a production system. The real challenges: hallucination risk against institutional trust, abuse and cost exposure on the expensive LLM path, latency, and reliability under concurrent load — all on a university budget.",
-    "approach": "Grounded-first architecture: every answer must trace to approved sources with citations. Then production hardening in layers — a semantic cache in front of the LLM, a guardrail register covering rate limits and abuse controls executed before any expensive work, structured telemetry for product analytics, and a maker/checker review loop that drove open findings to zero.",
+    "context": "NYU's Berkley Center for Entrepreneurship serves 1,100+ startup teams per year, and staff were drowning in repetitive program questions. I scoped and built an AI knowledge assistant grounded exclusively in verified institutional content, with streaming, citation-backed answers and multi-turn follow-ups, then led the production-hardening effort that took it from working prototype to reliable internal tool.",
+    "problem": "A RAG prototype that answers correctly in a demo is not a production system. The real challenges: hallucination risk against institutional trust, abuse and cost exposure on the expensive LLM path, latency, and reliability under concurrent load, all on a university budget.",
+    "approach": "Grounded-first architecture: every answer must trace to approved sources with citations. Then production hardening in layers: a semantic cache in front of the LLM, a guardrail register covering rate limits and abuse controls executed before any expensive work, structured telemetry for product analytics, and a maker/checker review loop that drove open findings to zero.",
     "frameworks": [
       "Retrieval-Augmented Generation (FAISS, query expansion, semantic chunking)",
       "OWASP LLM Top 10 threat modeling",
@@ -92,21 +92,21 @@
     "implementation": [
       "End-to-end pipeline: web scraping, semantic chunking, embeddings, FAISS similarity search, query expansion, streamed cited responses",
       "Postgres + pgvector semantic cache with similarity-threshold gating, TTL, and content-versioned invalidation",
-      "Guardrail register (15 cases): session/IP rate limits, burst limits, concurrent-stream caps, prompt-size and loop detection — all before cache, retrieval, or generation",
+      "Guardrail register (15 cases): session/IP rate limits, burst limits, concurrent-stream caps, prompt-size and loop detection, all executed before cache, retrieval, or generation",
       "Natively async re-architecture (AsyncOpenAI, async connection pools, async SSE) proven under a 25-concurrent-stream test",
       "Redis-backed sliding-window rate limiting with bounded in-memory fallback and fail-open degradation",
       "Structured per-query telemetry: answer rate, cache hits, latency, cost, and failure reasons"
     ],
     "outcomes": [
       "55% semantic cache hit rate; cached answers 41x faster (357 ms vs ~14.7 s) at 98% lower cost per hit",
-      "Resolved ~25 review findings — including 5 high-severity, one a cross-conversation cache leak — to zero open issues",
+      "Resolved ~25 review findings, including 5 high-severity issues (one a cross-conversation cache leak), to zero open issues",
       "Test suite grown from 33 to 207 backend tests plus 21 frontend tests, hermetic and deterministic",
-      "One slow request can no longer freeze others — verified with sabotage-tested concurrency suites",
+      "One slow request can no longer freeze others, verified with sabotage-tested concurrency suites",
       "Serving 1,100+ startup teams per year with grounded, citation-backed answers"
     ],
     "learnings": [
       "The distance between \"RAG demo\" and \"production RAG\" is mostly guardrails, caching, telemetry, and tests",
-      "Caching semantic answers requires content-versioned invalidation — stale answers are trust killers",
+      "Caching semantic answers requires content-versioned invalidation; stale answers are trust killers",
       "Follow-up questions must bypass shared caches: history-dependent answers leak across conversations",
       "A maker/checker agent review loop is a genuinely effective way to drive findings to zero"
     ]
@@ -117,7 +117,7 @@
     "client": "Vantage Sphere Pvt ltd",
     "year": "2023",
     "category": "EdTech, Strategy, Product, Learning Systems",
-    "context": "Traditional online learning platforms suffer from low engagement, weak motivation loops, and poor real-world outcomes. Students often drop off due to lack of structure, feedback, and peer interaction. I designed AdVantage Ecosystem — with QuestLabs, Collaborative Spaces, and Community Spaces — to re-architect the motivation system of learning using narrative gamification, peer collaboration, and intrinsic motivator design.",
+    "context": "Traditional online learning platforms suffer from low engagement, weak motivation loops, and poor real-world outcomes. Students often drop off due to lack of structure, feedback, and peer interaction. I designed AdVantage Ecosystem, with QuestLabs, Collaborative Spaces, and Community Spaces, to re-architect the motivation system of learning using narrative gamification, peer collaboration, and intrinsic motivator design.",
     "problem": "How do you sustain long-term learner motivation and engagement in online environments where attention fatigue, poor structure, and social isolation destroy outcomes? How do you design a system that makes learning addictive, rewarding, and socially reinforced?",
     "approach": "I built a three-pillar model (QuestLabs → Collaborative Spaces → Community Spaces) combining narrative gamification, structured challenges, peer learning cycles, and community-driven reinforcement. I conducted pilots across India, Laos, and Germany, partnered with professors and bootcamps, and used feedback loops to refine intrinsic motivators (flow, autonomy, relatedness, and progress visibility).",
     "frameworks": [

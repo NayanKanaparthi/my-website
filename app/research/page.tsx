@@ -2,31 +2,31 @@ const papers = [
   {
     title:
       'Reflexive Demand in the AI Infrastructure Boom: Vendor Financing, Backlogs, & the CapEx-Cash Flow Imbalance (2022–2025)',
-    venue: 'SSRN — recognized as a Recent Top Paper (~1,461 reads)',
+    venue: 'SSRN, recognized as a Recent Top Paper (~1,461 reads)',
     date: 'Posted December 2025',
     pages: '20 pages',
     link: 'https://papers.ssrn.com/abstract=5694302',
     doi: 'http://dx.doi.org/10.2139/ssrn.5694302',
     abstract:
-      'Examines whether the post-2022 AI infrastructure expansion represents genuine demand or a reflexive, vendor-financed cycle. Documents three interlinked dynamics: a sharp rise in capital intensity across hyperscalers, exploding long-dated backlogs that remain largely unmonetized, and heavy reliance on vendor financing and abundant credit. Argues the resulting feedback loop — belief, financing, backlog, valuation, further financing — resembles the dot-com capex bubble with modern features like AI-specific vendor financing across Nvidia, Oracle, Microsoft, Amazon, and Google.',
+      'Examines whether the post-2022 AI infrastructure expansion represents genuine demand or a reflexive, vendor-financed cycle. Documents three interlinked dynamics: a sharp rise in capital intensity across hyperscalers, exploding long-dated backlogs that remain largely unmonetized, and heavy reliance on vendor financing and abundant credit. Argues the resulting feedback loop (belief, financing, backlog, valuation, further financing) resembles the dot-com capex bubble with modern features like AI-specific vendor financing across Nvidia, Oracle, Microsoft, Amazon, and Google.',
     keywords: ['AI Infrastructure', 'Vendor Financing', 'Capital Expenditure', 'Reflexivity', 'Financial Cycles'],
   },
   {
     title:
       'The Adoption and Human Systems Layer: AI Agents as Organizational Members and the Implications for Organizational Behavior',
-    venue: 'SSRN — New York University',
+    venue: 'SSRN · New York University',
     date: 'Posted April 2026',
     pages: '28 pages',
     link: 'https://ssrn.com/abstract=6404938',
     doi: 'http://dx.doi.org/10.2139/ssrn.6404938',
     abstract:
-      'Examines the organizational behavior conditions required for AI agents to function as genuine participants in workflows rather than underutilized technology. Presents three pillars of the adoption and human systems layer — change management addressing professional identity threat, training that develops collaborative competencies, and deliberate sociotechnical workflow redesign — plus a failure modes framework, an operational governance model, and a phased 90-day implementation roadmap. Central claim: AI agent adoption is not a technology problem with a behavioral component; it is a behavioral problem with a technology component.',
+      'Examines the organizational behavior conditions required for AI agents to function as genuine participants in workflows rather than underutilized technology. Presents three pillars of the adoption and human systems layer (change management addressing professional identity threat, training that develops collaborative competencies, and deliberate sociotechnical workflow redesign), plus a failure modes framework, an operational governance model, and a phased 90-day implementation roadmap. Central claim: AI agent adoption is not a technology problem with a behavioral component; it is a behavioral problem with a technology component.',
     keywords: ['AI Agents', 'Organizational Behavior', 'Change Management', 'Human-AI Collaboration', 'Sociotechnical Systems'],
   },
 ]
 
 const ongoing = [
-  'Defining the first structured, empirically grounded methodology for AI-native entrepreneurship — built from deep case studies of AI-native startups (Berkley Center for Entrepreneurship, NYU Stern)',
+  'Defining the first structured, empirically grounded methodology for AI-native entrepreneurship, built from deep case studies of AI-native startups (Berkley Center for Entrepreneurship, NYU Stern)',
   'Energy constraints and grid bottlenecks shaping AI data center strategy and platform scalability',
 ]
 
