@@ -12,6 +12,28 @@ export default async function Footer() {
             © {new Date().getFullYear()} Nayan Kanaparthi. All rights reserved.
           </div>
           <div className="flex items-center space-x-6 text-sm">
+            <a
+              href="mailto:nk4286@nyu.edu"
+              className="text-navy/60 hover:text-navy transition-colors"
+            >
+              nk4286@nyu.edu
+            </a>
+            <a
+              href="https://github.com/NayanKanaparthi"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-navy/60 hover:text-navy transition-colors"
+            >
+              GitHub
+            </a>
+            <a
+              href="https://www.youtube.com/@llnayanll/videos"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-navy/60 hover:text-navy transition-colors"
+            >
+              YouTube
+            </a>
             {socialLinks.twitter && (
               <a
                 href={socialLinks.twitter}

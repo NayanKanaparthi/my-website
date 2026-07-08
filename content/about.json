@@ -1,5 +1,5 @@
 {
-  "bio": "NYU Graduate Student (MS, Management of Technology) | MIT-Trained Innovator | Building production AI systems and getting organizations to actually adopt them | AI Solutions and Enablement Intern @ Avis Budget Group | AI Graduate Assistant @ Goldman Sachs Black in Business × NYU Stern | 2× SSRN-Published Researcher | Co-Founder, AdVantage Ecosystem",
+  "bio": "Graduate student at NYU building production AI systems: RAG platforms, agentic workflows, and foundation-model pipelines. Currently an AI Solutions and Enablement Intern at Avis Budget Group and an AI Graduate Assistant on the Goldman Sachs Black in Business program at NYU Stern. Two SSRN-published papers on AI infrastructure economics and AI adoption. MIT Bootcamp alum and co-founder of AdVantage Ecosystem.",
   "timeline": [],
   "skills": {
     "Strategy": [
@@ -27,7 +27,7 @@
     },
     {
       "title": "AI Graduate Assistant",
-      "company": "Goldman Sachs x NYU Stern School of Business",
+      "company": "NYU Stern School of Business (Goldman Sachs Black in Business Program)",
       "location": "New York City",
       "startDate": "Feb 2026",
       "endDate": "",
@@ -36,7 +36,7 @@
     },
     {
       "title": "AI and Innovation Grad Assistant",
-      "company": "Berkley Center for Entrepreneurship- NYU Stern School of Business",
+      "company": "Berkley Center for Entrepreneurship, NYU Stern School of Business",
       "location": "New York City",
       "startDate": "Jan 2026",
       "endDate": "",
@@ -87,7 +87,7 @@
       "location": "Hyderabad",
       "startDate": "Oct 2023",
       "endDate": "Jan 2024",
-      "description": "Thrilled to have served as a Co-organizer at Frost Hacks, Hyderabad's premier hackathon in collaboration with Major League Hacking (MLH). In this dynamic role, I led a team of 55 people across five different domains to conduct a successful event, contributing to the strategic planning and execution of an event that bridges technology, innovation, and community building. From coordinating logistics and collaborating with sponsors to ensuring a seamless participant experience, I play a pivotal role in creating an environment where aspiring innovators can thrive. Excited to be part of a team that is not just organizing an event but crafting an experience that fosters creativity, learning, and lasting connections. Join me on this exciting journey as we redefine the hackathon landscape and empower the next generation of tech enthusiasts.",
+      "description": "Led a 55-member organizing team across five domains to deliver FrostHacks, a national MLH hackathon with 300+ participants, managing logistics, sponsorships, and participant experience end to end.",
       "companyImage": "/uploads/1763842788843-frost_hacks_vector_png_logo.png"
     },
     {
@@ -96,7 +96,7 @@
       "location": "Hyderabad, Telangana, india",
       "startDate": "Oct 2022",
       "endDate": "Oct 2024",
-      "description": "founded and led the Microsoft Student Community Hyderabad, one of the largest student-led tech communities in the region. Over two years, I built a thriving ecosystem of 15+ high-impact workshops, conferences, and peer learning initiatives that engaged more than 1,500 students. I managed partnerships, outreach, event operations, and content strategy while enabling students to learn new technologies, collaborate, and grow together.",
+      "description": "Founded and led one of the region's largest student-led tech communities: 15+ workshops and conferences engaging 1,500+ students over two years, with ownership of partnerships, outreach, operations, and content strategy.",
       "companyImage": "https://rgjbldklvuetedpmkhwy.supabase.co/storage/v1/object/public/Portfolio-assets/uploads/1764613538373-1737206113963-removebg-preview.png"
     },
     {
@@ -105,7 +105,7 @@
       "location": "Hyderabad, Telangana, India",
       "startDate": "Dec 2022",
       "endDate": "Feb 2023",
-      "description": "I served as Community Manager and Blockchain Lead Mentor at e-DAM, helping grow the community from a single college to seven campuses and reaching more than 5,000 students. I led mentorship programs, organized workshops and online learning initiatives, and built a structured environment for students to explore technology, blockchain fundamentals, and career opportunities. My focus was on scaling the community, enabling collaboration across campuses, and supporting students through guided learning paths and hands-on sessions.",
+      "description": "Scaled a tech-learning community from one college to seven campuses, reaching 5,000+ students. Led mentorship programs and workshops, and designed a blockchain-learning roadmap that enabled 100+ students to complete hands-on projects.",
       "companyImage": "https://rgjbldklvuetedpmkhwy.supabase.co/storage/v1/object/public/Portfolio-assets/uploads/1764613546327-Screenshot_2022-10-08-21-55-48-07_6012fa4d4ddec268fc5c7112cbb265e7-removebg-preview__1_.png"
     },
     {
@@ -114,7 +114,7 @@
       "location": "Hyderabad, Telangana, India",
       "startDate": "Sept 2022",
       "endDate": "Jan 2023",
-      "description": "As a CR/PR Executive for TEDx IARE’23, I secured key sponsorships and strategic partnerships that enabled the event to scale to 800+ attendees. I managed outreach, partner communication, and speaker coordination under tight deadlines, directly contributing to the successful execution of one of the campus’s highest-impact TEDx events.",
+      "description": "Secured sponsorships and strategic partnerships that scaled TEDx IARE'23 to 800+ attendees. Managed outreach, partner communication, and speaker coordination under tight deadlines.",
       "companyImage": "https://rgjbldklvuetedpmkhwy.supabase.co/storage/v1/object/public/Portfolio-assets/uploads/1764613554367-download__4_.png"
     },
     {
@@ -123,7 +123,7 @@
       "location": "Hyderabad, Telangana, India",
       "startDate": "Dec 2022",
       "endDate": "Dec 2022",
-      "description": "I served as an Organizing Committee Member for UnderGrad Summit 2K22, a large student conclave hosted in collaboration with JNTUH Technology Business Incubator. I supported event planning, speaker coordination, and on-ground operations for a summit that brought together industry leaders, startup founders, and students for talks, panels, live internships, and campus-wide engagement.",
+      "description": "Supported event planning, speaker coordination, and on-ground operations for UnderGrad Summit 2K22, a student conclave hosted with the JNTUH Technology Business Incubator.",
       "companyImage": "https://rgjbldklvuetedpmkhwy.supabase.co/storage/v1/object/public/Portfolio-assets/uploads/1764613558802-channels4_profile.jpg"
     }
   ],
@@ -133,7 +133,7 @@
       "major": "Management of Technology",
       "relevantCoursework": "Economics and Strategy, Corporate Finance, Data Visualisation, Technology Strategy",
       "location": "New York, United States",
-      "year": "2025- 2027(expected)",
+      "year": "2025 – 2027 (expected)",
       "universityLogo": "https://rgjbldklvuetedpmkhwy.supabase.co/storage/v1/object/public/Portfolio-assets/uploads/1764613465803-download__2_.png"
     },
     {

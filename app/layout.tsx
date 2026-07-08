@@ -23,8 +23,9 @@ const jetbrainsMono = localFont({
 })
 
 export const metadata: Metadata = {
-  title: 'Nayan Kanaparthi | Founder, Strategist, AI Builder',
-  description: 'Building at the intersection of strategy, AI, and quantitative thinking',
+  title: 'Nayan Kanaparthi | AI Engineer, Production AI Systems & Adoption',
+  description:
+    'I build production AI systems and get organizations to actually adopt them. AI engineering, adoption science, and technical product strategy at NYU, Goldman Sachs, and Avis Budget Group.',
 }
 
 export default function RootLayout({

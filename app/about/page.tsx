@@ -36,6 +36,44 @@ export default async function AboutPage() {
         </div>
       </div>
 
+      {/* Professional Experience */}
+      {aboutContent.professionalExperience && aboutContent.professionalExperience.length > 0 && (
+        <section className="mb-16">
+          <h2 className="text-2xl font-semibold text-navy mb-8">Professional Experience</h2>
+          <div className="space-y-6">
+            {aboutContent.professionalExperience.map((exp, index) => (
+              <div key={index} className="flex items-start space-x-4 pb-6 border-b border-navy/10 last:border-0">
+                {exp.companyImage && (
+                  <div className="flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden bg-white border border-navy/10">
+                    <img
+                      src={exp.companyImage}
+                      alt={exp.company}
+                      className="w-full h-full object-contain p-2"
+                    />
+                  </div>
+                )}
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-navy mb-1">{exp.title}</h3>
+                  <div className="flex items-center space-x-2 text-navy/70 mb-2">
+                    <span className="font-medium">{exp.company}</span>
+                    {exp.location && (
+                      <>
+                        <span>•</span>
+                        <span>{exp.location}</span>
+                      </>
+                    )}
+                  </div>
+                  <div className="text-sm text-navy/60 mb-3">
+                    {exp.startDate} {exp.endDate ? `- ${exp.endDate}` : '- Present'}
+                  </div>
+                  <p className="text-navy/70 leading-relaxed">{exp.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* Education */}
       {aboutContent.education && aboutContent.education.length > 0 && (
         <section className="mb-16">
@@ -75,44 +113,6 @@ export default async function AboutPage() {
                       <span>{edu.relevantCoursework}</span>
                     </div>
                   )}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* Professional Experience */}
-      {aboutContent.professionalExperience && aboutContent.professionalExperience.length > 0 && (
-        <section className="mb-16">
-          <h2 className="text-2xl font-semibold text-navy mb-8">Professional Experience</h2>
-          <div className="space-y-6">
-            {aboutContent.professionalExperience.map((exp, index) => (
-              <div key={index} className="flex items-start space-x-4 pb-6 border-b border-navy/10 last:border-0">
-                {exp.companyImage && (
-                  <div className="flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden bg-white border border-navy/10">
-                    <img
-                      src={exp.companyImage}
-                      alt={exp.company}
-                      className="w-full h-full object-contain p-2"
-                    />
-                  </div>
-                )}
-                <div className="flex-1">
-                  <h3 className="text-lg font-semibold text-navy mb-1">{exp.title}</h3>
-                  <div className="flex items-center space-x-2 text-navy/70 mb-2">
-                    <span className="font-medium">{exp.company}</span>
-                    {exp.location && (
-                      <>
-                        <span>•</span>
-                        <span>{exp.location}</span>
-                      </>
-                    )}
-                  </div>
-                  <div className="text-sm text-navy/60 mb-3">
-                    {exp.startDate} {exp.endDate ? `- ${exp.endDate}` : '- Present'}
-                  </div>
-                  <p className="text-navy/70 leading-relaxed">{exp.description}</p>
                 </div>
               </div>
             ))}

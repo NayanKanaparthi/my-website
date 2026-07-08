@@ -5,13 +5,13 @@
     "image": "https://rgjbldklvuetedpmkhwy.supabase.co/storage/v1/object/public/Portfolio-assets/uploads/1764517230811-WhatsApp_Image_2025-11-27_at_15.59.38_e83f9adc.jpg"
   },
   "featuredWork": [
-    "anticipate-predictive-urban-safety",
-    "aigis-ai-governance-cli",
-    "tokenomics-ai-optimization"
+    "avis-global-procurement-ai",
+    "goldman-bib-ai-adoption",
+    "berkley-rag-production-hardening"
   ],
   "featuredBlogs": [
     "deepscout-building-a-search-grounded-ai-browser-agent-with-fine-tuned-3b-models",
-    "swiggy-vs-zomato-a-business-case-study-on-tech-strategy-profitability",
+    "building-the-future-of-ai-a-business-leader-s-guide-to-infrastructure-power-and-strategic-advantage",
     "rewiring-for-digital-transformation-the-strategic-foundation-part-1"
   ],
   "featuredVentures": [
@@ -31,6 +31,10 @@
       "name": ""
     },
     {
+      "image": "/uploads/1763998615349-MIT-lockup-3line-red-removebg-preview.png",
+      "name": ""
+    },
+    {
       "image": "/uploads/1763998562724-Micro.png",
       "name": ""
     },
@@ -43,27 +47,7 @@
       "name": ""
     },
     {
-      "image": "/uploads/1763998615349-MIT-lockup-3line-red-removebg-preview.png",
-      "name": ""
-    },
-    {
-      "image": "/uploads/1763998640709-Advantage.png",
-      "name": ""
-    },
-    {
       "image": "https://rgjbldklvuetedpmkhwy.supabase.co/storage/v1/object/public/Portfolio-assets/uploads/1764517257657-download__6_.png",
-      "name": ""
-    },
-    {
-      "image": "https://rgjbldklvuetedpmkhwy.supabase.co/storage/v1/object/public/Portfolio-assets/uploads/1764517263125-download__7_.png",
-      "name": ""
-    },
-    {
-      "image": "https://rgjbldklvuetedpmkhwy.supabase.co/storage/v1/object/public/Portfolio-assets/uploads/1764517269287-channels4_profile.jpg",
-      "name": ""
-    },
-    {
-      "image": "https://rgjbldklvuetedpmkhwy.supabase.co/storage/v1/object/public/Portfolio-assets/uploads/1764517273437-download__4_.png",
       "name": ""
     },
     {
@@ -71,19 +55,7 @@
       "name": ""
     },
     {
-      "image": "https://rgjbldklvuetedpmkhwy.supabase.co/storage/v1/object/public/Portfolio-assets/uploads/1764517307431-mlh-facebook-ae6144c0a3605f15992ee2970616db8d-removebg-preview.png",
-      "name": ""
-    },
-    {
-      "image": "https://rgjbldklvuetedpmkhwy.supabase.co/storage/v1/object/public/Portfolio-assets/uploads/1764517337592-1645562238012.png",
-      "name": ""
-    },
-    {
-      "image": "https://rgjbldklvuetedpmkhwy.supabase.co/storage/v1/object/public/Portfolio-assets/uploads/1764517355900-SOLARIS.png",
-      "name": ""
-    },
-    {
-      "image": "https://rgjbldklvuetedpmkhwy.supabase.co/storage/v1/object/public/Portfolio-assets/uploads/1768447649118-BerkleyCenterLogo_Black_RGB.png",
+      "image": "https://rgjbldklvuetedpmkhwy.supabase.co/storage/v1/object/public/Portfolio-assets/uploads/1764517273437-download__4_.png",
       "name": ""
     }
   ],
@@ -91,10 +63,5 @@
     "twitter": "https://x.com/NayanKanaparthi",
     "linkedin": "https://www.linkedin.com/in/nayan-kanaparthi/"
   },
-  "featuredVideos": [
-    "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/eQNY0mtc534?si=axtJEM4XHSFEG1Wv\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
-    "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/JlLudLf2T2I?si=a2QimtEzlUKO9Qqb\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
-    "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/9wdGHiRTta4?si=uVWSrlKQFZoWMeVY\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
-    "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/5vGrRCmFy9c?si=EMZBypXax7-6ETjI\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
-  ]
+  "featuredVideos": []
 }

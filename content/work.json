@@ -1,5 +1,116 @@
 [
   {
+    "slug": "avis-global-procurement-ai",
+    "title": "Avis Budget Group: AI Transformation in Global Procurement",
+    "client": "Avis Budget Group (NASDAQ: CAR)",
+    "year": "2026",
+    "category": "Enterprise AI, AWS, Procurement, AI Enablement",
+    "context": "A CEO-sponsored AI transformation initiative at a NASDAQ-listed mobility company with ~25,000 employees and a 600,000+ vehicle global fleet. I was embedded with Global Procurement on the AI Solutions and Enablement team, reporting to the Office of the CEO, owning AI use cases end to end: discovery, scoping, build, and adoption.",
+    "problem": "Procurement runs on high-volume, judgment-heavy workflows: ~100,000 emergency roadside tows billed per year with identified supplier over-mileage, commodity supply shocks that surface too late to act on, and analyst work drowning in RFP responses and spend reports. The challenge: apply AI where it moves real money, with the governance an enterprise demands, and get a non-technical team to actually adopt it.",
+    "approach": "Deterministic-first architecture with a bounded LLM judgment layer: free deterministic checks run on 100% of events, paid routing and LLM inference are reserved for the flagged, dollar-ranked subset, and a human approves every dispute. Adoption was treated as its own workstream, not an afterthought: live enablement workshops built around the jagged-frontier model of which tasks to hand to AI and which to keep human.",
+    "frameworks": [
+      "Deterministic-First AI Design (bounded LLM judgment)",
+      "AWS Serverless Architecture (Lambda, Step Functions, EventBridge)",
+      "Amazon Bedrock (schema-validated JSON, fail-to-human routing)",
+      "AI Governance (NIST AI RMF, OWASP LLM Top 10)",
+      "Jagged-Frontier Task Allocation (adoption design)"
+    ],
+    "implementation": [
+      "Designed an end-to-end AWS serverless pipeline auditing ~100,000 annual roadside-tow invoices, targeting recovery of $1M+ of $2.5M in identified supplier over-mileage; containerized for deployment on AWS EKS",
+      "Built a capability-aware \"should-have-distance\" engine (BallTree haversine nearest-neighbor over repair-capability-filtered facilities) with road-distance verification via Amazon Location Service",
+      "Built a commodities market-intelligence agent on AWS Bedrock: early warning on supply and price shocks, mapped to the company's own supplier exposure, with a layered anti-hallucination system (span-level citations, deterministic citation checks, separate-model entailment verification)",
+      "Added a governed human-in-the-loop feedback loop that stores adjudicated reviewer decisions as precedent (Postgres/pgvector) while the LLM stays frozen",
+      "Authored a 15-page system design and a 28-page build specification; produced a spec-driven agentic build package for AWS Kiro and Claude Code",
+      "Designed and led live AI enablement workshops for the US and UK Procurement teams with live demos on RFP triage, contract summarization, and supplier-risk briefings"
+    ],
+    "outcomes": [
+      "Audit system targeting $1M+ recovery of identified supplier over-mileage (projected by business owners; delivery in progress)",
+      "Two live AI enablement workshops delivered to US and UK Procurement teams, including executive leadership",
+      "Market-intelligence agent validated against a real 2026 base-oil supply squeeze with a hand-built sample flag",
+      "Per-cycle cloud cost held to tens of dollars against six-figure recovery via the tiered cost funnel"
+    ],
+    "learnings": [
+      "Enterprise AI wins come from bounding the LLM, not unleashing it: code decides the flow, the model fills one narrow judgment slot",
+      "Adoption is a designed outcome: vocabulary, mental models, and live demos matter as much as the system itself",
+      "Dollar-ranked funnels keep AI economical: spend inference only where the money is",
+      "Impact figures stay labeled as projections until the results land; credibility compounds"
+    ]
+  },
+  {
+    "slug": "goldman-bib-ai-adoption",
+    "title": "Goldman Sachs Black in Business × NYU Stern: 97.7% AI Adoption by Design",
+    "client": "NYU Stern School of Business (Goldman Sachs BiB Program)",
+    "year": "2026",
+    "category": "AI Enablement, EdTech, Product, Adoption Science",
+    "context": "The Goldman Sachs Black in Business program, delivered in partnership with NYU Stern, teaches entrepreneurship to a cohort of 265 Scholars running real businesses. As AI Graduate Assistant, I embedded structured AI systems into the learning and operational workflows of the program: prompt systems first, then production web applications.",
+    "problem": "Most enterprise AI rollouts hit 30-60% usage and decay within 90 days. Here the users were non-technical small business owners, the stakes included academic integrity and sponsor brand standards, and the tools had to scaffold thinking without doing the work for people.",
+    "approach": "Design for adoption from day one: module-specific prompt libraries aligned to the curriculum, evidence-tagging and decision checkpoints to prevent shortcut behavior, and AI outputs framed as reflection material rather than answers. Then graduate from prompt cards to interactive production tools Scholars use directly inside the curriculum.",
+    "frameworks": [
+      "Adoption Science (novelty decay, workflow embedding)",
+      "Curriculum-Aligned AI Design",
+      "Non-Punitive UX for Low-Financial-Literacy Users",
+      "Data Minimization & Governance"
+    ],
+    "implementation": [
+      "Designed module-specific prompt libraries for customer discovery, persona design, and channel selection",
+      "Built and shipped the SMART Goal Builder: a production web app (React, Vercel Edge Functions, LLM-guided conversational flow) that walks business owners from a vague aspiration to a polished SMART goal",
+      "Built and shipped the BiB Financial Benchmark Tool: P&L margin comparison against benchmarks for 37 industries, built from data aggregating ~4.5M privately held U.S. businesses, with AI-powered industry matching",
+      "Engineered the benchmark dataset from 34 enterprise industry PDFs with a Python extraction pipeline; 185 of 185 spot-checked values matched source exactly",
+      "Designed session-isolated, zero-persistence architecture so Scholar financial data never leaves their device",
+      "Added \"check the AI response\" guidance to every AI output, teaching verification habits alongside the tools"
+    ],
+    "outcomes": [
+      "97.7% adoption: 259 of 265 Scholars used the Module 1 AI prompts in their assignments",
+      "96.5% rated the prompts helpful; zero Scholars rated them \"not at all helpful\"",
+      "Zero negative-intent non-use: the six non-users cited operational friction, not AI rejection",
+      "89% of Scholars now use AI daily or weekly in their actual businesses",
+      "Observed non-use patterns matched the failure modes predicted in my published SSRN research on AI adoption"
+    ],
+    "learnings": [
+      "Adoption is engineered through workflow embedding, not announced through training sessions",
+      "Non-technical users adopt AI when it scaffolds their thinking instead of replacing it",
+      "Universal adoption AND universal satisfaction is achievable when tools are curriculum-native",
+      "Field results validating your own published framework is the strongest research signal there is"
+    ]
+  },
+  {
+    "slug": "berkley-rag-production-hardening",
+    "title": "From Prototype to Production: Hardening a University RAG Assistant",
+    "client": "Berkley Center for Entrepreneurship, NYU Stern",
+    "year": "2026",
+    "category": "AI Engineering, RAG Systems, Production Reliability, Security",
+    "context": "NYU's Berkley Center for Entrepreneurship serves 1,100+ startup teams per year, and staff were drowning in repetitive program questions. I scoped and built an AI knowledge assistant grounded exclusively in verified institutional content, with streaming, citation-backed answers and multi-turn follow-ups, then led the production-hardening effort that took it from working prototype to reliable internal tool.",
+    "problem": "A RAG prototype that answers correctly in a demo is not a production system. The real challenges: hallucination risk against institutional trust, abuse and cost exposure on the expensive LLM path, latency, and reliability under concurrent load, all on a university budget.",
+    "approach": "Grounded-first architecture: every answer must trace to approved sources with citations. Then production hardening in layers: a semantic cache in front of the LLM, a guardrail register covering rate limits and abuse controls executed before any expensive work, structured telemetry for product analytics, and a maker/checker review loop that drove open findings to zero.",
+    "frameworks": [
+      "Retrieval-Augmented Generation (FAISS, query expansion, semantic chunking)",
+      "OWASP LLM Top 10 threat modeling",
+      "Semantic Caching (Postgres + pgvector, HNSW)",
+      "Test-Driven Production Hardening"
+    ],
+    "implementation": [
+      "End-to-end pipeline: web scraping, semantic chunking, embeddings, FAISS similarity search, query expansion, streamed cited responses",
+      "Postgres + pgvector semantic cache with similarity-threshold gating, TTL, and content-versioned invalidation",
+      "Guardrail register (15 cases): session/IP rate limits, burst limits, concurrent-stream caps, prompt-size and loop detection, all executed before cache, retrieval, or generation",
+      "Natively async re-architecture (AsyncOpenAI, async connection pools, async SSE) proven under a 25-concurrent-stream test",
+      "Redis-backed sliding-window rate limiting with bounded in-memory fallback and fail-open degradation",
+      "Structured per-query telemetry: answer rate, cache hits, latency, cost, and failure reasons"
+    ],
+    "outcomes": [
+      "55% semantic cache hit rate; cached answers 41x faster (357 ms vs ~14.7 s) at 98% lower cost per hit",
+      "Resolved ~25 review findings, including 5 high-severity issues (one a cross-conversation cache leak), to zero open issues",
+      "Test suite grown from 33 to 207 backend tests plus 21 frontend tests, hermetic and deterministic",
+      "One slow request can no longer freeze others, verified with sabotage-tested concurrency suites",
+      "Serving 1,100+ startup teams per year with grounded, citation-backed answers"
+    ],
+    "learnings": [
+      "The distance between \"RAG demo\" and \"production RAG\" is mostly guardrails, caching, telemetry, and tests",
+      "Caching semantic answers requires content-versioned invalidation; stale answers are trust killers",
+      "Follow-up questions must bypass shared caches: history-dependent answers leak across conversations",
+      "A maker/checker agent review loop is a genuinely effective way to drive findings to zero"
+    ]
+  },
+  {
     "slug": "anticipate-predictive-urban-safety",
     "title": "Anticipate: Predictive Urban Safety with Foundation-Model Video Intelligence",
     "client": "NVIDIA Spark Hack NYC 2026 (4-person team)",
@@ -75,40 +186,44 @@
     ]
   },
   {
-    "slug": "berkley-rag-production-hardening",
-    "title": "From Prototype to Production: Hardening a University RAG Assistant",
-    "client": "Berkley Center for Entrepreneurship, NYU Stern",
-    "year": "2026",
-    "category": "AI Engineering, RAG Systems, Production Reliability, Security",
-    "context": "NYU's Berkley Center for Entrepreneurship serves 1,100+ startup teams per year, and staff were drowning in repetitive program questions. I scoped and built an AI knowledge assistant grounded exclusively in verified institutional content, with streaming, citation-backed answers and multi-turn follow-ups, then led the production-hardening effort that took it from working prototype to reliable internal tool.",
-    "problem": "A RAG prototype that answers correctly in a demo is not a production system. The real challenges: hallucination risk against institutional trust, abuse and cost exposure on the expensive LLM path, latency, and reliability under concurrent load, all on a university budget.",
-    "approach": "Grounded-first architecture: every answer must trace to approved sources with citations. Then production hardening in layers: a semantic cache in front of the LLM, a guardrail register covering rate limits and abuse controls executed before any expensive work, structured telemetry for product analytics, and a maker/checker review loop that drove open findings to zero.",
+    "slug": "tokenomics-ai-optimization",
+    "title": "Tokenomics: Building an AI Token Optimization Layer for Efficient LLM Workflows",
+    "client": "Independent Research & Engineering Project",
+    "year": "2025",
+    "category": "AI Engineering, Agentic Systems, Cost Optimization, LLM Infrastructure",
+    "context": "As LLM adoption grows, teams face rapidly increasing inference costs driven by inefficient prompts, long contexts, and redundant retrieval. Token usage often scales faster than value, creating a hidden cost spiral in AI systems. I built Tokenomics, an AI token optimization layer designed to reduce cost, latency, and context overhead while maintaining output quality.",
+    "problem": "LLM workflows frequently waste tokens due to unnecessary context, repeated information, and unoptimized retrieval. This leads to:\n• High inference costs\n• Slower response times\n• Inefficient pipeline design\n• Difficulty scaling multi-step agent systems\n\nThe challenge: How do you systematically reduce token usage while improving or preserving output quality?",
+    "approach": "Built an inference optimization layer that decides, per query, whether to answer from a semantic FAISS cache, compress the prompt with LLMLingua-2, or route to the cheapest capable model via UCB multi-armed bandit routing. A knapsack token-budget orchestrator allocates spend, cascading inference escalates only when a lightweight model fails, and every decision is benchmarked: the headline number comes from a 50-query benchmark measuring cost per query with quality checks, with savings attributed per component.",
     "frameworks": [
-      "Retrieval-Augmented Generation (FAISS, query expansion, semantic chunking)",
-      "OWASP LLM Top 10 threat modeling",
-      "Semantic Caching (Postgres + pgvector, HNSW)",
-      "Test-Driven Production Hardening"
+      "Agentic Workflows",
+      "Prompt Compression",
+      "Retrieval Optimization",
+      "Context Window Management",
+      "Token Efficiency Modeling",
+      "Benchmarking Frameworks",
+      "RAG Pipelines",
+      "LLM Systems Design"
     ],
     "implementation": [
-      "End-to-end pipeline: web scraping, semantic chunking, embeddings, FAISS similarity search, query expansion, streamed cited responses",
-      "Postgres + pgvector semantic cache with similarity-threshold gating, TTL, and content-versioned invalidation",
-      "Guardrail register (15 cases): session/IP rate limits, burst limits, concurrent-stream caps, prompt-size and loop detection, all executed before cache, retrieval, or generation",
-      "Natively async re-architecture (AsyncOpenAI, async connection pools, async SSE) proven under a 25-concurrent-stream test",
-      "Redis-backed sliding-window rate limiting with bounded in-memory fallback and fail-open degradation",
-      "Structured per-query telemetry: answer rate, cache hits, latency, cost, and failure reasons"
+      "Built a multi-step optimization agent for prompt rewriting and context reduction",
+      "Implemented retrieval pruning to eliminate unnecessary document chunks",
+      "Designed context-ranking algorithms to prioritize high-signal information",
+      "Added token usage benchmarking for before/after comparisons",
+      "Engineered a quality guardrail to verify output fidelity",
+      "Developed an interface for integrating the layer into existing workflows"
     ],
     "outcomes": [
-      "55% semantic cache hit rate; cached answers 41x faster (357 ms vs ~14.7 s) at 98% lower cost per hit",
-      "Resolved ~25 review findings, including 5 high-severity issues (one a cross-conversation cache leak), to zero open issues",
-      "Test suite grown from 33 to 207 backend tests plus 21 frontend tests, hermetic and deterministic",
-      "One slow request can no longer freeze others, verified with sabotage-tested concurrency suites",
-      "Serving 1,100+ startup teams per year with grounded, citation-backed answers"
+      "~90% LLM API cost reduction: $0.218 to $0.014 across a 50-query benchmark, with quality preserved",
+      "Savings attribution measured per component: UCB bandit routing ~75%, semantic caching ~22%, prompt compression ~3%",
+      "ML complexity classifier at ~90% accuracy drives the token-budget orchestrator; escalation predictor at ~85% accuracy powers cascading inference",
+      "Multi-provider support (OpenAI, Gemini, self-hosted vLLM) with circuit-breaker resilience and a live observability dashboard"
     ],
     "learnings": [
-      "The distance between \"RAG demo\" and \"production RAG\" is mostly guardrails, caching, telemetry, and tests",
-      "Caching semantic answers requires content-versioned invalidation; stale answers are trust killers",
-      "Follow-up questions must bypass shared caches: history-dependent answers leak across conversations",
-      "A maker/checker agent review loop is a genuinely effective way to drive findings to zero"
+      "Most AI cost problems come from context misuse, not model size",
+      "Retrieval pruning dramatically improves both cost and output clarity",
+      "Optimization layers should be model-agnostic to scale across platforms",
+      "Token efficiency directly improves user experience and system reliability",
+      "Agentic systems need guardrails to balance optimization with fidelity"
     ]
   },
   {
@@ -272,48 +387,6 @@
       "Interactive learning formats outperform text-heavy content",
       "Innovation frameworks become powerful when simplified into actions",
       "Good product thinking requires clarity, sequencing, and user empathy"
-    ]
-  },
-  {
-    "slug": "tokenomics-ai-optimization",
-    "title": "Tokenomics: Building an AI Token Optimization Layer for Efficient LLM Workflows",
-    "client": "Independent Research & Engineering Project",
-    "year": "2025",
-    "category": "AI Engineering, Agentic Systems, Cost Optimization, LLM Infrastructure",
-    "context": "As LLM adoption grows, teams face rapidly increasing inference costs driven by inefficient prompts, long contexts, and redundant retrieval. Token usage often scales faster than value, creating a hidden cost spiral in AI systems. I built Tokenomics, an AI token optimization layer designed to reduce cost, latency, and context overhead while maintaining output quality.",
-    "problem": "LLM workflows frequently waste tokens due to unnecessary context, repeated information, and unoptimized retrieval. This leads to:\n• High inference costs\n• Slower response times\n• Inefficient pipeline design\n• Difficulty scaling multi-step agent systems\n\nThe challenge: How do you systematically reduce token usage while improving or preserving output quality?",
-    "approach": "I designed an optimization layer that sits between user prompts and the model. Tokenomics automatically compresses context, trims redundant data, prunes retrieval results, and restructures prompts. I used a chain-of-thought style agent pipeline to evaluate, transform, and optimize prompts before they reach the model. The system benchmarks cost savings and ensures fidelity through quality checks.",
-    "frameworks": [
-      "Agentic Workflows",
-      "Prompt Compression",
-      "Retrieval Optimization",
-      "Context Window Management",
-      "Token Efficiency Modeling",
-      "Benchmarking Frameworks",
-      "RAG Pipelines",
-      "LLM Systems Design"
-    ],
-    "implementation": [
-      "Built a multi-step optimization agent for prompt rewriting and context reduction",
-      "Implemented retrieval pruning to eliminate unnecessary document chunks",
-      "Designed context-ranking algorithms to prioritize high-signal information",
-      "Added token usage benchmarking for before/after comparisons",
-      "Engineered a quality guardrail to verify output fidelity",
-      "Developed an interface for integrating the layer into existing workflows"
-    ],
-    "outcomes": [
-      "Reduced token usage by optimizing prompts and compressing context",
-      "Lowered inference cost per request across multi-step agent pipelines",
-      "Improved response speed due to lower token load",
-      "Increased reliability by pruning irrelevant retrieval noise",
-      "Created a reusable token optimization module for future AI projects"
-    ],
-    "learnings": [
-      "Most AI cost problems come from context misuse, not model size",
-      "Retrieval pruning dramatically improves both cost and output clarity",
-      "Optimization layers should be model-agnostic to scale across platforms",
-      "Token efficiency directly improves user experience and system reliability",
-      "Agentic systems need guardrails to balance optimization with fidelity"
     ]
   },
   {

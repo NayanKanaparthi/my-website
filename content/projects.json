@@ -1,7 +1,7 @@
 [
   {
     "title": "AIGIS: Open-Source AI Governance CLI",
-    "description": "An open-source command-line tool that compiles a natural-language project description into a deterministic AI governance brief, mapping it against NIST AI RMF, OWASP Top 10 for LLMs, and ISO/IEC 42001, with byte-identical output and overclaim detection. Published on npm and PyPI with 6,000+ downloads and an endorsement from a former Washington Post CTO. Built on Agent-Computer Interface research: governance content structured for AI coding agents first, humans second.",
+    "description": "6,000+ downloads on npm and PyPI, endorsed by a former Washington Post CTO. An open-source command-line tool that compiles a natural-language project description into a deterministic AI governance brief, mapping it against NIST AI RMF, OWASP Top 10 for LLMs, and ISO/IEC 42001 with byte-identical output and overclaim detection. Built on Agent-Computer Interface research: governance content structured for AI coding agents first, humans second.",
     "githubLink": "https://github.com/NayanKanaparthi/aigis",
     "projectLink": "https://www.npmjs.com/package/@aigis-ai/cli",
     "type": "project",
@@ -14,7 +14,7 @@
   },
   {
     "title": "Anticipate: Predictive Urban Safety System (NVIDIA Spark Hack NYC 2026)",
-    "description": "Predictive video anomaly detection built in 24 hours on an NVIDIA DGX Spark (GB10 Grace Blackwell). Uses Meta's V-JEPA 2 foundation model as a frozen video encoder with a custom attentive probe head (4.86M params) trained on UCF-Crime, ingesting live HLS streams from NYC DOT traffic cameras with ~1.1s end-to-end latency, fully on-device: no video ever leaves the machine. I owned the ML pipeline and backend engineering: encoder wrapper, probe architecture, training loop, FastAPI + WebSocket orchestration, and live stream ingestion.",
+    "description": "~1.1s end-to-end video-to-risk-score latency, fully on-device: no video ever leaves the machine. Predictive anomaly detection built in 24 hours on an NVIDIA DGX Spark (GB10 Grace Blackwell) using Meta's V-JEPA 2 as a frozen encoder with a custom attentive probe head (4.86M params), ingesting live HLS streams from NYC DOT traffic cameras. I owned the ML pipeline and backend engineering: encoder wrapper, probe architecture, training loop, FastAPI + WebSocket orchestration, and stream ingestion. Team repo.",
     "githubLink": "https://github.com/yaojiejia/anticipate",
     "projectLink": "https://github.com/yaojiejia/anticipate",
     "type": "project",
@@ -27,7 +27,7 @@
   },
   {
     "title": "DeepScout: Search-Grounded AI Browser Agent",
-    "description": "An end-to-end agentic browser agent powered by two fine-tuned 3B models (one for query generation, one for evidence reasoning) so the whole loop runs locally instead of calling a frontier API. Covers the full LLM lifecycle: teacher distillation, QLoRA fine-tuning, GRPO reinforcement learning with rule-based rewards, NVFP4 quantization-aware training (~6 GB → ~1.7 GB), and vLLM multi-LoRA GPU serving, wired into a Chrome extension that produces cited answers from live web results.",
+    "description": "Frontier-level web reasoning distilled into two locally served 3B models (~6 GB to ~1.7 GB via NVFP4 quantization-aware training). An end-to-end agentic browser agent (one model for query generation, one for evidence reasoning) covering the full LLM lifecycle: teacher distillation, QLoRA fine-tuning, GRPO reinforcement learning with rule-based rewards, and vLLM multi-LoRA GPU serving, wired into a Chrome extension that produces cited answers from live web results.",
     "githubLink": "https://github.com/NayanKanaparthi/deepscout-research-agent",
     "projectLink": "https://github.com/NayanKanaparthi/deepscout-research-agent",
     "type": "project",
@@ -40,7 +40,7 @@
   },
   {
     "title": "Veritas RAG: Local-First Retrieval Engine",
-    "description": "A portable, local-first retrieval engine that packages knowledge into a shippable \"retrieval artifact\" for fast, offline, privacy-preserving search, with no vector database and no server. BM25 sparse retrieval benchmarked at ~2–3 ms P50 latency and ~230 ms cold start on a ~10k-chunk corpus, with published failure analysis on semantic queries and a hybrid retrieval roadmap.",
+    "description": "~2-3 ms P50 retrieval latency and ~230 ms cold start on a ~10k-chunk corpus. A portable, local-first retrieval engine that packages knowledge into a shippable \"retrieval artifact\" for fast, offline, privacy-preserving search, with no vector database and no server. Includes published failure analysis on semantic queries and a hybrid retrieval roadmap.",
     "githubLink": "https://github.com/NayanKanaparthi/Veritas-RAG",
     "projectLink": "https://github.com/NayanKanaparthi/Veritas-RAG",
     "type": "project",
@@ -64,7 +64,7 @@
   },
   {
     "title": "Reflexive Demand in the AI Infrastructure Boom (Abstract ID: 5694302)",
-    "description": "“Reflexive Demand in the AI Infrastructure Boom” analyzes the financial mechanics behind the rapid AI buildout from 2022 to 2025. The paper studies how vendor financing, long-dated backlogs, capital intensity, and credit conditions are shaping the current AI cycle across companies like Nvidia, Oracle, Microsoft, Amazon, and Google. It examines whether today’s surge in AI infrastructure reflects real user demand or a reflexive loop driven by financing structures, incentives, and expectations. The research connects this cycle to past investment booms while highlighting what makes the AI wave structurally different.",
+    "description": "SSRN Recent Top Paper, ~1,461 reads. “Reflexive Demand in the AI Infrastructure Boom” analyzes the financial mechanics behind the rapid AI buildout from 2022 to 2025. The paper studies how vendor financing, long-dated backlogs, capital intensity, and credit conditions are shaping the current AI cycle across companies like Nvidia, Oracle, Microsoft, Amazon, and Google. It examines whether today’s surge in AI infrastructure reflects real user demand or a reflexive loop driven by financing structures, incentives, and expectations. The research connects this cycle to past investment booms while highlighting what makes the AI wave structurally different.",
     "image": "https://rgjbldklvuetedpmkhwy.supabase.co/storage/v1/object/public/Portfolio-assets/uploads/1765637576102-research_paper.png",
     "githubLink": "https://github.com/NayanKanaparthi/Reflexive-Demand-in-the-AI-Infrastructure-Boom",
     "projectLink": "https://papers.ssrn.com/abstract=5694302",

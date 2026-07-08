@@ -1,14 +1,14 @@
 [
   {
     "title": "AIGIS",
-    "description": "An open-source AI governance CLI, published on npm and PyPI with 6,000+ downloads and an endorsement from a former Washington Post CTO. One command compiles a plain-English project description into a deterministic governance brief mapped against NIST AI RMF, OWASP Top 10 for LLMs, and ISO/IEC 42001. Built for the coding-agent era: governance content structured for AI agents first, humans second.",
+    "description": "6,000+ downloads on npm and PyPI. An open-source AI governance CLI: one command compiles a plain-English project description into a deterministic governance brief mapped against NIST AI RMF, OWASP Top 10 for LLMs, and ISO/IEC 42001, with byte-identical output and overclaim detection. Built for the coding-agent era: governance content structured for AI agents first, humans second.",
     "status": "Active",
     "year": "2026",
     "link": "https://github.com/NayanKanaparthi/aigis"
   },
   {
     "title": "Tokenomics",
-    "description": "Tokenomics is a token-aware optimization and memory layer that sits between your application and LLM providers. It decides, per query, whether to answer from cache, compress the prompt, or route to the cheapest model that can do the job. Benchmarked at ~90% LLM API cost reduction with quality preserved, combining semantic caching, UCB bandit routing, prompt compression, and cascading inference.",
+    "description": "~90% LLM API cost reduction ($0.218 to $0.014 across a 50-query benchmark) with quality preserved. Tokenomics is a token-aware optimization layer between your application and LLM providers: it decides, per query, whether to answer from cache, compress the prompt, or route to the cheapest capable model. Savings attribution: UCB bandit routing ~75%, semantic caching ~22%, prompt compression ~3%.",
     "status": "Active",
     "year": "2025",
     "image": "/uploads/1764005954174-d1d0c211-7f13-49b7-9867-1519815cdd0d.png",
@@ -32,7 +32,7 @@
   },
   {
     "title": "Veritas RAG",
-    "description": "A portable, local-first RAG retrieval engine that packages your knowledge into a shippable “retrieval artifact” for fast, offline, privacy-preserving search (no vector DB, no server).",
+    "description": "~2-3 ms P50 retrieval latency, ~230 ms cold start on a ~10k-chunk corpus. A portable, local-first retrieval engine that packages your knowledge into a shippable \"retrieval artifact\" for fast, offline, privacy-preserving search, with no vector database and no server.",
     "status": "Active",
     "year": "2026",
     "link": "https://github.com/NayanKanaparthi/Veritas-RAG",

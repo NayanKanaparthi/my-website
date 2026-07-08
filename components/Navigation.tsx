@@ -8,15 +8,14 @@ export default function Navigation() {
   const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
 
-  const navItems = [
+  const navItems: { href: string; label: string; external?: boolean }[] = [
     { href: '/', label: 'Home' },
-    { href: '/ventures', label: 'Ventures' },
-    { href: '/blogs', label: 'Blogs' },
-    { href: '/projects', label: 'Projects' },
-    { href: '/research', label: 'Research' },
     { href: '/work', label: 'Case Studies' },
+    { href: '/projects', label: 'Projects' },
+    { href: '/ventures', label: 'Ventures' },
+    { href: '/research', label: 'Research' },
+    { href: '/blogs', label: 'Writing' },
     { href: '/about', label: 'Resume' },
-    { href: 'https://www.youtube.com/@llnayanll/videos', label: 'YouTube', external: true },
     { href: '/contact', label: 'Contact' },
   ]
 
