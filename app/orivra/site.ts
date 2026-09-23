@@ -2,12 +2,12 @@
 export const orivraSite = {
   origin: 'https://www.nayankanaparthi.dev',
   path: '/orivra',
-  supportEmail: 'nk4286@nyu.edu',
-  contactHref: 'mailto:nk4286@nyu.edu?subject=Orivra%20preview',
+  supportEmail: 'kanaparthinayan@gmail.com',
+  contactHref: 'mailto:kanaparthinayan@gmail.com?subject=Orivra%20preview',
   repositoryUrl: null as string | null,
   downloadUrl: null as string | null,
-  // Privacy / terms and release claims need owner review before indexing.
+  // Policy approval does not change the separate package release / indexing decision.
   indexable: false,
-  policyReviewed: false,
+  policyReviewed: true,
   updated: 'September 23, 2026',
 }

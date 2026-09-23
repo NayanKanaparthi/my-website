@@ -23,7 +23,9 @@ export function PolicyPage({
         <h1>{title}</h1>
         <p>{lead}</p>
         <span className={styles.policyDate}>
-          {orivraSite.policyReviewed ? 'Last updated' : 'Draft prepared'}{' '}
+          {orivraSite.policyReviewed
+            ? 'Effective and last updated'
+            : 'Draft prepared'}{' '}
           {orivraSite.updated}
         </span>
       </header>

@@ -25,7 +25,7 @@ const sections = [
 export default function PrivacyPage() {
   return (
     <PolicyPage
-      title="Privacy, in plain sight."
+      title="Privacy policy."
       lead="Read-only describes what Orivra can do to your mailbox. It does not mean the messages returned to your AI client stay on your computer."
       sections={sections}
     >
@@ -34,8 +34,9 @@ export default function PrivacyPage() {
         <p>
           Orivra is an independent project by Nayan Kanaparthi. This notice
           describes MailWeave, Orivra’s Gmail engine in preview, and the Orivra
-          pages on this website. It does not describe future Slack or Google
-          Drive connectors.
+          pages on this website. Nayan is responsible for the practices
+          described here. This policy does not cover future Slack or Google
+          Drive connectors or claim that a public download is available.
         </p>
         <p>
           Contact:{' '}
@@ -93,9 +94,11 @@ export default function PrivacyPage() {
         </p>
         <p>
           <strong>Model setup:</strong> Initial provisioning downloads model
-          files from the model host. This is separate from reading your mailbox;
-          the download process does not need your Gmail messages or Gmail
-          authorization token.
+          files from Hugging Face and its download infrastructure. Those
+          services receive normal download-request information, such as your IP
+          address. This is separate from reading your mailbox; the download
+          process does not send your Gmail messages or Gmail authorization
+          token.
         </p>
         <p>
           <strong>The project operator:</strong> The current connector does not
@@ -109,11 +112,12 @@ export default function PrivacyPage() {
         <p>
           The desktop package stores its Google authorization token and local
           model files under{' '}
-          <code>~/Library/Application Support/Orivra Beta</code>. The
-          self-managed path uses its configured state and model directories.
-          Authorization is kept in a local file with owner-only access
-          permissions; this is not a claim that the file is encrypted by Orivra
-          or stored in the system keychain.
+          <code>~/Library/Application Support/Orivra Beta</code> on macOS by
+          default, with authorization in <code>state/</code> and weights in{' '}
+          <code>models/</code>. The self-managed path uses its configured state
+          and model directories. Authorization is kept in a local file with
+          owner-only access permissions; this is not a claim that the file is
+          encrypted by Orivra or stored in the system keychain.
         </p>
         <p>
           The current connector does not persist message bodies or attachments
@@ -131,21 +135,25 @@ export default function PrivacyPage() {
           deletion.
         </p>
         <p>
-          Local credentials and models remain until you remove them. Orivra
+          Local credentials, models and persistent state remain until you remove
+          them. Optional diagnostic files remain at the location you chose until
+          you delete them; they have no automatic retention deadline. Orivra
           cannot delete a conversation or log held by your AI provider.
         </p>
       </section>
       <section id="use">
         <h2>5. Use and sharing</h2>
         <p>
-          Google user data is used to provide the user-directed search, reading
-          and contextual-navigation features. Orivra does not sell Gmail data,
-          use it for advertising, or use it to train general-purpose AI models.
-          The local ranking models are used for inference, not trained on your
-          mailbox.
+          Google user data is used to provide the search, reading and
+          information-navigation features you request. Orivra does not sell
+          Gmail data, use it for advertising, or train general-purpose AI models
+          on it. Its local ranking models perform inference only. These
+          statements describe Orivra’s processing, not the independent practices
+          of your AI provider.
         </p>
         <p>
-          Orivra’s use and transfer of Google API data must comply with the{' '}
+          We limit Orivra’s use and transfer of Google API data to the purposes
+          described in this policy, in accordance with the{' '}
           <a
             href="https://developers.google.com/terms/api-services-user-data-policy"
             target="_blank"
@@ -158,17 +166,35 @@ export default function PrivacyPage() {
           for unrelated reuse.
         </p>
         <p>
-          The operator does not routinely access your mailbox. For support,
-          share only the specific information you choose. Do not send private
-          messages, credentials or tokens. Information voluntarily supplied for
-          support is used to investigate and respond; you may request deletion
-          by email. The operator may need to retain or disclose information when
-          legally required.
+          The operator has no routine remote access to your mailbox. For
+          support, share only the specific information you choose. Do not send
+          private messages, credentials or tokens. Support correspondence is
+          used to investigate and respond, and retained only as long as needed
+          to resolve the request, related follow-up or a legal obligation. You
+          may request deletion by email; information that must be retained by
+          law is excepted. Copies in the email provider’s backups follow that
+          provider’s deletion schedule.
         </p>
         <p>
-          Before using a cloud AI client, review its data controls and terms.
-          Orivra cannot determine your provider’s retention or training settings
-          on your behalf.
+          Before connecting Gmail, review your AI client’s retention and model
+          improvement settings. For Claude, see Anthropic’s{' '}
+          <a
+            href="https://privacy.claude.com/en/articles/10023548-how-long-do-you-store-my-data"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            retention information
+          </a>{' '}
+          and{' '}
+          <a
+            href="https://privacy.claude.com/en/articles/12109829-how-do-i-change-my-model-improvement-privacy-settings"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            model improvement controls
+          </a>
+          . Orivra does not read or change those settings and cannot promise
+          that the provider will never retain or use content it receives.
         </p>
       </section>
       <section id="control">
@@ -218,10 +244,10 @@ export default function PrivacyPage() {
           as a static file from this website.
         </p>
         <p>
-          The website’s hosting service processes ordinary request information,
+          Vercel, the website’s hosting service, processes request information,
           such as IP addresses and browser details, to deliver and secure the
-          site. An email you send to the contact address is handled by the email
-          provider. Those services have their own retention practices; the
+          site. Email sent to the contact address is handled by Google’s Gmail
+          service. Those services have their own retention practices; the
           no-mailbox-backend statement above does not mean visiting this website
           creates no server logs.
         </p>
@@ -240,10 +266,11 @@ export default function PrivacyPage() {
       <section id="updates">
         <h2>8. Updates and questions</h2>
         <p>
-          Any material change to Gmail data handling should be described here
-          and in the product before it takes effect, with renewed consent where
-          required. This draft must be reviewed against the package actually
-          released.
+          We will update this policy and the product’s disclosures before a
+          material change to Gmail data handling takes effect, and request
+          renewed consent where required. The effective date above identifies
+          the current policy. New connectors or a different data flow require
+          updated disclosures; this policy does not silently extend to them.
         </p>
         <p>
           Questions? Contact{' '}

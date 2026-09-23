@@ -2,9 +2,12 @@
 
 Prepared 2026-09-23. Initially built and reviewed locally. The owner subsequently
 authorized pushing the website to the Portfolio repository's `main` branch for
-the existing Vercel integration to publish. This does not approve the draft
-policies, Google submission, OAuth changes, package publication or a license.
-The policy draft labels, unavailable download links and indexing guard remain.
+the existing Vercel integration to publish. The owner later requested factual
+verification and approval of the privacy/terms pages and changed the Orivra
+support address to `kanaparthinayan@gmail.com`. The pages are now adopted under
+that instruction; see `ORIVRA_POLICY_REVIEW.md` for evidence and limits. This
+does not approve Google submission, OAuth changes, package publication or a
+license. Unavailable download links and the indexing guard remain.
 
 ## Pages
 
@@ -17,10 +20,10 @@ The policy draft labels, unavailable download links and indexing guard remain.
   local credentials, optional diagnostics, retention and revocation.
 - `/orivra/terms`: preview boundaries, authorized use, independent services.
 
-Privacy and terms are **drafts for owner review**, not adopted policy or legal
-advice. Confirm the factual disclosures against the release package and the
-actual hosting/support arrangements before adopting them. The site makes no
-claim of Google verification or guaranteed answer accuracy.
+Privacy and terms take effect on 2026-09-23 under the owner's approval after
+the factual review. This is not legal advice, a compliance certification or
+Google data-access approval. Check the disclosures again if the release package
+or hosting/support arrangements change. The site does not guarantee answers.
 
 The umbrella product is Orivra. Gmail is its first connector; MailWeave powers
 that connector. Slack and Drive are explicitly planned, not available.
@@ -74,25 +77,25 @@ carry a revision query to avoid displaying cached copies of the previous cut.
 The film shows future sources, so the visible caption still identifies Slack and
 Drive as planned. The separate website logo masters are unchanged.
 
-## Review settings / decisions before publishing
+## Current settings / remaining release decisions
 
 Central settings are in `app/orivra/site.ts`:
 
 1. `indexable: false`: all product pages currently carry `noindex, nofollow`.
-   This is an indexing instruction, **not access control**. Keep the work local
-   until publication is approved; a deployed draft would still be public.
-2. `policyReviewed: false`: visible legal draft notices stay on. Approve the
-   privacy practices, operator/contact, retention and effective date before
-   changing this. Do not submit draft policy URLs to Google.
-3. Confirm `supportEmail` (currently the existing portfolio contact,
-   `nk4286@nyu.edu`). There is no new email account to operate.
+   This is an indexing instruction, **not access control**. Publication has
+   been approved; changing search indexing is a separate decision.
+2. `policyReviewed: true`: the owner asked to verify and approve the policies.
+   Factual claims were checked, qualifications retained and draft labels removed.
+   This is not a legal or Google approval flag.
+3. `supportEmail` is `kanaparthinayan@gmail.com`, as requested. All Orivra
+   contact links use it; the portfolio's separate contact address is unchanged.
 4. `repositoryUrl` and `downloadUrl` are null. Add only the approved, sanitized
    public repository and verified release artifact. The self-managed link should
    go to a version-matched setup guide. Do not link credentials or private records.
 5. Reconcile the installer’s Testing-mode text with the chosen Google project
    publishing status before promising an authorization flow publicly. The site
    intentionally promises neither unrestricted signup nor weekly reconnection.
-6. Confirm the software license separately; the terms draft does not select one.
+6. Confirm the software license separately; the website terms do not select one.
 
 The development status is shown in the page copy as well as `site.ts`.
 When the package launches, update the setup status notice, landing FAQ,
@@ -157,7 +160,7 @@ Browser checks and any remaining issues are recorded in the handoff below.
 - The final rebuilt site also passed keyboard-first skip-to-content, native FAQ
   expansion, and mobile-menu Escape dismissal with focus returned to the toggle.
 - Network inspection found the portfolio's **existing** Google Fonts stylesheet
-  request on these routes. The privacy draft discloses it; the shared portfolio
+  request on these routes. The privacy policy discloses it; the shared portfolio
   stylesheet was not changed. The local Orivra font files are self-hosted.
 
 These checks validate this website, not Gmail authorization, installer behaviour,

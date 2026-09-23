@@ -28,6 +28,44 @@ for (const [path, title, content] of pages) {
     `${path}: page title`
   )
   assert(html.includes(content), `${path}: content rendered on the server`)
+  const main = html.match(
+    /<main\b[^>]*id="orivra-main"[^>]*>([\s\S]*?)<\/main>/
+  )?.[1]
+  assert(main, `${path}: product content is present`)
+  assert(
+    !main.includes('nk4286@nyu.edu'),
+    `${path}: old Orivra support address removed`
+  )
+  assert(
+    main.includes('mailto:kanaparthinayan@gmail.com'),
+    `${path}: current Orivra support contact`
+  )
+  if (path === '/orivra/privacy' || path === '/orivra/terms') {
+    assert(
+      main.includes('Effective and last updated'),
+      `${path}: effective policy date`
+    )
+    assert(
+      !/\bdraft\b/i.test(main),
+      `${path}: approved policy, no draft notices`
+    )
+  }
+  if (path === '/orivra/privacy') {
+    for (const disclosure of [
+      'https://www.googleapis.com/auth/gmail.readonly',
+      'Selected message content',
+      'owner-only access',
+      'no automatic retention',
+      'Support correspondence',
+      'Google API Services User Data Policy',
+      'model improvement controls',
+      'Revoking Google access does',
+    ])
+      assert(
+        main.includes(disclosure),
+        `Privacy disclosure retained: ${disclosure}`
+      )
+  }
   assert(
     !/context layer|gmail preview/i.test(html),
     `${path}: current positioning and MailWeave naming`
@@ -71,7 +109,7 @@ for (const [path, title, content] of pages) {
   )
   assert(
     html.includes('name="robots" content="noindex, nofollow"'),
-    `${path}: pre-publication indexing guard`
+    `${path}: unchanged indexing guard`
   )
   assert(
     html.includes(

@@ -6,7 +6,7 @@ import { orivraSite } from '../site'
 export const metadata: Metadata = {
   title: 'Preview terms',
   description:
-    'Draft terms for the Orivra MailWeave preview for Gmail: authorized use, experimental status, independent services and user control.',
+    'Terms for the Orivra website and MailWeave preview for Gmail: authorized use, experimental status, independent services and user control.',
   alternates: { canonical: '/orivra/terms' },
   openGraph: { title: 'Orivra preview terms', url: '/orivra/terms' },
 }
@@ -23,7 +23,7 @@ export default function TermsPage() {
   return (
     <PolicyPage
       title="Preview terms."
-      lead="Orivra helps AI agents find and navigate information. These draft terms explain the intended boundaries of the MailWeave preview for Gmail."
+      lead="Orivra helps AI agents find and navigate information. These terms cover this website and use of the MailWeave preview for Gmail when it is made available."
       sections={sections}
     >
       <section id="project">
@@ -35,9 +35,11 @@ export default function TermsPage() {
           other products identify compatibility, not an endorsement.
         </p>
         <p>
-          This page is a draft for review, not a statement that the preview has
-          launched or that these terms are effective. The release package and
-          its final terms must be identified before public distribution.
+          These terms are effective from the date above. They do not announce a
+          software release: the <Link href="/orivra/setup">setup page</Link>{' '}
+          identifies current availability and requirements. Use the preview only
+          after reviewing these terms, the privacy policy and the permissions
+          requested.
         </p>
       </section>
       <section id="permission">
@@ -98,10 +100,11 @@ export default function TermsPage() {
       <section id="license">
         <h2>5. Software and content</h2>
         <p>
-          The license included with the released software governs permissions to
-          use, copy, modify and redistribute that software. This draft does not
-          select a software license or grant rights that a future release may
-          not provide.
+          Permissions to use, copy, modify and redistribute a software version
+          are governed by the license supplied with that version. These website
+          terms do not select a software license, replace its conditions or
+          grant additional rights to the code. Check the release’s license
+          before using or redistributing it.
         </p>
         <p>
           You retain your rights in your email and other content. Connecting an
@@ -124,9 +127,7 @@ export default function TermsPage() {
           <a href={`mailto:${orivraSite.supportEmail}`}>
             {orivraSite.supportEmail}
           </a>
-          . Final release terms, including any applicable warranty, liability or
-          governing-law provisions, require owner review; none are silently
-          selected by this draft.
+          . The preview does not include a service-level agreement.
         </p>
       </section>
     </PolicyPage>
