@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import './globals.css'
-import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
+import SiteShell from '@/components/SiteShell'
 
 const inter = localFont({ 
   src: '../public/fonts/Inter-Variable.woff2',
@@ -36,13 +36,8 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${manrope.variable} ${jetbrainsMono.variable}`}>
       <body className="bg-offwhite text-navy antialiased">
-        <Navigation />
-        <main className="min-h-screen">
-          {children}
-        </main>
-        <Footer />
+        <SiteShell footer={<Footer />}>{children}</SiteShell>
       </body>
     </html>
   )
 }
-

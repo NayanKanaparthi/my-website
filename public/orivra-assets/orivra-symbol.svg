@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+  <title>Orivra symbol</title>
+  <desc>Three evidence paths enter an open O, converge visibly, and resolve at an inspectable evidence point.</desc>
+  <g stroke="#111318" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M44 22C78 7 112 29 112 64C112 99 78 121 44 106"/>
+    <path d="M12 30C29 30 33 51 49 59"/>
+    <path d="M12 64H87"/>
+    <path d="M12 98C29 98 33 77 49 69"/>
+  </g>
+  <circle cx="49" cy="64" r="6" fill="#111318"/>
+  <circle cx="87" cy="64" r="6" fill="#111318"/>
+</svg>

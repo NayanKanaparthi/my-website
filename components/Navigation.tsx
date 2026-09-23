@@ -12,6 +12,7 @@ export default function Navigation() {
     { href: '/', label: 'Home' },
     { href: '/work', label: 'Case Studies' },
     { href: '/projects', label: 'Projects' },
+    { href: '/orivra', label: 'Orivra' },
     { href: '/ventures', label: 'Ventures' },
     { href: '/research', label: 'Research' },
     { href: '/blogs', label: 'Writing' },
@@ -28,7 +29,7 @@ export default function Navigation() {
           </Link>
           
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center space-x-4 xl:space-x-8">
             {navItems.map((item) => {
               if (item.external) {
                 return (
@@ -61,7 +62,7 @@ export default function Navigation() {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden text-navy"
+            className="lg:hidden text-navy"
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
           >
@@ -77,7 +78,7 @@ export default function Navigation() {
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden py-4 space-y-4">
+          <div className="lg:hidden py-4 space-y-4">
             {navItems.map((item) => {
               if (item.external) {
                 return (
@@ -114,5 +115,4 @@ export default function Navigation() {
     </nav>
   )
 }
-
 
