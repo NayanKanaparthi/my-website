@@ -35,7 +35,11 @@ const questions = [
   ],
   [
     'Can I download it today?',
-    'A public download is not linked yet. The desktop package and Google authorization flow are still being prepared for release. The getting-started page explains both the simpler desktop route and the advanced, self-managed route.',
+    'Yes. MailWeave 0.2.0-beta.1 is a public experimental beta for Claude Desktop on Apple Silicon Macs running macOS 14 or later. Download the .mcpb installer here, then follow Getting started. The source is public under MIT, and the advanced, self-managed route remains available.',
+  ],
+  [
+    'Has Google verified the Gmail connection?',
+    'Gmail data-access verification is not complete. Google may show an unverified-app warning, enforce a 100-total-user cap, or block authorization under account or administrator policies. The cap is not a verification exemption. This is an experimental release, not a Google-approved app.',
   ],
 ]
 
@@ -66,17 +70,21 @@ export default function OrivraPage() {
               and why, and bring back evidence you can check.
             </p>
             <div className={styles.heroActions}>
-              <a className={styles.button} href="#mailweave">
-                Explore MailWeave <span aria-hidden="true">↗</span>
+              <a className={styles.button} href={orivraSite.downloadUrl}>
+                Download MailWeave beta <span aria-hidden="true">↓</span>
               </a>
-              <a className={styles.textLink} href="#approach">
-                See how it works <span aria-hidden="true">↓</span>
+              <a className={styles.textLink} href="#mailweave">
+                Explore MailWeave <span aria-hidden="true">↘</span>
               </a>
             </div>
             <p className={styles.heroNote}>
-              Starting with MailWeave, Orivra’s Gmail engine for Claude Desktop.
+              {orivraSite.version} · Apple Silicon · macOS 14+ · 346 MB
               <br />
-              Read-only access. Local retrieval. Sources you can inspect.
+              Gmail access is unverified. Selected email goes to Claude.
+              <br />
+              <Link href="/orivra/setup">Installation & requirements</Link>
+              {' · '}
+              <a href={orivraSite.releaseUrl}>Release notes</a>
             </p>
           </div>
           <div
@@ -320,7 +328,7 @@ export default function OrivraPage() {
       >
         <div className={styles.connectorHeading}>
           <span className={styles.eyebrow}>04 / MEET MAILWEAVE</span>
-          <span className={styles.badge}>IN DEVELOPMENT · PREVIEW</span>
+          <span className={styles.badge}>PUBLIC EXPERIMENTAL BETA</span>
         </div>
         <div className={styles.gmailGrid}>
           <div>
@@ -335,8 +343,13 @@ export default function OrivraPage() {
               conversation to the messages that explain the decision.
             </p>
             <Link href="/orivra/setup" className={styles.button}>
-              Choose your setup path <span aria-hidden="true">↗</span>
+              Get started with MailWeave <span aria-hidden="true">↗</span>
             </Link>
+            <p className={styles.heroNote}>
+              MIT-licensed source. Early release with{' '}
+              <a href={orivraSite.limitationsUrl}>known limitations</a>;
+              repository CI and release checks are not fully green.
+            </p>
           </div>
           <div className={styles.connectorSpecs}>
             <div>

@@ -78,6 +78,7 @@ export default function OrivraLayout({
             <Link href="/orivra/setup">Getting started</Link>
             <Link href="/orivra/privacy">Privacy</Link>
             <Link href="/orivra/terms">Terms</Link>
+            <a href={orivraSite.repositoryUrl}>GitHub</a>
             <a href={orivraSite.contactHref}>Contact</a>
           </nav>
         </div>
@@ -86,7 +87,7 @@ export default function OrivraLayout({
             © {new Date().getFullYear()} Orivra · Built by{' '}
             <Link href="/">Nayan Kanaparthi</Link>
           </span>
-          <span>Independent software. MailWeave preview in development.</span>
+          <span>MailWeave {orivraSite.version} · Public experimental beta · MIT</span>
         </div>
       </footer>
     </div>

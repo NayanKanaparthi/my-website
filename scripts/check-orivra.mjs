@@ -18,6 +18,9 @@ const pages = [
   ['/orivra/terms', 'Preview terms', 'Authorized use'],
 ]
 const assets = new Set()
+const releaseBase = 'https://github.com/NayanKanaparthi/Orivra'
+const releaseTag = 'v0.2.0-beta.1'
+const installerUrl = `${releaseBase}/releases/download/${releaseTag}/Orivra-Beta-0.2.0-beta.1.mcpb`
 for (const [path, title, content] of pages) {
   const response = await fetch(new URL(path, origin))
   assert.equal(response.status, 200, path)
@@ -74,7 +77,7 @@ for (const [path, title, content] of pages) {
     assert.match(
       html,
       /href="#mailweave"[^>]*>Explore MailWeave/,
-      'Primary CTA explores MailWeave'
+      'MailWeave exploration remains available beside the download'
     )
     assert(
       html.includes('id="mailweave"'),
@@ -93,6 +96,21 @@ for (const [path, title, content] of pages) {
       'Implementation remains explained beneath the value proposition'
     )
   }
+  if (path === '/orivra' || path === '/orivra/setup') {
+    assert(html.includes(`href="${installerUrl}"`), `${path}: exact public installer link`)
+    assert(html.includes(`href="${releaseBase}/releases/tag/${releaseTag}"`), `${path}: release notes`)
+    assert(html.includes('Download MailWeave beta'), `${path}: visible download CTA`)
+    assert(html.includes('macOS 14'), `${path}: platform requirement`)
+    assert(html.includes('346 MB'), `${path}: download size`)
+    assert(html.includes('100-total-user'), `${path}: unverified app cap disclosed`)
+    assert(!/not linked yet|being prepared for release|once it is available|IN DEVELOPMENT · PREVIEW/.test(html), `${path}: no stale availability copy`)
+  }
+  if (path === '/orivra/setup') {
+    assert(html.includes(`href="${releaseBase}/releases/download/${releaseTag}/SHA256SUMS"`), 'Checksum companion linked')
+    assert(html.includes(`href="${releaseBase}/blob/${releaseTag}/docs/SETUP.md"`), 'Version-matched self-managed guide')
+    assert(html.includes('Google data-access verification is incomplete'), 'Google verification status is explicit')
+    assert(html.includes('Selected email evidence is sent to Claude/Anthropic'), 'AI provider disclosure retained')
+  }
   assert.equal(
     (html.match(/<main\b/g) || []).length,
     1,
@@ -108,8 +126,8 @@ for (const [path, title, content] of pages) {
     `${path}: no portfolio navigation`
   )
   assert(
-    html.includes('name="robots" content="noindex, nofollow"'),
-    `${path}: unchanged indexing guard`
+    html.includes('name="robots" content="index, follow"'),
+    `${path}: published product pages allow indexing`
   )
   assert(
     html.includes(
@@ -127,7 +145,7 @@ for (const [path, title, content] of pages) {
       `${path}: valid fragment ${match[1]}`
     )
   console.log(
-    `PASS ${path}: server-rendered content, landmarks, canonical, indexing guard, anchors`
+    `PASS ${path}: content, release links, landmarks, canonical, public indexing, anchors`
   )
 }
 for (const path of assets) {

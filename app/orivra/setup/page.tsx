@@ -6,7 +6,7 @@ import styles from '../orivra.module.css'
 export const metadata: Metadata = {
   title: 'Getting started',
   description:
-    'Get started with MailWeave, Orivra’s Gmail engine: the planned Claude Desktop package or advanced self-managed setup. Availability, requirements and data flow.',
+    'Download the MailWeave public beta for Claude Desktop on Apple Silicon Macs, connect Gmail, or choose the advanced self-managed setup. Requirements and data flow.',
   alternates: { canonical: '/orivra/setup' },
   openGraph: { title: 'Getting started with Orivra', url: '/orivra/setup' },
 }
@@ -33,10 +33,12 @@ export default function SetupPage() {
       <aside className={styles.releaseNotice}>
         <span className={styles.mono}>RELEASE STATUS</span>
         <p>
-          <strong>The MailWeave preview is being prepared for release.</strong>{' '}
-          A verified public download and source-repository link are not
-          published here yet. The paths below describe the intended setup—not an
-          announcement that the package is ready to install.
+          <strong>MailWeave {orivraSite.version} is available as a public experimental beta.</strong>{' '}
+          Google data-access verification is incomplete: authorization may show
+          a warning or be blocked, and the unverified app has a 100-total-user
+          cap. Selected email evidence is sent to Claude/Anthropic. Read the{' '}
+          <a href={orivraSite.releaseUrl}>release notes</a> and{' '}
+          <a href={orivraSite.limitationsUrl}>known limitations</a> before connecting.
         </p>
       </aside>
       <div className={styles.setupGrid}>
@@ -47,7 +49,7 @@ export default function SetupPage() {
           </div>
           <h2>For Claude Desktop.</h2>
           <p>
-            Designed to connect your own Gmail account without Terminal commands
+            Connect your own Gmail account without Terminal commands
             or your own Google Cloud project.
           </p>
           <ul className={styles.requirements}>
@@ -55,18 +57,21 @@ export default function SetupPage() {
             <li>Claude Desktop with local extensions enabled</li>
             <li>Internet connection for setup and Gmail access</li>
             <li>
-              Space for the extension and approximately 1.2 GB of local models
+              346 MB download · about 1.16 GB unpacked + 1.27 GB of models,
+              plus temporary installation space
             </li>
           </ul>
           <ol className={styles.steps}>
             <li>
-              <strong>Install the Orivra extension.</strong>
+              <strong>Download and install the .mcpb file.</strong>
               <span>
-                Use the released desktop package once it is available.
+                In Claude Desktop, open Settings → Extensions → Advanced
+                settings → Install Extension… and choose the downloaded file.
+                The source ZIP is not the installer.
               </span>
             </li>
             <li>
-              <strong>Ask Claude to set up Orivra.</strong>
+              <strong>Send “Set up Orivra” in a new chat.</strong>
               <span>
                 Setup prepares the local models and gives you a Google
                 authorization link.
@@ -82,23 +87,23 @@ export default function SetupPage() {
             <li>
               <strong>Return to Claude to finish.</strong>
               <span>
-                Continue setup, confirm the account, then ask a question about
-                your mail.
+                Send “Continue the Orivra setup.” Wait for “Orivra is ready”
+                and confirm the account before asking about your mail.
               </span>
             </li>
           </ol>
-          {orivraSite.downloadUrl ? (
-            <a className={styles.button} href={orivraSite.downloadUrl}>
-              Download desktop preview ↗
-            </a>
-          ) : (
-            <a className={styles.button} href={orivraSite.contactHref}>
-              Ask about the desktop preview ↗
-            </a>
-          )}
+          <a className={styles.button} href={orivraSite.downloadUrl}>
+            Download MailWeave beta <span aria-hidden="true">↓</span>
+          </a>
           <p className={styles.smallNote}>
-            Google app verification and the public authorization flow are still
-            being prepared. No Google verification or endorsement is claimed.
+            {orivraSite.version} · .mcpb · 346 MB · Apple Silicon only
+            <br />
+            <a href={orivraSite.checksumUrl}>SHA-256 checksum</a>
+            {' · '}
+            <a href={orivraSite.desktopGuideUrl}>Full install & removal guide</a>
+            <br />
+            No Google approval or endorsement is claimed. If authorization is
+            blocked, stop and contact support; do not disable protections.
           </p>
         </article>
         <article className={styles.setupCard}>
@@ -112,8 +117,9 @@ export default function SetupPage() {
             Your credentials.
           </h2>
           <p>
-            The command-line path remains available in the project. It isn’t
-            being removed in favour of the desktop package.
+            Build and run from the public MIT-licensed source with your own
+            Google Cloud project. This route remains available alongside the
+            desktop package.
           </p>
           <ul className={styles.requirements}>
             <li>Comfortable using a terminal</li>
@@ -151,19 +157,14 @@ export default function SetupPage() {
               </span>
             </li>
           </ol>
-          {orivraSite.repositoryUrl ? (
-            <a className={styles.outlineButton} href={orivraSite.repositoryUrl}>
-              Open the source and setup guide ↗
-            </a>
-          ) : (
-            <a
-              className={styles.outlineButton}
-              href={`${orivraSite.contactHref}%20%E2%80%94%20self-managed%20setup`}
-            >
-              Ask for the self-managed guide ↗
-            </a>
-          )}
+          <a className={styles.outlineButton} href={orivraSite.selfManagedGuideUrl}>
+            Open the self-managed setup guide ↗
+          </a>
           <p className={styles.smallNote}>
+            <a href={orivraSite.repositoryUrl}>View source on GitHub</a>
+            {' · '}
+            <a href={orivraSite.licenseUrl}>MIT License</a>
+            <br />
             Your Google project’s authorization rules still apply. Self-managed
             setup is not a bypass for Google’s requirements.
           </p>

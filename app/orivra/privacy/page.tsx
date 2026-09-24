@@ -33,10 +33,11 @@ export default function PrivacyPage() {
         <h2>1. Who and what this covers</h2>
         <p>
           Orivra is an independent project by Nayan Kanaparthi. This notice
-          describes MailWeave, Orivra’s Gmail engine in preview, and the Orivra
+          describes MailWeave, Orivra’s Gmail engine in public beta, and the Orivra
           pages on this website. Nayan is responsible for the practices
           described here. This policy does not cover future Slack or Google
-          Drive connectors or claim that a public download is available.
+          Drive connectors. Current downloads and requirements are listed on the{' '}
+          <Link href="/orivra/setup">setup page</Link>.
         </p>
         <p>
           Contact:{' '}

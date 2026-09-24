@@ -23,7 +23,7 @@ export default function TermsPage() {
   return (
     <PolicyPage
       title="Preview terms."
-      lead="Orivra helps AI agents find and navigate information. These terms cover this website and use of the MailWeave preview for Gmail when it is made available."
+      lead="Orivra helps AI agents find and navigate information. These terms cover this website and use of the MailWeave public beta for Gmail."
       sections={sections}
     >
       <section id="project">
@@ -35,8 +35,8 @@ export default function TermsPage() {
           other products identify compatibility, not an endorsement.
         </p>
         <p>
-          These terms are effective from the date above. They do not announce a
-          software release: the <Link href="/orivra/setup">setup page</Link>{' '}
+          These terms are effective from the date above. The{' '}
+          <Link href="/orivra/setup">setup page</Link>{' '}
           identifies current availability and requirements. Use the preview only
           after reviewing these terms, the privacy policy and the permissions
           requested.
@@ -100,6 +100,8 @@ export default function TermsPage() {
       <section id="license">
         <h2>5. Software and content</h2>
         <p>
+          The current MailWeave beta’s original software is released under the{' '}
+          <a href={orivraSite.licenseUrl}>MIT License</a>.{' '}
           Permissions to use, copy, modify and redistribute a software version
           are governed by the license supplied with that version. These website
           terms do not select a software license, replace its conditions or

@@ -1,13 +1,22 @@
-/** Release links deliberately stay unset until the owner approves publication. */
+const repositoryUrl = 'https://github.com/NayanKanaparthi/Orivra'
+const releaseTag = 'v0.2.0-beta.1'
+
+/** Version-specific beta links; do not use /releases/latest for a prerelease. */
 export const orivraSite = {
   origin: 'https://www.nayankanaparthi.dev',
   path: '/orivra',
   supportEmail: 'kanaparthinayan@gmail.com',
-  contactHref: 'mailto:kanaparthinayan@gmail.com?subject=Orivra%20preview',
-  repositoryUrl: null as string | null,
-  downloadUrl: null as string | null,
-  // Policy approval does not change the separate package release / indexing decision.
-  indexable: false,
+  contactHref: 'mailto:kanaparthinayan@gmail.com?subject=MailWeave%20beta',
+  version: '0.2.0-beta.1',
+  repositoryUrl,
+  releaseUrl: `${repositoryUrl}/releases/tag/${releaseTag}`,
+  downloadUrl: `${repositoryUrl}/releases/download/${releaseTag}/Orivra-Beta-0.2.0-beta.1.mcpb`,
+  checksumUrl: `${repositoryUrl}/releases/download/${releaseTag}/SHA256SUMS`,
+  desktopGuideUrl: `${repositoryUrl}/blob/${releaseTag}/docs/INSTALL_DESKTOP_BETA.md`,
+  selfManagedGuideUrl: `${repositoryUrl}/blob/${releaseTag}/docs/SETUP.md`,
+  limitationsUrl: `${repositoryUrl}/blob/${releaseTag}/docs/KNOWN_LIMITATIONS.md`,
+  licenseUrl: `${repositoryUrl}/blob/${releaseTag}/LICENSE`,
+  indexable: true,
   policyReviewed: true,
-  updated: 'September 23, 2026',
+  updated: 'September 24, 2026',
 }

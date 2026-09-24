@@ -71,7 +71,7 @@ export function OrivraNavigation() {
             aria-current={pathname === '/orivra/setup' ? 'page' : undefined}
             onClick={() => setOpen(false)}
           >
-            Getting started <span aria-hidden="true">↗</span>
+            Download beta <span aria-hidden="true">↗</span>
           </Link>
         </nav>
       </div>
