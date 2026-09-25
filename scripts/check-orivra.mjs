@@ -74,6 +74,8 @@ for (const [path, title, content] of pages) {
     `${path}: current positioning and MailWeave naming`
   )
   if (path === '/orivra') {
+    assert(html.includes(`href="${releaseBase}/releases/tag/${releaseTag}"`), 'Release notes linked')
+    assert(html.includes('100-total-user'), 'Unverified app cap disclosed in FAQ')
     assert.match(
       html,
       /href="#mailweave"[^>]*>Explore MailWeave/,
@@ -98,18 +100,17 @@ for (const [path, title, content] of pages) {
   }
   if (path === '/orivra' || path === '/orivra/setup') {
     assert(html.includes(`href="${installerUrl}"`), `${path}: exact public installer link`)
-    assert(html.includes(`href="${releaseBase}/releases/tag/${releaseTag}"`), `${path}: release notes`)
     assert(html.includes('Download MailWeave beta'), `${path}: visible download CTA`)
     assert(html.includes('macOS 14'), `${path}: platform requirement`)
     assert(html.includes('346 MB'), `${path}: download size`)
-    assert(html.includes('100-total-user'), `${path}: unverified app cap disclosed`)
     assert(!/not linked yet|being prepared for release|once it is available|IN DEVELOPMENT · PREVIEW/.test(html), `${path}: no stale availability copy`)
   }
   if (path === '/orivra/setup') {
     assert(html.includes(`href="${releaseBase}/releases/download/${releaseTag}/SHA256SUMS"`), 'Checksum companion linked')
     assert(html.includes(`href="${releaseBase}/blob/${releaseTag}/docs/SETUP.md"`), 'Version-matched self-managed guide')
-    assert(html.includes('Google data-access verification is incomplete'), 'Google verification status is explicit')
-    assert(html.includes('Selected email evidence is sent to Claude/Anthropic'), 'AI provider disclosure retained')
+    assert(!main.includes('RELEASE STATUS'), 'Removed release-status banner stays absent')
+    assert(main.includes('No Google approval or endorsement is claimed'), 'Setup authorization guidance retained')
+    assert(main.includes('The evidence it returns becomes available to Claude'), 'Setup data-sharing disclosure retained')
   }
   assert.equal(
     (html.match(/<main\b/g) || []).length,

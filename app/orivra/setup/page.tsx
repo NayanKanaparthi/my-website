@@ -30,17 +30,6 @@ export default function SetupPage() {
           how much of the setup you want to own.
         </p>
       </header>
-      <aside className={styles.releaseNotice}>
-        <span className={styles.mono}>RELEASE STATUS</span>
-        <p>
-          <strong>MailWeave {orivraSite.version} is available as a public experimental beta.</strong>{' '}
-          Google data-access verification is incomplete: authorization may show
-          a warning or be blocked, and the unverified app has a 100-total-user
-          cap. Selected email evidence is sent to Claude/Anthropic. Read the{' '}
-          <a href={orivraSite.releaseUrl}>release notes</a> and{' '}
-          <a href={orivraSite.limitationsUrl}>known limitations</a> before connecting.
-        </p>
-      </aside>
       <div className={styles.setupGrid}>
         <article className={styles.setupCard}>
           <div className={styles.setupCardTop}>

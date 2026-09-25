@@ -852,26 +852,6 @@
   color: var(--muted);
   font-size: 17px;
 }
-.releaseNotice {
-  display: grid;
-  grid-template-columns: 1fr 4fr;
-  gap: 35px;
-  padding: 24px;
-  border: 1px solid #bfc1b6;
-  background: #e9ece2;
-  margin: 0 0 48px;
-}
-.releaseNotice p {
-  font-size: 13px;
-  line-height: 1.85;
-}
-.releaseNotice strong {
-  font-weight: 600;
-}
-.releaseNotice > span {
-  padding-top: 5px;
-  color: #4d5745;
-}
 .setupGrid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -1446,12 +1426,6 @@
   .pageIntro > p,
   .policyIntro > p {
     font-size: 15px;
-  }
-  .releaseNotice {
-    grid-template-columns: 1fr;
-    gap: 12px;
-    padding: 21px;
-    margin-bottom: 28px;
   }
   .setupGrid {
     grid-template-columns: 1fr;
