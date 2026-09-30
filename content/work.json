@@ -1,39 +1,37 @@
 [
   {
     "slug": "avis-global-procurement-ai",
-    "title": "Avis Budget Group: AI Transformation in Global Procurement",
-    "client": "Avis Budget Group (NASDAQ: CAR)",
+    "title": "Avis Budget Group: Enterprise AI Engineering & Enablement",
+    "client": "Avis Budget Group",
     "year": "2026",
-    "category": "Enterprise AI, AWS, Procurement, AI Enablement",
-    "context": "A CEO-sponsored AI transformation initiative at a NASDAQ-listed mobility company with ~25,000 employees and a 600,000+ vehicle global fleet. I was embedded with Global Procurement on the AI Solutions and Enablement team, reporting to the Office of the CEO, owning AI use cases end to end: discovery, scoping, build, and adoption.",
-    "problem": "Procurement runs on high-volume, judgment-heavy workflows: ~100,000 emergency roadside tows billed per year with identified supplier over-mileage, commodity supply shocks that surface too late to act on, and analyst work drowning in RFP responses and spend reports. The challenge: apply AI where it moves real money, with the governance an enterprise demands, and get a non-technical team to actually adopt it.",
-    "approach": "Deterministic-first architecture with a bounded LLM judgment layer: free deterministic checks run on 100% of events, paid routing and LLM inference are reserved for the flagged, dollar-ranked subset, and a human approves every dispute. Adoption was treated as its own workstream, not an afterthought: live enablement workshops built around the jagged-frontier model of which tasks to hand to AI and which to keep human.",
+    "category": "AI Engineering, Data Systems, Product Development, AI Enablement",
+    "context": "As an AI Solutions and Enablement Intern at Avis Budget Group, I work across problem discovery, software development, evaluation, and AI enablement. My role connects hands-on engineering with the people who will use the technology. Internal applications, business data, and implementation details are confidential; this overview focuses on my contributions and capabilities.",
+    "problem": "Turning a business need into a dependable AI application takes more than a working prototype. It requires clear requirements, reliable data, careful evaluation, and an experience that makes sense to the people using it.",
+    "approach": "I work with stakeholders to clarify the problem and translate it into a scoped product. I build and test the software, investigate data-quality issues, and communicate technical tradeoffs in business terms. I treat reliability and human judgment as design requirements throughout the work.",
     "frameworks": [
-      "Deterministic-First AI Design (bounded LLM judgment)",
-      "AWS Serverless Architecture (Lambda, Step Functions, EventBridge)",
-      "Amazon Bedrock (schema-validated JSON, fail-to-human routing)",
-      "AI Governance (NIST AI RMF, OWASP LLM Top 10)",
-      "Jagged-Frontier Task Allocation (adoption design)"
+      "AI & Data Engineering",
+      "Full-Stack Development",
+      "Evaluation & Testing",
+      "Cloud Application Delivery",
+      "Stakeholder Discovery",
+      "Responsible AI Enablement"
     ],
     "implementation": [
-      "Designed an end-to-end AWS serverless pipeline auditing ~100,000 annual roadside-tow invoices, targeting recovery of $1M+ of $2.5M in identified supplier over-mileage; containerized for deployment on AWS EKS",
-      "Built a capability-aware \"should-have-distance\" engine (BallTree haversine nearest-neighbor over repair-capability-filtered facilities) with road-distance verification via Amazon Location Service",
-      "Built a commodities market-intelligence agent on AWS Bedrock: early warning on supply and price shocks, mapped to the company's own supplier exposure, with a layered anti-hallucination system (span-level citations, deterministic citation checks, separate-model entailment verification)",
-      "Added a governed human-in-the-loop feedback loop that stores adjudicated reviewer decisions as precedent (Postgres/pgvector) while the LLM stays frozen",
-      "Authored a 15-page system design and a 28-page build specification; produced a spec-driven agentic build package for AWS Kiro and Claude Code",
-      "Designed and led live AI enablement workshops for the US and UK Procurement teams with live demos on RFP triage, contract summarization, and supplier-risk briefings"
+      "Built full-stack AI applications and data pipelines, connecting backend engineering, data modeling, and user-facing interfaces.",
+      "Developed automated tests and evaluation methods to check outputs, diagnose defects, and improve reliability.",
+      "Collaborated with platform engineers on cloud application delivery, with clear ownership across application and infrastructure work.",
+      "Translated technical findings into demonstrations and recommendations for business stakeholders.",
+      "Designed and led practical AI workshops for teams in the US and UK, covering effective use, limitations, and responsible judgment."
     ],
     "outcomes": [
-      "Audit system targeting $1M+ recovery of identified supplier over-mileage (projected by business owners; delivery in progress)",
-      "Two live AI enablement workshops delivered to US and UK Procurement teams, including executive leadership",
-      "Market-intelligence agent validated against a real 2026 base-oil supply squeeze with a hand-built sample flag",
-      "Per-cycle cloud cost held to tens of dollars against six-figure recovery via the tiered cost funnel"
+      "Delivered working software and evaluation tooling, taking ownership beyond the initial prototype.",
+      "Identified additional opportunities through hands-on investigation and developed them into working capabilities.",
+      "Created training materials and delivered live sessions that helped non-technical colleagues explore AI in their work."
     ],
     "learnings": [
-      "Enterprise AI wins come from bounding the LLM, not unleashing it: code decides the flow, the model fills one narrow judgment slot",
-      "Adoption is a designed outcome: vocabulary, mental models, and live demos matter as much as the system itself",
-      "Dollar-ranked funnels keep AI economical: spend inference only where the money is",
-      "Impact figures stay labeled as projections until the results land; credibility compounds"
+      "Reliable AI starts with understanding the data and testing the assumptions behind the result.",
+      "Effective delivery requires both technical ownership and close collaboration with business and platform teams.",
+      "Clear explanations and practical learning experiences are part of the product, not an afterthought."
     ]
   },
   {

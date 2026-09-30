@@ -1,10 +1,10 @@
 [
   {
-    "title": "AI Enablement Workshops for Procurement Teams",
+    "title": "Practical AI Enablement Workshops",
     "type": "Workshop",
-    "venue": "Avis Budget Group (US & UK Procurement)",
+    "venue": "Avis Budget Group (US & UK)",
     "year": "2026",
-    "description": "Designed and led live AI enablement workshops for the US and UK Procurement teams: practical LLM application, the Context → Task → Format prompting framework, the jagged-frontier model for deciding which tasks to hand to AI versus keep human, and responsible-use ground rules, with live demos on core procurement workflows like RFP response triage, contract summarization, and supplier-risk briefings."
+    "description": "Designed and led live workshops for teams in the US and UK on using AI effectively, understanding its limitations, and applying responsible-use principles. Created practical demonstrations and reusable learning materials for non-technical colleagues."
   },
   {
     "title": "Technical Workshops & Bootcamps",

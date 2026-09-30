@@ -1,5 +1,6 @@
 import fs from 'fs'
 import path from 'path'
+import { enforcePublicContent } from './public-content-policy'
 
 const contentDirectory = path.join(process.cwd(), 'content')
 
@@ -192,7 +193,7 @@ export async function readContent<T>(filename: string, defaultValue: T): Promise
       const content = await redisClient.get(key)
       if (content !== null) {
         // Parse JSON string back to object
-        return typeof content === 'string' ? JSON.parse(content) : content
+        return enforcePublicContent(filename, typeof content === 'string' ? JSON.parse(content) : content)
       }
       // If not found in Redis, fall through to read from committed files
     } catch (error) {
@@ -222,13 +223,14 @@ export async function readContent<T>(filename: string, defaultValue: T): Promise
   }
   try {
     const content = fs.readFileSync(filePath, 'utf8')
-    return JSON.parse(content)
+    return enforcePublicContent(filename, JSON.parse(content))
   } catch {
     return defaultValue
   }
 }
 
 export async function writeContent<T>(filename: string, data: T): Promise<void> {
+  data = enforcePublicContent(filename, data)
   // Use Upstash Redis in production
   if (isProduction) {
     const redisClient = getRedisClient()

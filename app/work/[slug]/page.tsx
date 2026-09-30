@@ -39,7 +39,7 @@ export default async function CaseStudyPage({ params }: { params: { slug: string
 
         {study.frameworks && study.frameworks.length > 0 && (
           <section>
-            <h2 className="text-2xl font-semibold text-navy mb-4">Frameworks</h2>
+            <h2 className="text-2xl font-semibold text-navy mb-4">{study.slug === 'avis-global-procurement-ai' ? 'Capabilities' : 'Frameworks'}</h2>
             <div className="flex flex-wrap gap-3">
               {study.frameworks.map((framework: string) => (
                 <span
@@ -55,7 +55,7 @@ export default async function CaseStudyPage({ params }: { params: { slug: string
 
         {study.implementation && study.implementation.length > 0 && (
           <section>
-            <h2 className="text-2xl font-semibold text-navy mb-4">Implementation</h2>
+            <h2 className="text-2xl font-semibold text-navy mb-4">{study.slug === 'avis-global-procurement-ai' ? 'Contributions' : 'Implementation'}</h2>
             <ul className="space-y-3">
               {study.implementation.map((item: string, index: number) => (
                 <li key={index} className="flex items-start">

@@ -22,8 +22,8 @@
       "company": "Avis Budget Group",
       "location": "Parsippany, New Jersey",
       "startDate": "Jun 2026",
-      "endDate": "Aug 2026",
-      "description": "Embedded with Global Procurement on a CEO-sponsored AI transformation initiative at Avis Budget Group (NASDAQ: CAR, ~25,000 employees), owning AI use cases end to end, from discovery and scoping through build and adoption, on the AI Solutions and Enablement team reporting to the Office of the CEO.\n- Designed an end-to-end AWS serverless pipeline to audit ~100,000 annual roadside-tow invoices, targeting recovery of $1M+ in identified supplier over-mileage (Lambda, Step Functions, RDS PostgreSQL, Amazon Location, Bedrock, CDK), now being containerized for deployment on AWS EKS (Kubernetes)\n- Built a commodities market-intelligence agent on AWS Bedrock that gives procurement early warning on supply and price shocks, delivering grounded, source-verified alerts with a layered anti-hallucination system: span-level citations, deterministic citation checks, and a separate-model entailment verifier\n- Designed and led live AI enablement workshops for the US and UK Procurement teams, covering practical LLM application, prompt engineering, and responsible-use guardrails, with live demos on core procurement workflows\n- Scoped a document-AI and anomaly-detection system to audit vendor repair invoices, expanding audit coverage from 50% toward 100%"
+      "endDate": "",
+      "description": "Building enterprise AI applications and supporting practical AI adoption, with ownership across discovery, development, and evaluation.\n- Built full-stack applications and data pipelines, with automated testing and careful attention to data quality\n- Collaborated with platform engineers on cloud application delivery\n- Translated business needs into scoped products and communicated technical tradeoffs to stakeholders\n- Designed and led practical AI enablement workshops for teams in the US and UK\nInternal applications, business data, and implementation details are confidential."
     },
     {
       "title": "AI Graduate Assistant",
