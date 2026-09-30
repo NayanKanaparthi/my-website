@@ -5,7 +5,7 @@ import InstitutionLogos from '@/components/home/InstitutionLogos'
 import { getHomeContent } from '@/lib/content'
 
 const proofPoints = [
-  { stat: '6,000+ downloads', context: 'AIGIS, open-source AI governance CLI on npm and PyPI' },
+  { stat: '8,000+ downloads', context: 'AIGIS, open-source AI governance CLI on npm and PyPI' },
   { stat: 'SSRN Recent Top Paper', context: 'Published research on AI infrastructure economics' },
 ]
 
